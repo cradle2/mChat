@@ -1,0 +1,47 @@
+<!-- INCLUDE ucp_header.html -->
+
+<form id="ucp" method="post" action="{S_UCP_ACTION}">
+
+<h2>{L_TITLE}</h2>
+
+<div class="panel">
+	<div class="inner"><span class="corners-top"><span></span></span>
+	<fieldset>
+	<!-- IF ERROR --><p class="error">{ERROR}</p><!-- ENDIF -->
+	<!-- IF S_MCHAT_INDEX -->
+	<dl>
+		<dt><label for="mchat_index1">{L_DISPLAY_MCHAT}:</label></dt>
+		<dd>
+			<label for="mchat_index1"><input type="radio" name="user_mchat_index" id="mchat_index1" value="1"<!-- IF S_DISPLAY_MCHAT --> checked="checked"<!-- ENDIF --> /> {L_YES}</label> 
+			<label for="mchat_index0"><input type="radio" name="user_mchat_index" id="mchat_index0" value="0"<!-- IF not S_DISPLAY_MCHAT --> checked="checked"<!-- ENDIF --> /> {L_NO}</label>
+		</dd>
+	</dl>
+	<!-- ENDIF -->
+	<dl>
+		<dt><label for="mchat_sound1">{L_SOUND_MCHAT}:</label></dt>
+		<dd>
+			<label for="mchat_sound1"><input type="radio" name="user_mchat_sound" id="mchat_sound1" value="1"<!-- IF S_SOUND_MCHAT --> checked="checked"<!-- ENDIF --> /> {L_YES}</label> 
+			<label for="mchat_sound0"><input type="radio" name="user_mchat_sound" id="mchat_sound0" value="0"<!-- IF not S_SOUND_MCHAT --> checked="checked"<!-- ENDIF --> /> {L_NO}</label>
+		</dd>
+	</dl>
+	<!-- IF S_MCHAT_INDEX -->
+	<dl>
+		<dt><label for="mchat_statsindex1">{L_DISPLAY_STATS_INDEX}:</label></dt>
+		<dd>
+			<label for="mchat_statsindex1"><input type="radio" name="user_mchat_stats_index" id="mchat_statsindex1" value="1"<!-- IF S_STATS_MCHAT --> checked="checked"<!-- ENDIF --> /> {L_YES}</label> 
+			<label for="mchat_statsindex0"><input type="radio" name="user_mchat_stats_index" id="mchat_statsindex0" value="0"<!-- IF not S_STATS_MCHAT --> checked="checked"<!-- ENDIF --> /> {L_NO}</label>
+		</dd>
+	</dl>
+	<!-- ENDIF -->
+	</fieldset>
+	<span class="corners-bottom"><span></span></span></div>
+</div>	
+<fieldset class="submit-buttons">
+	{S_HIDDEN_FIELDS}<input type="reset" value="{L_RESET}" name="reset" class="button2" />&nbsp; 
+	<input type="submit" name="submit" value="{L_SUBMIT}" class="button1" />
+	{S_FORM_TOKEN}
+</fieldset>
+</form>
+
+
+<!-- INCLUDE ucp_footer.html -->
