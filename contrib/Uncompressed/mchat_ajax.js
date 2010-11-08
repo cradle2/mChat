@@ -16,15 +16,17 @@ jQuery(document).ready(function($)
 	{	
 		var scrH=$('#mChatmain')[0].scrollHeight;
 		$('#mChatmain').animate({scrollTop:scrH},1000,'swing');
-		
-		// remove refresh on input keypress
-		$('#mChatMessage').bind('keypress', function(){
-			clearInterval(interval);
-			$('#mChatLoadIMG,#mChatOkIMG,#mChatErrorIMG').hide();
-			$('#mChatRefreshText').html(mChatRefreshNo).addClass('mchat-alert');
-			$('#mChatPauseIMG').show();
+		if(mChatPause)
+		{
+			// remove refresh on input keypress
+			$('#mChatMessage').bind('keypress', function(){
+				clearInterval(interval);
+				$('#mChatLoadIMG,#mChatOkIMG,#mChatErrorIMG').hide();
+				$('#mChatRefreshText').html(mChatRefreshNo).addClass('mchat-alert');
+				$('#mChatPauseIMG').show();
 
-		});
+			});
+		}
 
 		//http://jsbin.com/ahaxe
 		//allows the input area to "grow"
@@ -158,8 +160,11 @@ var mChat =	{
 			if($('#mChatRefreshText').hasClass('mchat-alert'))
 			{
 				$('#mChatRefreshText').removeClass('mchat-alert');
-			}		
-			interval=setInterval(function(){mChat.refresh()},mChatRefresh);
+			}
+			if(mChatPause)
+			{
+				interval=setInterval(function(){mChat.refresh()},mChatRefresh);
+			}
 			$('#mChatOkIMG').show();
 			$('#mChatLoadIMG, #mChatErrorIMG, #mChatPauseIMG').hide();
 			$('#mChatRefreshText').html(mChatRefreshYes);		

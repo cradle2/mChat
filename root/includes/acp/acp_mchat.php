@@ -4,7 +4,7 @@
 *
 * @author RMcGirr83
 * @package - mChat
-* @version $Id acp_mchat.php 1.3.7 2010-10-28
+* @version $Id acp_mchat.php 1.3.8 2010-11-08
 * @copyright (c) 2010 RMcGirr83 ( http://www.rmcgirr83.org/ )
 * @copyright (c) Stokerpiller
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License 
@@ -81,6 +81,7 @@ class acp_mchat
 			'override_min_post_chars'	=> request_var('mchat_override_min_post_chars', 0),
 			'override_smilie_limit'	=> request_var('mchat_override_smilie_limit', 0),
 			'timeout'			=> request_var('mchat_timeout', 0),
+			'pause_on_input'	=> request_var('mchat_pause_on_input', 0),
 		);		
 		
 		if ($submit)
@@ -206,6 +207,7 @@ class acp_mchat
 			'MCHAT_OVERRIDE_MIN_POST_CHARS'	=> !empty($mchat_row['override_min_post_chars']) ? $mchat_row['override_min_post_chars'] : $mchat_config['override_min_post_chars'],
 			'MCHAT_TIMEOUT'					=> !empty($mchat_row['timeout']) ? $mchat_row['timeout'] : $mchat_config['timeout'],
 			'MCHAT_NEW_POSTS'				=> ($mchat_new_posts) ? true : false,
+			'MCHAT_PAUSE_ON_INPUT'			=> !empty($mchat_row['pause_on_input']) ? $mchat_row['pause_on_input'] : $mchat_config['pause_on_input'],
 			
 			'L_MCHAT_BBCODES_DISALLOWED_EXPLAIN'	=> sprintf($user->lang['MCHAT_BBCODES_DISALLOWED_EXPLAIN'], '<a href="' . append_sid("{$phpbb_admin_path}index.$phpEx", 'i=bbcodes', true, $user->session_id) . '">', '</a>'),
 			'L_MCHAT_TIMEOUT_EXPLAIN'		=> sprintf($user->lang['MCHAT_USER_TIMEOUT_EXPLAIN'],'<a href="' . append_sid("{$phpbb_admin_path}index.$phpEx", 'i=board&amp;mode=load', true, $user->session_id) . '">', '</a>', $config['session_length']),

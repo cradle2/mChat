@@ -3,7 +3,7 @@
 /**
 *
 * @package - mChat
-* @version $Id: info_acp_mchat.php 2010-09-07
+* @version $Id: info_acp_mchat.php 2010-11-08
 * @copyright (c) 2010 RMcGirr83 ( http://www.rmcgirr83.org/ )
 * @copyright (c) 2009 phpbb3bbcodes.com
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License 
@@ -103,6 +103,8 @@ $lang = array_merge($lang, array(
 	'MCHAT_MAIN'					=> 'Main Configuration',
 	'MCHAT_STATS'					=> 'Whois Chatting',
 	'MCHAT_MESSAGES'				=> 'Message Settings',
+	'MCHAT_PAUSE_ON_INPUT'			=> 'Pause on input',
+	'MCHAT_PAUSE_ON_INPUT_EXPLAIN'	=> 'If set Yes, then the chat will not autoupdate upon a user entering a message in the input area',
 	
 	// error reporting
 	'MCHAT_NEEDS_UPDATING'	=> 'The mChat mod needs updating.  Please have a forum founder visit this section to run the installer.',

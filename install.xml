@@ -39,7 +39,7 @@
       		</contributions-group>				
 			</author>			
 		</author-group>
-		<mod-version>1.3.3</mod-version>
+		<mod-version>1.3.4</mod-version>
 		<installation>
 			<level>easy</level>
 			<time>1200</time>
@@ -265,6 +265,13 @@
 				<changelog lang="en">
 					<change>fix for install issues</change>
 				</changelog>
+			</entry>
+			<entry>
+				<date>2010-11-08</date>
+				<rev-version>1.3.4</rev-version>
+				<changelog lang="en">
+					<change>Allow ability to pause autoupdate or not on input by user</change>
+				</changelog>
 			</entry>			
 		</history>
 		<link-group>
@@ -280,6 +287,7 @@
 			<link type="contrib" href="./contrib/update_mchat_1217_131.xml" lang="en">Update from 1.2.17 to 1.3.1</link>
 			<link type="contrib" href="./contrib/update_mchat_131_132.xml" lang="en">Update from 1.3.1 to 1.3.2</link>
 			<link type="contrib" href="./contrib/update_mchat_132_133.xml" lang="en">Update from 1.3.2 to 1.3.3</link>
+			<link type="contrib" href="./contrib/update_mchat_133_134.xml" lang="en">Update from 1.3.3 to 1.3.4</link>			
 		</link-group>
 	</header>
 	<action-group>

@@ -354,10 +354,21 @@ $versions = array(
 	),
 	// Version 1.3.3
 	'1.3.3' => array(
-		//nothing to do
+		//nothing to do	
+	),
+	// Version 1.3.4
+	'1.3.4'	=> array(
+		// Insert a new entry
+		'table_insert'	=> array(
+			array('phpbb_mchat_config', array(			
+					'config_name' 	=> 'pause_on_input',
+					'config_value'	=> '0',
+				),
+			),			
+		),		
 		// purge the cache
-		'cache_purge' => array('','template'),		
-	),	
+		'cache_purge' => array('','template'),
+	),
 );
 
 // Include the UMIF Auto file and everything else will be handled automatically.
