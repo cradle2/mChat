@@ -2,7 +2,7 @@
 /**
 *
 * @package mChat
-* @version $Id: 1.3.9 mchat.php 2010-10-28
+* @version $Id: 1.4.0 mchat.php 2010-11-10
 * @copyright (c) 2010 RMcGirr83 ( http://www.rmcgirr83.org/ )
 * @copyright (c) djs596 ( http://djs596.com/ ), (c) Stokerpiller ( http://www.phpbb3bbcodes.com/ )
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
@@ -36,8 +36,8 @@ if (empty($config['mchat_version']))
 {
 	if($user->data['user_type'] == USER_FOUNDER)
 	{
-		$installer =  append_sid("{$phpbb_root_path}mchat_install.$phpEx");
-		$message = sprintf($user->lang['MCHAT_NOT_INSTALLED'], '<a href="' . $installer . '">', '</a>');
+	$installer =  append_sid("{$phpbb_root_path}mchat_install.$phpEx");
+	$message = sprintf($user->lang['MCHAT_NOT_INSTALLED'], '<a href="' . $installer . '">', '</a>');
 	}
 	else
 	{
@@ -78,7 +78,6 @@ $mchat_session_time = !empty($config_mchat['timeout']) ? $config_mchat['timeout'
 // Request options.
 $mchat_mode	= request_var('mode', '');
 $mchat_read_mode = $mchat_archive_mode = $mchat_custom_page = $mchat_no_message = false;
-
 // set redirect if on index or custom page
 $mchat_redirect = ($mchat_include_index && $mchat_mode != 'clean') ? append_sid("{$phpbb_root_path}index.$phpEx") : append_sid("{$phpbb_root_path}mchat.$phpEx");
 
@@ -279,19 +278,13 @@ switch ($mchat_mode)
 		
 		// Reverse the array wanting messages appear in reverse
 		$rows = array_reverse($rows);
-		
-		// auth check for new post notifications
-		$authed_forums = array_unique(array_keys($auth->acl_getf('f_read')));
-		
+				
 		foreach($rows as $row)
 		{
 			// auth check
-			if (sizeof($authed_forums))
+			if ($row['forum_id'] != 0 && !$auth->acl_get('f_read', $row['forum_id']))
 			{
-				if ($row['forum_id'] != 0 && !in_array($row['forum_id'], $authed_forums))
-				{
-					continue;
-				}
+				continue;
 			}	
 			// edit, delete and permission auths
 			$mchat_ban = ($auth->acl_get('a_authusers') && $user->data['user_id'] != $row['user_id']) ? true : false;
@@ -654,10 +647,10 @@ switch ($mchat_mode)
 		// must have auths to delete
 		$mchat_del = ($auth->acl_get('u_mchat_delete')) ? true : false;
 		// Reguest...
-		$message_id = request_var('message_id', 0);		
+		$message_id = request_var('message_id', 0);
 		// If mChat disabled
 		if (!$config['mchat_enable'] || !$mchat_del || !$message_id)
-		{ 
+		{
 			// Forbidden (for jQ AJAX request)
 			header('HTTP/1.0 403 Forbidden');
 			exit_handler();
@@ -770,18 +763,13 @@ switch ($mchat_mode)
 			$rows = $db->sql_fetchrowset($result);
 
 			$rows = array_reverse($rows, true);
-			// auth check for new post notifications
-			$authed_forums = array_unique(array_keys($auth->acl_getf('f_read')));
 			
 			foreach($rows as $row)
 			{
 				// auth check
-				if (sizeof($authed_forums))
+				if ($row['forum_id'] != 0 && !$auth->acl_get('f_read', $row['forum_id']))
 				{
-					if ($row['forum_id'] != 0 && !in_array($row['forum_id'], $authed_forums))
-					{
-						continue;
-					}
+					continue;
 				}
 				// edit, delete and permission auths
 				$mchat_ban = ($auth->acl_get('a_authusers') && $user->data['user_id'] != $row['user_id']) ? true : false;
@@ -901,6 +889,7 @@ $template->assign_vars(array(
 	'MCHAT_MESS_LONG'		=> sprintf($user->lang['MCHAT_MESS_LONG'], $config_mchat['max_message_lngth']),
 	'MCHAT_USER_TIMEOUT'	=> $config_mchat['timeout'] ? 1000 * $config_mchat['timeout'] : false,
 	'MCHAT_WHOIS_REFRESH'	=> 1000 * $config_mchat['whois_refresh'],
+	'MCHAT_PAUSE_ON_INPUT'	=> $config_mchat['pause_on_input'] ? true : false,
 	'L_MCHAT_ONLINE_EXPLAIN'	=> sprintf($user->lang['MCHAT_ONLINE_EXPLAIN'], $chat_session),
 	'MCHAT_REFRESH_YES'	=> sprintf($user->lang['MCHAT_REFRESH_YES'], $config_mchat['refresh']),
 	'L_MCHAT_WHOIS_REFRESH_EXPLAIN'	=> sprintf($user->lang['WHO_IS_REFRESH_EXPLAIN'], $config_mchat['whois_refresh']),
