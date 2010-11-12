@@ -549,7 +549,7 @@ $lang = array_merge($lang, array(
 			</edit>
 		</open>
 	<php-installer><![CDATA[mchat_install.php]]></php-installer>
-<diy-instructions lang="en"><![CDATA[*** NOTE: If you are installing via Automod you may skip to step 3 ***
+<diy-instructions lang="en"><![CDATA[*** NOTE: If you are installing via Automod you may skip to step 2 ***
 1. Make all edits to all files and upload them to your forum.    
 2. Browse to the file mchat_install.php in the root of your forum to make the database changes (eg, http://mysite.com/mchat_install.php).
 3. Delete the mchat_install.php file from the root of your forum.
