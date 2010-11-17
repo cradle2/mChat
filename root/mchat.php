@@ -36,8 +36,8 @@ if (empty($config['mchat_version']))
 {
 	if($user->data['user_type'] == USER_FOUNDER)
 	{
-	$installer =  append_sid("{$phpbb_root_path}mchat_install.$phpEx");
-	$message = sprintf($user->lang['MCHAT_NOT_INSTALLED'], '<a href="' . $installer . '">', '</a>');
+		$installer =  append_sid("{$phpbb_root_path}mchat_install.$phpEx");
+		$message = sprintf($user->lang['MCHAT_NOT_INSTALLED'], '<a href="' . $installer . '">', '</a>');
 	}
 	else
 	{
@@ -71,7 +71,7 @@ $mchat_view	= ($auth->acl_get('u_mchat_view')) ? true : false;
 $mchat_no_flood	= ($auth->acl_get('u_mchat_flood_ignore')) ? true : false;
 $mchat_read_archive = ($auth->acl_get('u_mchat_archive')) ? true : false;
 $mchat_founder = ($user->data['user_type'] == USER_FOUNDER) ? true : false;
-$mchat_session_time = !empty($config_mchat['timeout']) ? $config_mchat['timeout'] : 900;
+$mchat_session_time = !empty($config_mchat['timeout']) ? $config_mchat['timeout'] : 1800;// you can change this number to a greater number for longer chat sessions
 
 
 // needed variables
@@ -177,7 +177,7 @@ switch ($mchat_mode)
 		
 		if ($config['mchat_enable'] && $mchat_read_archive && $mchat_view)
 		{
-			// prune the chats if nescessary and amount in ACP not empty
+			// prune the chats if necessary and amount in ACP not empty
 			if ($config_mchat['prune_enable'] && $config_mchat['prune_num'] > 0)
 			{
 				mchat_prune((int) $config_mchat['prune_num']);
@@ -425,7 +425,6 @@ switch ($mchat_mode)
 				// Stop running code
 				exit_handler();
 			}
-			$db->sql_freeresult($result);
 		}
 
 		// we override the $config['min_post_chars'] entry?

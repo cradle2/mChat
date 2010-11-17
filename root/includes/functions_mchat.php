@@ -51,7 +51,7 @@ function mchat_user_fix($user_id)
 
 	$sql = 'UPDATE ' . MCHAT_TABLE . '
 		SET user_id = ' . ANONYMOUS . '
-	WHERE user_id = ' . $user_id;
+	WHERE user_id = ' . (int) $user_id;
 	$db->sql_query($sql);
 
 	return;
@@ -64,7 +64,7 @@ function mchat_users($session_time, $on_page = false)
 {
 	global $auth, $db, $template, $user;
 
-	$check_time = time() - $session_time;
+	$check_time = time() - (int) $session_time;
 	
 	$sql = 'DELETE FROM ' . MCHAT_SESSIONS_TABLE . ' WHERE user_lastupdate < ' . $check_time;
 	$db->sql_query($sql);	
@@ -91,7 +91,7 @@ function mchat_users($session_time, $on_page = false)
 			$sql_ary = array(
 				'user_lastupdate'	=> time(),
 			);
-			$sql = 'UPDATE ' . MCHAT_SESSIONS_TABLE . ' SET ' . $db->sql_build_array('UPDATE', $sql_ary) . ' WHERE user_id =' . (int) $user->data['user_id'];
+			$sql = 'UPDATE ' . MCHAT_SESSIONS_TABLE . ' SET ' . $db->sql_build_array('UPDATE', $sql_ary) . ' WHERE user_id =' . $user->data['user_id'];
 			$db->sql_query($sql);
 		}		
 	}
@@ -254,7 +254,6 @@ function display_mchat_bbcodes()
 	global $db, $cache, $template, $user;
 
 	// grab the bbcodes that aren't allowed 
-	// this is already done in mchat.php but just to be safe ;)
 	$config_mchat = $cache->get('_mchat_config');
 	
 	$disallowed_bbcode_array = explode('|', strtoupper($config_mchat['bbcode_disallowed']));

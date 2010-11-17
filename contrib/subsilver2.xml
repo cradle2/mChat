@@ -293,7 +293,7 @@
 		<open src="styles/subsilver2/template/overall_header.html">
 			<edit>
 				<find><![CDATA[</head>]]></find>
-				<action type="before-add"><![CDATA[<!-- IF S_MCHAT_ENABLE -->
+				<action type="before-add"><![CDATA[<!-- IF S_MCHAT_ENABLE and (S_MCHAT_ON_INDEX or U_MCHAT) -->
 <script type="text/javascript" src="{ROOT_PATH}mchat/jquery-1.4.2.min.js"></script>
 <script type="text/javascript" src="{ROOT_PATH}mchat/jquery_cookie_mini.js"></script>
 <link href="{T_THEME_PATH}/mchat_subsilver2.css" rel="stylesheet" type="text/css" />
