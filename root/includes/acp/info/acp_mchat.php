@@ -3,7 +3,7 @@
 *
 * @author RMcGirr83
 * @package - mChat
-* @version $Id acp_mchat.php 1.3.1 2010-10-20
+* @version $Id acp_mchat.php 1.3.4 2010-11-15
 * @copyright RMcGirr83 ( http://www.rmcgirr83.org/ )
 * @copyright (c) Stokerpiller
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
@@ -23,7 +23,7 @@ class acp_mchat_info
 		return array(
 			'filename'	=> 'acp_mchat',
 			'title'		=> 'ACP_CAT_MCHAT',
-			'version'	=> '1.3.4',
+			'version'	=> '1.3.5',
 			'modes'		=> array(
 				'configuration'		=> array('title' => 'ACP_MCHAT_CONFIG', 'auth' => 'acl_a_mchat', 'cat' => array('ACP_CAT_DOT_MODS')),
 			),

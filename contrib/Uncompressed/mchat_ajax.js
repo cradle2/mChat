@@ -80,7 +80,7 @@ jQuery(document).ready(function($)
 
 				testSubject.insertAfter(input);
 				
-				$(this).bind('keyup keydown blur update', check);
+				$(this).bind('keypress blur change submit focus', check);
 
 			});
 
