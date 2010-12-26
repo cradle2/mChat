@@ -52,22 +52,6 @@ input.mChatText:hover {
 	border-color: #11A3EA;
 }
 
-input.mChatButton {
-	width: auto;
-	font-weight: bold;
-	background-color: #ECECEC;
-	border: 1px solid #A9B8C2;
-	cursor: pointer;
-	padding: 2px 5px 2px 5px;
-	margin: 5px 0px 0px 5px;
-	font-size: 1em;
-}
-
-input.mChatButton:hover {
-	border-color: #BC2A4D;
-	color: #BC2A4D;
-}
-
 div.mChatHover:hover {
 	background-color: #FEFAC0;
 }

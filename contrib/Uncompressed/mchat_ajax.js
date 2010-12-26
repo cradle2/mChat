@@ -1,7 +1,7 @@
 /**
 *
 * @package mChat JavaScript Code mini
-* @version 1.3.9 of 2010-10-20
+* @version 1.4.1 of 2010-12-26
 * @copyright (c) 2010 By Rich McGirr (RMcGirr83) http://rmcgirr83.org
 * @copyright (c) 2009 By Shapoval Andrey Vladimirovich (AllCity) ~ http://allcity.net.ru/
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
@@ -10,7 +10,7 @@
 
 //var $jQ=jQuery;
 
-jQuery(document).ready(function($)
+jQuery(document).ready(function()
 {
 	if(!mChatArchiveMode)
 	{	
@@ -149,10 +149,7 @@ var mChat =	{
 	{
 		if($('#mChatMessage').val()=='')
 		{
-			// Error alert
-			alert(mChatNoMessageInput);
-			// Stop!
-			return;
+			return false;
 		}		
 		var answer = confirm(mChatReset);
 		if (answer)
@@ -219,10 +216,7 @@ var mChat =	{
 		// If message input empty stop Send function
 		if($('#mChatMessage').val()=='')
 		{
-			// Error alert
-			alert(mChatNoMessageInput);
-			// Stop!
-			return;
+			return false;
 		}
 		var mChatMessChars = $('#mChatMessage').val().replace(/ /g,'');
 

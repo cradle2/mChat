@@ -109,23 +109,23 @@
 				<!-- IF MCHAT_ADD_MESSAGE -->
 				<input type="hidden" name="mode" value="add" />
 				<input type="text" name="message" class="mChatText" id="mChatMessage" /><br />
-				<input id="submit_button" type="button" class="mChatButton" onclick="mChat.add();" value="{L_MCHAT_ADD}" />
-				<input id="mChatClear" type="button" class="mChatButton" onclick="mChat.clear();" value="{L_MCHAT_CLEAR_INPUT}" />
+				<input id="submit_button" type="button" class="button2" onclick="mChat.add();" value="{L_MCHAT_ADD}" />
+				<input id="mChatClear" type="button" class="button2" onclick="mChat.clear();" value="{L_MCHAT_CLEAR_INPUT}" />
 				<!-- IF MCHAT_ALLOW_SMILES and .smiley -->
-				<input type="button" class="mChatButton" onclick="mChat.toggle('Smiles');" value="{L_MCHAT_SMILES}" />
+				<input type="button" class="button2" onclick="mChat.toggle('Smiles');" value="{L_MCHAT_SMILES}" />
 				<!-- ENDIF -->
 				<!-- IF MCHAT_ALLOW_BBCODES -->
-				<input type="button" class="mChatButton" onclick="mChat.toggle('BBCodes');" value="{L_MCHAT_BBCODES}" />
+				<input type="button" class="button2" onclick="mChat.toggle('BBCodes');" value="{L_MCHAT_BBCODES}" />
 				<!-- ENDIF -->
 				<!-- ENDIF -->
 				<!-- IF MCHAT_READ_ARCHIVE_BUTTON -->
-				<input type="button" class="mChatButton" onclick="window.location.href = '{MCHAT_ARCHIVE_URL}';" value="{L_MCHAT_ARCHIVE}" />
+				<input type="button" class="button2" onclick="window.location.href = '{MCHAT_ARCHIVE_URL}';" value="{L_MCHAT_ARCHIVE}" />
 				<!-- ENDIF -->
 				<!-- IF MCHAT_FOUNDER -->
-				<input type="button" class="mChatButton" onclick="window.location.href = '{MCHAT_CLEAN_URL}';" value="{L_MCHAT_CLEAN}" />
+				<input type="button" class="button2" onclick="window.location.href = '{MCHAT_CLEAN_URL}';" value="{L_MCHAT_CLEAN}" />
 				<!-- ENDIF -->
 				<!-- IF MCHAT_ADD_MESSAGE -->
-				<input type="button" class="mChatButton" onclick="popup('{U_MCHAT_RULES}', 450, 275); return false;" value="{L_MCHAT_HELP}" />
+				<input type="button" class="button2" onclick="popup('{U_MCHAT_RULES}', 450, 275); return false;" value="{L_MCHAT_HELP}" />
 				<!-- IF MCHAT_ALLOW_BBCODES -->
 					<!-- INCLUDE mchat_bbcodes.html -->
 				<!-- ENDIF -->

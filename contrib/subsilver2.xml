@@ -332,7 +332,7 @@
 				<action type="after-add"><![CDATA[				<!-- IF S_MCHAT_ENABLE and U_MCHAT -->&nbsp; &nbsp;<a href="{U_MCHAT}#mChat"><img src="{T_THEME_PATH}/images/icon_mini_groups.gif" width="12" height="13" alt="{L_MCHAT_TITLE}" /> {L_MCHAT_TITLE}</a><!-- ENDIF -->]]></action>
 			</edit>
 		</open>	
-		<open src="styles/prosilver/theme/stylesheet.css">
+		<open src="styles/subsilver2/theme/stylesheet.css">
 			<edit>
 				<find><![CDATA[/* Layout
  ------------ */]]></find>
