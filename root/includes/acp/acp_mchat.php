@@ -44,7 +44,7 @@ class acp_mchat
 		global $phpbb_root_path, $phpEx, $phpbb_admin_path;
 		
 		// install file been run?
-		if (!isset($config['mchat_version']) || (isset($config['mchat_version']) && version_compare($config['mchat_version'], '1.3.4', '<')))
+		if (!isset($config['mchat_version']) || (isset($config['mchat_version']) && version_compare($config['mchat_version'], '1.3.5', '<')))
 		{
 			if($user->data['user_type'] == USER_FOUNDER)
 			{
