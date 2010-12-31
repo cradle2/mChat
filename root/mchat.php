@@ -25,9 +25,10 @@ if(!defined('MCHAT_INCLUDE'))
   $auth->acl($user->data);
   $user->setup();
 }
-
-include($phpbb_root_path . 'includes/functions_mchat.' . $phpEx);
-
+if (!function_exists('mchat_cache'))
+{
+	include($phpbb_root_path . 'includes/functions_mchat.' . $phpEx);
+}
 // Add lang file
 $user->add_lang(array('mods/mchat_lang', 'viewtopic', 'posting'));
 
@@ -46,20 +47,7 @@ if (empty($config['mchat_version']))
 	trigger_error ($message);
 }
 
-// Grab the config entries in teh ACP...and cache em :P
-if (($config_mchat = $cache->get('_mchat_config')) === false)
-{
-	$sql = 'SELECT * FROM ' . MCHAT_CONFIG_TABLE;
-	$result = $db->sql_query($sql);
-	$config_mchat = array();
-	while ($row = $db->sql_fetchrow($result))	
-	{
-		$config_mchat[$row['config_name']] = $row['config_value'];
-	}
-	$db->sql_freeresult($result);
-
-	$cache->put('_mchat_config', $config_mchat);
-}
+$config_mchat = $cache->get('_mchat_config');
 
 // Access rights 
 $mchat_allow_bbcode	= ($config['allow_bbcode'] && $auth->acl_get('u_mchat_bbcode')) ? true : false;
