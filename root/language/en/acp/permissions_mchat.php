@@ -3,7 +3,7 @@
 * acp_permissions_mchat (phpBB Permission Set) [English]
 *
 * @package language
-* @version $Id: permissions_mchat.php 8911 2009-08-20 13:58:33Z RMcGirr83 $
+* @version $Id: permissions_mchat.php
 * @copyright (c) 2010 rmcgirr83.org
 * @copyright (c) 2009 phpbb3bbcodes.com
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License

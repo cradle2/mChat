@@ -2,7 +2,7 @@
 /**
 *
 * @package mChat
-* @version $Id: 1.4.0 mchat.php 2010-11-10
+* @version $Id: mchat.php
 * @copyright (c) 2010 RMcGirr83 ( http://www.rmcgirr83.org/ )
 * @copyright (c) djs596 ( http://djs596.com/ ), (c) Stokerpiller ( http://www.phpbb3bbcodes.com/ )
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
@@ -46,11 +46,6 @@ if (empty($config['mchat_version']))
 		$message = $user->lang['MCHAT_NOTINSTALLED_USER'];
 	}
 	trigger_error ($message);
-}
-
-if (!$config['mchat_enable'])
-{
-	trigger_error ($user->lang['MCHAT_ENABLE']);
 }
 
 $config_mchat = $cache->get('_mchat_config');
@@ -279,10 +274,19 @@ switch ($mchat_mode)
 			{
 				continue;
 			}	
+			// edit auths
+			if ($user->data['user_id'] == ANONYMOUS && $user->data['user_id'] == $row['user_id'])
+			{
+				$chat_auths = $user->data['session_ip'] == $row['user_ip'] ? true : false;
+			}
+			else
+			{
+				$chat_auths = $user->data['user_id'] == $row['user_id'] ? true : false;
+			}			
 			// edit, delete and permission auths
 			$mchat_ban = ($auth->acl_get('a_authusers') && $user->data['user_id'] != $row['user_id']) ? true : false;
-			$mchat_edit = ($auth->acl_get('u_mchat_edit') && ($auth->acl_get('m_') || $user->data['user_id'] == $row['user_id'])) ? true : false;
-			$mchat_del = ($auth->acl_get('u_mchat_delete') && ($auth->acl_get('m_') || $user->data['user_id'] == $row['user_id'])) ? true : false;
+			$mchat_edit = ($auth->acl_get('u_mchat_edit') && ($auth->acl_get('m_') || $chat_auths)) ? true : false;
+			$mchat_del = ($auth->acl_get('u_mchat_delete') && ($auth->acl_get('m_') || $chat_auths)) ? true : false;
 				
 			$message_edit = $row['message'];
 			decode_message($message_edit, $row['bbcode_uid']);
@@ -484,7 +488,7 @@ switch ($mchat_mode)
 		}
 		
 		// insert user into the mChat sessions table
-		mchat_sessions($mchat_session_time);
+		mchat_sessions($mchat_session_time, true);
 		// Stop run code!
 		exit_handler();
 	break;
@@ -765,8 +769,17 @@ switch ($mchat_mode)
 				}
 				// edit, delete and permission auths
 				$mchat_ban = ($auth->acl_get('a_authusers') && $user->data['user_id'] != $row['user_id']) ? true : false;
-				$mchat_edit = ($auth->acl_get('u_mchat_edit') && ($auth->acl_get('m_') || $user->data['user_id'] == $row['user_id'])) ? true : false;
-				$mchat_del = ($auth->acl_get('u_mchat_delete') && ($auth->acl_get('m_') || $user->data['user_id'] == $row['user_id'])) ? true : false;
+				// edit auths
+				if ($user->data['user_id'] == ANONYMOUS && $user->data['user_id'] == $row['user_id'])
+				{
+					$chat_auths = $user->data['session_ip'] == $row['user_ip'] ? true : false;
+				}
+				else
+				{
+					$chat_auths = $user->data['user_id'] == $row['user_id'] ? true : false;
+				}
+				$mchat_edit = ($auth->acl_get('u_mchat_edit') && ($auth->acl_get('m_') || $chat_auths)) ? true : false;
+				$mchat_del = ($auth->acl_get('u_mchat_delete') && ($auth->acl_get('m_') || $chat_auths)) ? true : false;
 		
 				$message_edit = $row['message'];
 				decode_message($message_edit, $row['bbcode_uid']);
@@ -818,7 +831,7 @@ switch ($mchat_mode)
 				$config_mchat['static_message'] = $user->lang[strtoupper('static_message')];
 			}			
 			// a list of users using the chat
-			$mchat_users = mchat_users($mchat_session_time, true);
+			$mchat_users = mchat_users($mchat_session_time);
 			$template->assign_vars(array(
 				'MCHAT_USERS_COUNT'		=> $mchat_users['mchat_users_count'],
 				'MCHAT_USERS_LIST'		=> $mchat_users['online_userlist'],	

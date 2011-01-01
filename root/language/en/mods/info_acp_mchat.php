@@ -3,7 +3,7 @@
 /**
 *
 * @package - mChat
-* @version $Id: info_acp_mchat.php 2010-11-08
+* @version $Id: info_acp_mchat.php
 * @copyright (c) 2010 RMcGirr83 ( http://www.rmcgirr83.org/ )
 * @copyright (c) 2009 phpbb3bbcodes.com
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License 

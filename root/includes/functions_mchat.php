@@ -2,7 +2,7 @@
 /**
 *
 * @package mChat
-* @version $Id: functions_mchat.php 1.3.7 2010-10-28
+* @version $Id: functions_mchat.php
 * @copyright (c) 2010 RMcGirr83 ( http://www.rmcgirr83.org/ )
 * @copyright (c) 2009 phpbb3bbcodes.com
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
@@ -72,28 +72,7 @@ function mchat_users($session_time, $on_page = false)
 	// add the user into the sessions upon first visit
 	if($on_page && ($user->data['user_id'] != ANONYMOUS && !$user->data['is_bot']))
 	{
-		$sql = 'SELECT user_id
-			FROM ' . MCHAT_SESSIONS_TABLE . '
-			WHERE user_id = ' . $user->data['user_id'];
-		$result = $db->sql_fetchrow($db->sql_query($sql));
-		
-		if(!$result)
-		{
-			$sql_ary = array(
-				'user_id'			=> $user->data['user_id'],
-				'user_lastupdate'	=> time(),
-			);		
-			$sql = 'INSERT INTO ' . MCHAT_SESSIONS_TABLE . ' ' . $db->sql_build_array('INSERT', $sql_ary);
-			$db->sql_query($sql);
-		}
-		else
-		{
-			$sql_ary = array(
-				'user_lastupdate'	=> time(),
-			);
-			$sql = 'UPDATE ' . MCHAT_SESSIONS_TABLE . ' SET ' . $db->sql_build_array('UPDATE', $sql_ary) . ' WHERE user_id =' . $user->data['user_id'];
-			$db->sql_query($sql);
-		}		
+		mchat_sessions($session_time);
 	}
 	
 	$mchat_user_count = 0;

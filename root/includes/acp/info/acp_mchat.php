@@ -3,7 +3,7 @@
 *
 * @author RMcGirr83
 * @package - mChat
-* @version $Id acp_mchat.php 1.3.4 2010-11-15
+* @version $Id acp_mchat.php
 * @copyright RMcGirr83 ( http://www.rmcgirr83.org/ )
 * @copyright (c) Stokerpiller
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License

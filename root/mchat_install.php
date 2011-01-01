@@ -4,7 +4,7 @@
 *
 * @author RMcGirr83 (Rich McGirr) rmcgirr83@gmail.com 
 * @package mChat
-* @version $Id mchat_install.php 2.0.1 2010-12-02
+* @version $Id mchat_install.php
 * @copyright (c) 2010 RMcGirr83 ( http://www.rmcgirr83.org/ )
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *

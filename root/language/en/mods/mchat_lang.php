@@ -2,7 +2,7 @@
 /**
 *
 * @package mChat
-* @version $Id: mchat_lang.php 1.3.7 2010-10-20
+* @version $Id: mchat_lang.php
 * @copyright (c) RMcGirr83 ( http://www.rmcgirr83.org/ )
 * @copyright (c) djs596 ( http://djs596.com/ ), (c) Stokerpiller ( http://www.phpbb3bbcodes.com/ )
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License

@@ -1,8 +1,8 @@
 <?php
 /**
 *
-* @package ucp_mchat
-* @version $Id$
+* @package mChat
+* @version $Id ucp_mchat
 * @copyright (c) 2010 RMcGirr83 Rich McGirr http://rmcgirr83.org
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
