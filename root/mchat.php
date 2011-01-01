@@ -831,7 +831,14 @@ switch ($mchat_mode)
 				$config_mchat['static_message'] = $user->lang[strtoupper('static_message')];
 			}			
 			// a list of users using the chat
-			$mchat_users = mchat_users($mchat_session_time);
+			if ($mchat_custom_page)
+			{
+				$mchat_users = mchat_users($mchat_session_time, true);
+			}
+			else
+			{
+				$mchat_users = mchat_users($mchat_session_time);
+			}
 			$template->assign_vars(array(
 				'MCHAT_USERS_COUNT'		=> $mchat_users['mchat_users_count'],
 				'MCHAT_USERS_LIST'		=> $mchat_users['online_userlist'],	
