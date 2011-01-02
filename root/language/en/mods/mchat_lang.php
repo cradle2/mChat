@@ -63,7 +63,7 @@ $lang = array_merge($lang, array(
 	'MCHAT_HELP_INFO'			=> 'No swearing<br />Don’t advertise your site<br />Don’t leave several messages in succession<br />Don’t leave a pointless message<br />Don’t leave a message consisting of only smilies',	// <br /> signifies a new line, see above for Unicode characters to use //
 	'MCHAT_HIDE_LIST'			=> 'Hide List',	
 	'MCHAT_HOUR'				=> 'hour ',
-	'MCHAT_HOURS'				=> 'hours ',
+	'MCHAT_HOURS'				=> 'hours',
 	'MCHAT_IP'					=> 'IP:',
 	'MCHAT_IP_WHOIS_FOR'		=> 'IP whois for %s',
 	
@@ -125,6 +125,7 @@ $lang = array_merge($lang, array(
 	'DISPLAY_MCHAT' 	=> 'Display mChat on Index',
 	'SOUND_MCHAT'		=> 'Enable mChat sound',
 	'DISPLAY_STATS_INDEX'	=> 'Display the Who is Chatting stats on index page',
+	'DISPLAY_NEW_TOPICS'	=> 'Display new topics in the chat',
 	
 	// ACP
 	'USER_MCHAT_UPDATED'	=> 'Users mChat preferences were updated',

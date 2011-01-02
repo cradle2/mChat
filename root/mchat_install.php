@@ -372,7 +372,10 @@ $versions = array(
 		// Lets add a config setting and set it to false
 		'config_add' => array(
 			array('mchat_stats_index', false),
-		),	
+		),
+		'table_column_add'	=> array(
+			array('phpbb_users', 'user_mchat_topics', array('BOOL', true)),
+		),		
 		// purge the cache
 		'cache_purge' => array(''),
 	),

@@ -184,7 +184,7 @@ switch ($mchat_mode)
 			foreach($rows as $row)
 			{
 				// auth check
-				if ($row['forum_id'] != 0 && !$auth->acl_get('f_read', $row['forum_id']))
+				if ($row['forum_id'] != 0 && !$auth->acl_get('f_read', $row['forum_id']) && $user->data['user_mchat_topics'])
 				{
 					continue;
 				}	
@@ -270,7 +270,7 @@ switch ($mchat_mode)
 		foreach($rows as $row)
 		{
 			// auth check
-			if ($row['forum_id'] != 0 && !$auth->acl_get('f_read', $row['forum_id']))
+			if ($row['forum_id'] != 0 && !$auth->acl_get('f_read', $row['forum_id']) && $user->data['user_mchat_topics'])
 			{
 				continue;
 			}	
@@ -340,7 +340,7 @@ switch ($mchat_mode)
 		}
 		else
 		{
-			$message = '<div class="mChatStats" id="mChatStats">' . $user->lang['MCHAT_NO_CHATTERS'] . '&nbsp;' . $refresh_message . '</div>';
+			$message = '<div class="mChatStats" id="mChatStats">' . $user->lang['MCHAT_NO_CHATTERS'] . '&nbsp;' . $mchat_stats['refresh_message'] . '</div>';
 		}
 
 		echo $message;
@@ -735,7 +735,7 @@ switch ($mchat_mode)
 			foreach($rows as $row)
 			{
 				// auth check
-				if ($row['forum_id'] != 0 && !$auth->acl_get('f_read', $row['forum_id']))
+				if ($row['forum_id'] != 0 && !$auth->acl_get('f_read', $row['forum_id']) && $user->data['user_mchat_topics'])
 				{
 					continue;
 				}

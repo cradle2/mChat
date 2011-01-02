@@ -1,8 +1,8 @@
 <?php
 /**
 *
-* @package mChat
-* @version $Id ucp_mchat
+* @package ucp_mchat
+* @version $Id$
 * @copyright (c) 2010 RMcGirr83 Rich McGirr http://rmcgirr83.org
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
@@ -36,6 +36,7 @@ class ucp_mchat
 					'user_mchat_index'	=> request_var('user_mchat_index', (bool) $user->data['user_mchat_index']),
 					'user_mchat_sound'	=> request_var('user_mchat_sound', (bool) $user->data['user_mchat_sound']),
 					'user_mchat_stats_index'	=> request_var('user_mchat_stats_index', (bool) $user->data['user_mchat_stats_index']),
+					'user_mchat_topics'	=> request_var('user_mchat_topics', (bool) $user->data['user_mchat_topics']),
 				);
 
 				add_form_key('ucp_mchat');
@@ -53,6 +54,7 @@ class ucp_mchat
 							'user_mchat_index'	=> $data['user_mchat_index'],
 							'user_mchat_sound'	=> $data['user_mchat_sound'],
 							'user_mchat_stats_index'	=> $data['user_mchat_stats_index'],
+							'user_mchat_topics'	=> $data['user_mchat_topics'],
 						);
 
 						if (sizeof($sql_ary))
@@ -78,6 +80,8 @@ class ucp_mchat
 					'S_DISPLAY_MCHAT'	=> $data['user_mchat_index'],
 					'S_SOUND_MCHAT'		=> $data['user_mchat_sound'],
 					'S_STATS_MCHAT'		=> $data['user_mchat_stats_index'],
+					'S_TOPICS_MCHAT'	=> $data['user_mchat_topics'],
+					'S_MCHAT_TOPICS'	=> $config['mchat_new_posts'],
 					'S_MCHAT_INDEX'		=> $config['mchat_on_index'],
 				));
 			break;
