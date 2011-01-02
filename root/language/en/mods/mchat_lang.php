@@ -105,7 +105,7 @@ $lang = array_merge($lang, array(
 	'MCHAT_ONLINE_USERS_TOTAL'			=> 'In total there are <strong>%d</strong> users chatting ',
 	'MCHAT_ONLINE_USER_TOTAL'			=> 'In total there is <strong>%d</strong> user chatting ',
 	'MCHAT_NO_CHATTERS'					=> 'No one is chatting',
-	'MCHAT_ONLINE_EXPLAIN'				=> '( based on users active over the past %s)',
+	'MCHAT_ONLINE_EXPLAIN'				=> '(based on users active over the past %s)',
 	
 	'WHO_IS_CHATTING'			=> 'Who is chatting',
 	'WHO_IS_REFRESH_EXPLAIN'	=> 'Refreshes every <strong>%d</strong> seconds',

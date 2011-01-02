@@ -369,6 +369,10 @@ $versions = array(
 	),
 	// Version 1.3.5
 	'1.3.5'	=> array(
+		// Lets add a config setting and set it to false
+		'config_add' => array(
+			array('mchat_stats_index', false),
+		),	
 		// purge the cache
 		'cache_purge' => array(''),
 	),

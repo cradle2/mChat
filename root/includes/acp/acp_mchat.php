@@ -132,6 +132,8 @@ class acp_mchat
 				set_config('mchat_on_index', request_var('mchat_on_index', 0));
 				// update setting in config table to allow new posts to display or not
 				set_config('mchat_new_posts', request_var('mchat_new_posts', 0));
+				// update setting in config table for stats on index
+				set_config('mchat_stats_index', request_var('mchat_stats_index', 0));
 				// and an entry into the log table
 				add_log('admin', 'LOG_MCHAT_CONFIG_UPDATE');
 				
@@ -163,6 +165,7 @@ class acp_mchat
 		$mchat_on_index = isset($config['mchat_on_index']) ? $config['mchat_on_index'] : 0;
 		$mchat_version = isset($config['mchat_version']) ? $config['mchat_version'] : '';
 		$mchat_new_posts = isset($config['mchat_new_posts']) ? $config['mchat_new_posts'] : 0;
+		$mchat_stats_index = isset($config['mchat_stats_index']) ? $config['mchat_stats_index'] : 0;
 		
 		$dateformat_options = '';
 		foreach ($user->lang['dateformats'] as $format => $null)
@@ -199,6 +202,7 @@ class acp_mchat
 			'MCHAT_DATE'					=> !empty($mchat_row['date']) ? $mchat_row['date'] : $mchat_config['date'],
 			'MCHAT_DEFAULT_DATEFORMAT'		=> $config['default_dateformat'],		
 			'MCHAT_WHOIS'					=> !empty($mchat_row['whois']) ? $mchat_row['whois'] : $mchat_config['whois'],
+			'MCHAT_STATS_INDEX'				=> ($mchat_stats_index) ? true : false,
 			'MCHAT_BBCODE_DISALLOWED'		=> !empty($mchat_row['bbcode_disallowed']) ? $mchat_row['bbcode_disallowed'] : $mchat_config['bbcode_disallowed'],
 			'MCHAT_STATIC_MESSAGE'			=> !empty($mchat_row['static_message']) ? $mchat_row['static_message'] : $mchat_config['static_message'],
 			'MCHAT_INDEX_HEIGHT'			=> !empty($mchat_row['index_height']) ? $mchat_row['index_height'] : $mchat_config['index_height'],

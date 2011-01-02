@@ -150,6 +150,12 @@
 			<label><input type="radio" class="radio" name="mchat_whois" value="0"<!-- IF not MCHAT_WHOIS --> id="mchat_whois" checked="checked"<!-- ENDIF --> /> {L_NO}</label></dd>
 		</dl>
 		<dl>
+			<dt><label for="mchat_stats_index">{L_MCHAT_STATS_INDEX}:</label><br />
+			<span>{L_MCHAT_STATS_INDEX_EXPLAIN}</span></dt>
+			<dd><label><input type="radio" class="radio" name="mchat_stats_index" value="1"<!-- IF MCHAT_STATS_INDEX --> id="mchat_stats_index" checked="checked"<!-- ENDIF --> /> {L_YES}</label>
+			<label><input type="radio" class="radio" name="mchat_stats_index" value="0"<!-- IF not MCHAT_STATS_INDEX --> id="mchat_stats_index" checked="checked"<!-- ENDIF --> /> {L_NO}</label></dd>			
+		</dl>		
+		<dl>
 			<dt><label for="mchat_whois">{L_MCHAT_WHOIS_REFRESH}:</label><br />
 			<span>{L_MCHAT_WHOIS_REFRESH_EXPLAIN}</span></dt>
 			<dd><input type="text" name="mchat_whois_refresh" size="10" value="{MCHAT_WHOIS_REFRESH}" /></dd>
