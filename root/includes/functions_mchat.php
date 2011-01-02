@@ -56,6 +56,43 @@ function mchat_user_fix($user_id)
 
 	return;
 }
+
+// mchat_session_time
+/**
+* @param $time the amount of time to display
+*
+*/
+function mchat_session_time($time)
+{
+	global $user;
+	// fix the display of the time limit
+	// hours, minutes, seconds
+	$chat_session = '';
+	$chat_timeout = (int) $time;	
+	$hours = $minutes = $seconds = 0;
+		
+	if ($chat_timeout >= 3600)
+	{
+		$hours = floor($chat_timeout / 3600);
+		$chat_timeout = $chat_timeout - ($hours * 3600);
+		$chat_session .= $hours > 1 ? ($hours . '&nbsp;' . $user->lang['MCHAT_HOURS']) : ($hours . '&nbsp;' . $user->lang['MCHAT_HOUR']);
+	}
+	$minutes = floor($chat_timeout / 60);
+	if ($minutes)
+	{
+		$minutes = $minutes > 1 ? ($minutes . '&nbsp;' . $user->lang['MCHAT_MINUTES']) : ($minutes . '&nbsp;' . $user->lang['MCHAT_MINUTE']);
+		$chat_timeout = $chat_timeout - ($minutes * 60);
+		$chat_session .= $minutes;
+	}
+	$seconds = ceil($chat_timeout);
+	if ($seconds)
+	{
+		$seconds = $seconds > 1 ? ($seconds . '&nbsp;' . $user->lang['MCHAT_SECONDS']) : ($seconds . '&nbsp;' . $user->lang['MCHAT_SECOND']);
+		$chat_session .= $seconds;
+	}		
+	return sprintf($user->lang['MCHAT_ONLINE_EXPLAIN'], $chat_session);	
+}
+
 // mchat_users
 /**
 * @param $session_time amount of time before a users session times out
@@ -104,11 +141,13 @@ function mchat_users($session_time, $on_page = false)
 	}
 	$db->sql_freeresult($result);
 
+	$refresh_message = mchat_session_time($session_time);	
 	if (!$mchat_user_count)
 	{
 		return array(
 			'online_userlist'	=> '',
 			'mchat_users_count'	=> $user->lang['MCHAT_NO_CHATTERS'],
+			'refresh_message'	=> $refresh_message,
 		);
 	}
 	else
@@ -116,6 +155,7 @@ function mchat_users($session_time, $on_page = false)
 		return array(
 			'online_userlist'	=> $mchat_user_list,
 			'mchat_users_count'	=> $mchat_user_count > 1 ? sprintf($user->lang['MCHAT_ONLINE_USERS_TOTAL'], $mchat_user_count) : sprintf($user->lang['MCHAT_ONLINE_USER_TOTAL'], $mchat_user_count),
+			'refresh_message'	=> $refresh_message,
 		);
 	}
 }

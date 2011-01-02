@@ -279,6 +279,7 @@
 				<changelog lang="en">
 					<change>Fix to mchat.php and functions_mchat.php file</change>
 					<change>jQuery 1.4.4</change>
+					<change>Display chat stats within index page stats</change>
 				</changelog>
 			</entry>			
 		</history>
@@ -329,6 +330,25 @@ if(!defined('MCHAT_INCLUDE') && $mchat_installed && $auth->acl_get('u_mchat_view
 	$mchat_include_index = true;
 	include($phpbb_root_path . 'mchat.' . $phpEx);
 }
+
+if (!empty($config['mchat_enable']) && !empty($config['mchat_stats_index']))
+{
+	if (!function_exists('mchat_users'))
+	{
+		include($phpbb_root_path . 'includes/functions_mchat.' . $phpEx);
+	}
+	// Add lang file
+	$user->add_lang('mods/mchat_lang');
+	// stats display
+	$mchat_session_time = !empty($config_mchat['timeout']) ? $config_mchat['timeout'] : 3600;// you can change this number to a greater number for longer chat sessions
+	$mchat_stats = mchat_users($mchat_session_time);
+	$template->assign_vars(array(
+		'MCHAT_INDEX_STATS'	=> true,
+		'MCHAT_INDEX_USERS_COUNT'	=> $mchat_stats['mchat_users_count'],
+		'MCHAT_INDEX_USERS_LIST'	=> $mchat_stats['online_userlist'],
+		'L_MCHAT_ONLINE_EXPLAIN'	=> $mchat_stats['refresh_message'],	
+	));
+}
 // END mChat Mod]]></action>
 			</edit>
 		</open>	
@@ -372,27 +392,23 @@ define('MCHAT_SESSIONS_TABLE',			$table_prefix . 'mchat_sessions');
 			<edit>
 				<find><![CDATA[	// The following assigns all _common_ variables that may be used at any point in a template.]]></find>
 				<action type="before-add"><![CDATA[// BEGIN mChat Mod
-if(!empty($config['mchat_version']))
+$mchat_custom_page = false;
+if(!empty($config['mchat_version']) && !empty($config['mchat_enable']))
 {
 	global $cache;
 	if (!function_exists('mchat_cache'))
 	{
 		include($phpbb_root_path . 'includes/functions_mchat.' . $phpEx);
 	}
-	
-	$mchat_custom_page = false;
 	if (($config_mchat = $cache->get('_mchat_config')) === false)
 	{
 		mchat_cache();
-	}	
-	if(!empty($config['mchat_enable']))
-	{
-		$config_mchat = $cache->get('_mchat_config');
-		$mchat_custom_page = $config_mchat['custom_page'];
-		unset($config_mchat);
 	}
+	$config_mchat = $cache->get('_mchat_config');	
+		
+	$mchat_custom_page = $config_mchat['custom_page'];
 }
-// END mChat Mod]]></action>
+//END mChat Mod]]></action>
 			</edit>		
 			<edit>
 				<find><![CDATA[		'U_FAQ'					=> append_sid("{$phpbb_root_path}faq.$phpEx"),]]></find>
@@ -540,7 +556,11 @@ $lang = array_merge($lang, array(
 				<find><![CDATA[<!-- INCLUDE forumlist_body.html -->]]></find>
 				<action type="before-add"><![CDATA[<!-- IF S_MCHAT_ENABLE and S_MCHAT_ON_INDEX and S_MCHAT_LOCATION --><!-- INCLUDE mchat_body.html --><!-- ENDIF -->]]></action>
 				<action type="after-add"><![CDATA[<!-- IF S_MCHAT_ENABLE and S_MCHAT_ON_INDEX and not S_MCHAT_LOCATION --><!-- INCLUDE mchat_body.html --><!-- ENDIF -->]]></action>
-			</edit>			
+			</edit>
+			<edit>
+				<find><![CDATA[<!-- IF S_DISPLAY_BIRTHDAY_LIST and BIRTHDAY_LIST -->]]></find>
+				<action type="before-add"><![CDATA[<!-- INCLUDE mchat_stats.html -->]]></action>
+			</edit>				
 		</open>		
 		<open src="styles/prosilver/template/overall_header.html">
 			<edit>

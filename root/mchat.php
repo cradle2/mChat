@@ -333,38 +333,10 @@ switch ($mchat_mode)
 		}
 
 		$mchat_stats = mchat_users($mchat_session_time);
-		// fix the display of the time limit
-		// hours, minutes, seconds
-		if ($mchat_session_time)
-		{
-			$chat_session = '';
-			$chat_timeout = $mchat_session_time;	
-			$hours = $minutes = $seconds = 0;
 			
-			if ($chat_timeout >= 3600)
-			{
-				$hours = floor($chat_timeout / 3600);
-				$chat_timeout = $chat_timeout - ($hours * 3600);
-				$chat_session .= $hours > 1 ? ($hours . '&nbsp;' . $user->lang['MCHAT_HOURS']) : ($hours . '&nbsp;' . $user->lang['MCHAT_HOUR']);
-			}
-			$minutes = floor($chat_timeout / 60);
-			if ($minutes)
-			{
-				$minutes = $minutes > 1 ? ($minutes . '&nbsp;' . $user->lang['MCHAT_MINUTES']) : ($minutes . '&nbsp;' . $user->lang['MCHAT_MINUTE']);
-				$chat_timeout = $chat_timeout - ($minutes * 60);
-				$chat_session .= $minutes;
-			}
-			$seconds = ceil($chat_timeout);
-			if ($seconds)
-			{
-				$seconds = $seconds > 1 ? ($seconds . '&nbsp;' . $user->lang['MCHAT_SECONDS']) : ($seconds . '&nbsp;' . $user->lang['MCHAT_SECOND']);
-				$chat_session .= $seconds;
-			}		
-		}		
-		$refresh_message = sprintf($user->lang['MCHAT_ONLINE_EXPLAIN'], $chat_session);
 		if(!empty($mchat_stats['online_userlist']))
 		{
-			$message = '<div class="mChatStats" id="mChatStats"><a href="javascript://" onclick="mChat.toggle(\'UserList\');">' . $mchat_stats['mchat_users_count'] . '</a>&nbsp;' . $refresh_message . '<br /><span id="mChatUserList" style="display: none; float: left;">' . $mchat_stats['online_userlist'] . '</span></div>';
+			$message = '<div class="mChatStats" id="mChatStats"><a href="javascript://" onclick="mChat.toggle(\'UserList\');">' . $mchat_stats['mchat_users_count'] . '</a>&nbsp;' . $mchat_stats['refresh_message'] . '<br /><span id="mChatUserList" style="display: none; float: left;">' . $mchat_stats['online_userlist'] . '</span></div>';
 		}
 		else
 		{
@@ -847,34 +819,6 @@ switch ($mchat_mode)
 	break;
 }
 
-// fix the display of the time limit
-// hours, minutes, seconds
-if ($mchat_session_time)
-{
-	$chat_session = '';
-	$chat_timeout = $mchat_session_time;	
-	$hours = $minutes = $seconds = 0;
-	
-	if ($chat_timeout >= 3600)
-	{
-		$hours = floor($chat_timeout / 3600);
-		$chat_timeout = $chat_timeout - ($hours * 3600);
-		$chat_session .= $hours > 1 ? ($hours . '&nbsp;' . $user->lang['MCHAT_HOURS']) : ($hours . '&nbsp;' . $user->lang['MCHAT_HOUR']);
-	}
-	$minutes = floor($chat_timeout / 60);
-	if ($minutes)
-	{
-		$minutes = $minutes > 1 ? ($minutes . '&nbsp;' . $user->lang['MCHAT_MINUTES']) : ($minutes . '&nbsp;' . $user->lang['MCHAT_MINUTE']);
-		$chat_timeout = $chat_timeout - ($minutes * 60);
-		$chat_session .= $minutes;
-	}
-	$seconds = ceil($chat_timeout);
-	if ($seconds)
-	{
-		$seconds = $seconds > 1 ? ($seconds . '&nbsp;' . $user->lang['MCHAT_SECONDS']) : ($seconds . '&nbsp;' . $user->lang['MCHAT_SECOND']);
-		$chat_session .= $seconds;
-	}		
-}
 // Template function...
 $template->assign_vars(array(
 	'MCHAT_FILE_NAME'		=> append_sid("{$phpbb_root_path}mchat.$phpEx"),
@@ -902,7 +846,7 @@ $template->assign_vars(array(
 	'MCHAT_USER_TIMEOUT'	=> $config_mchat['timeout'] ? 1000 * $config_mchat['timeout'] : false,
 	'MCHAT_WHOIS_REFRESH'	=> 1000 * $config_mchat['whois_refresh'],
 	'MCHAT_PAUSE_ON_INPUT'	=> $config_mchat['pause_on_input'] ? true : false,
-	'L_MCHAT_ONLINE_EXPLAIN'	=> sprintf($user->lang['MCHAT_ONLINE_EXPLAIN'], $chat_session),
+	'L_MCHAT_ONLINE_EXPLAIN'	=> mchat_session_time($mchat_session_time),
 	'MCHAT_REFRESH_YES'	=> sprintf($user->lang['MCHAT_REFRESH_YES'], $config_mchat['refresh']),
 	'L_MCHAT_WHOIS_REFRESH_EXPLAIN'	=> sprintf($user->lang['WHO_IS_REFRESH_EXPLAIN'], $config_mchat['whois_refresh']),
 	'S_MCHAT_LOCATION'		=> $config_mchat['location'],

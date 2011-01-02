@@ -27,7 +27,19 @@ jQuery(document).ready(function()
 
 			});
 		}
-
+		$.fn.preventDoubleSubmit=function(){
+			var alreadySubmitted = false;
+			return jQuery(this).submit(function(){
+			if (alreadySubmitted)
+			{
+				return false;
+			}
+			else
+			{
+				alreadySubmitted = true;
+			}
+			});
+		};
 		//http://jsbin.com/ahaxe
 		//allows the input area to "grow"
 		$.fn.autoGrowInput=function(o){
@@ -150,7 +162,8 @@ var mChat =	{
 		if($('#mChatMessage').val()=='')
 		{
 			return false;
-		}		
+		}
+	
 		var answer = confirm(mChatReset);
 		if (answer)
 		{
@@ -235,6 +248,8 @@ var mChat =	{
 			beforeSend:function()
 			{		
 				$('#submit_button').attr('disabled','disabled');
+				// Empty message input
+				$('#mChatMessage').val('');
 				if (mChatUserTimeout)
 				{
 					clearInterval(activeinterval);
@@ -244,8 +259,6 @@ var mChat =	{
 			},			
 			success:function()
 			{
-          		// Empty message input
-				$('#mChatMessage').val('');
           		// Run refresh function
 				mChat.refresh();
 				
