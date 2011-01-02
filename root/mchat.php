@@ -173,10 +173,12 @@ switch ($mchat_mode)
 					
 			// Reguest...
 			$mchat_archive_start = request_var('start', 0);
+			$sql_where = $user->data['user_mchat_topics'] ? '' : 'WHERE m.forum_id = 0';
 			// Message row
 			$sql = 'SELECT m.*, u.username, u.user_colour
 				FROM ' . MCHAT_TABLE . ' m
 					LEFT JOIN ' . USERS_TABLE . ' u ON m.user_id = u.user_id
+				' . $sql_where . '
 					ORDER BY m.message_id DESC';
 			$result = $db->sql_query_limit($sql, (int) $config_mchat['archive_limit'], $mchat_archive_start);
 			$rows = $db->sql_fetchrowset($result);
@@ -184,7 +186,7 @@ switch ($mchat_mode)
 			foreach($rows as $row)
 			{
 				// auth check
-				if ($row['forum_id'] != 0 && !$auth->acl_get('f_read', $row['forum_id']) && $user->data['user_mchat_topics'])
+				if ($row['forum_id'] != 0 && !$auth->acl_get('f_read', $row['forum_id']))
 				{
 					continue;
 				}	
@@ -255,11 +257,12 @@ switch ($mchat_mode)
 		}
 		// Request
 		$mchat_message_last_id = request_var('message_last_id', 0);
-		
+		$sql_and = $user->data['user_mchat_topics'] ? '' : 'AND m.forum_id = 0';
 		$sql = 'SELECT m.*, u.username, u.user_colour, u.user_id as userid
 					FROM ' . MCHAT_TABLE . ' m, ' . USERS_TABLE . ' u
 						WHERE m.user_id = u.user_id
 							AND m.message_id > ' . (int) $mchat_message_last_id . '
+							' . $sql_and . '
 				ORDER BY m.message_id DESC';		
 		$result = $db->sql_query_limit($sql, (int) $config_mchat['message_limit']);
 		$rows = $db->sql_fetchrowset($result);
@@ -270,7 +273,7 @@ switch ($mchat_mode)
 		foreach($rows as $row)
 		{
 			// auth check
-			if ($row['forum_id'] != 0 && !$auth->acl_get('f_read', $row['forum_id']) && $user->data['user_mchat_topics'])
+			if ($row['forum_id'] != 0 && (!$auth->acl_get('f_read', $row['forum_id']) || !$user->data['user_mchat_topics']))
 			{
 				continue;
 			}	
@@ -722,10 +725,12 @@ switch ($mchat_mode)
 		// Run code...
 		if ($mchat_view)
 		{
+			$sql_where = $user->data['user_mchat_topics'] ? '' : 'WHERE m.forum_id = 0';
 			// Message row
 			$sql = 'SELECT m.*, u.username, u.user_colour
 				FROM ' . MCHAT_TABLE . ' m
 					LEFT JOIN ' . USERS_TABLE . ' u ON (m.user_id = u.user_id)
+				' . $sql_where . '
 				ORDER BY message_id DESC';
 			$result = $db->sql_query_limit($sql, $config_mchat['message_limit']);
 			$rows = $db->sql_fetchrowset($result);
@@ -735,7 +740,7 @@ switch ($mchat_mode)
 			foreach($rows as $row)
 			{
 				// auth check
-				if ($row['forum_id'] != 0 && !$auth->acl_get('f_read', $row['forum_id']) && $user->data['user_mchat_topics'])
+				if ($row['forum_id'] != 0 && (!$auth->acl_get('f_read', $row['forum_id']) || !$user->data['user_mchat_topics']))
 				{
 					continue;
 				}
