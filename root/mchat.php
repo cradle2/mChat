@@ -179,7 +179,7 @@ switch ($mchat_mode)
 				FROM ' . MCHAT_TABLE . ' m
 					LEFT JOIN ' . USERS_TABLE . ' u ON m.user_id = u.user_id
 				' . $sql_where . '
-					ORDER BY m.message_id DESC';
+				ORDER BY m.message_id DESC';
 			$result = $db->sql_query_limit($sql, (int) $config_mchat['archive_limit'], $mchat_archive_start);
 			$rows = $db->sql_fetchrowset($result);
 							
@@ -259,10 +259,10 @@ switch ($mchat_mode)
 		$mchat_message_last_id = request_var('message_last_id', 0);
 		$sql_and = $user->data['user_mchat_topics'] ? '' : 'AND m.forum_id = 0';
 		$sql = 'SELECT m.*, u.username, u.user_colour, u.user_id as userid
-					FROM ' . MCHAT_TABLE . ' m, ' . USERS_TABLE . ' u
-						WHERE m.user_id = u.user_id
-							AND m.message_id > ' . (int) $mchat_message_last_id . '
-							' . $sql_and . '
+				FROM ' . MCHAT_TABLE . ' m, ' . USERS_TABLE . ' u
+				WHERE m.user_id = u.user_id
+				AND m.message_id > ' . (int) $mchat_message_last_id . '
+				' . $sql_and . '
 				ORDER BY m.message_id DESC';		
 		$result = $db->sql_query_limit($sql, (int) $config_mchat['message_limit']);
 		$rows = $db->sql_fetchrowset($result);
@@ -273,7 +273,7 @@ switch ($mchat_mode)
 		foreach($rows as $row)
 		{
 			// auth check
-			if ($row['forum_id'] != 0 && (!$auth->acl_get('f_read', $row['forum_id']) || !$user->data['user_mchat_topics']))
+			if ($row['forum_id'] != 0 && !$auth->acl_get('f_read', $row['forum_id']))
 			{
 				continue;
 			}	
@@ -740,7 +740,7 @@ switch ($mchat_mode)
 			foreach($rows as $row)
 			{
 				// auth check
-				if ($row['forum_id'] != 0 && (!$auth->acl_get('f_read', $row['forum_id']) || !$user->data['user_mchat_topics']))
+				if ($row['forum_id'] != 0 && !$auth->acl_get('f_read', $row['forum_id']))
 				{
 					continue;
 				}
@@ -852,7 +852,7 @@ $template->assign_vars(array(
 	'MCHAT_WHOIS_REFRESH'	=> 1000 * $config_mchat['whois_refresh'],
 	'MCHAT_PAUSE_ON_INPUT'	=> $config_mchat['pause_on_input'] ? true : false,
 	'L_MCHAT_ONLINE_EXPLAIN'	=> mchat_session_time($mchat_session_time),
-	'MCHAT_REFRESH_YES'	=> sprintf($user->lang['MCHAT_REFRESH_YES'], $config_mchat['refresh']),
+	'MCHAT_REFRESH_YES'		=> sprintf($user->lang['MCHAT_REFRESH_YES'], $config_mchat['refresh']),
 	'L_MCHAT_WHOIS_REFRESH_EXPLAIN'	=> sprintf($user->lang['WHO_IS_REFRESH_EXPLAIN'], $config_mchat['whois_refresh']),
 	'S_MCHAT_LOCATION'		=> $config_mchat['location'],
 	'S_MCHAT_SOUND_YES'		=> $user->data['user_mchat_sound'],
