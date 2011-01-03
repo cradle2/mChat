@@ -376,6 +376,14 @@ $versions = array(
 		'table_column_add'	=> array(
 			array('phpbb_users', 'user_mchat_topics', array('BOOL', true)),
 		),		
+		// Insert a new entry
+		'table_insert'	=> array(
+			array('phpbb_mchat_config', array(			
+					'config_name' 	=> 'rules',
+					'config_value'	=> '',
+				),
+			),			
+		),				
 		// purge the cache
 		'cache_purge' => array(''),
 	),

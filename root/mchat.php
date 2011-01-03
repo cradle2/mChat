@@ -5,6 +5,7 @@
 * @version $Id: mchat.php
 * @copyright (c) 2010 RMcGirr83 ( http://www.rmcgirr83.org/ )
 * @copyright (c) djs596 ( http://djs596.com/ ), (c) Stokerpiller ( http://www.phpbb3bbcodes.com/ )
+* @copyright (c) By Shapoval Andrey Vladimirovich (AllCity) ~ http://allcity.net.ru/
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
 **/
@@ -60,6 +61,7 @@ $mchat_no_flood	= ($auth->acl_get('u_mchat_flood_ignore')) ? true : false;
 $mchat_read_archive = ($auth->acl_get('u_mchat_archive')) ? true : false;
 $mchat_founder = ($user->data['user_type'] == USER_FOUNDER) ? true : false;
 $mchat_session_time = !empty($config_mchat['timeout']) ? $config_mchat['timeout'] : 1800;// you can change this number to a greater number for longer chat sessions
+$mchat_rules = !empty($config_mchat['rules']) ? $config_mchat['rules'] : '';
 
 
 // needed variables
@@ -74,8 +76,29 @@ switch ($mchat_mode)
 {
 	// rules popup..
 	case 'rules';
+		// If the rules are defined in the language file use them, else just use the entry in the database
+		if (!empty($mchat_rules))
+		{
+			if(isset($user->lang[strtoupper('mchat_rules')]))
+			{
+				$template->assign_var('MCHAT_RULES', $user->lang[strtoupper('mchat_rules')]);
+			}
+			else
+			{
+				$mchat_rules = explode("\n", $mchat_rules);
 
-		$template->assign_var('MCHAT_RULES', $user->lang['MCHAT_HELP_INFO']);
+				foreach ($mchat_rules as $mchat_rule)
+				{
+					$template->assign_block_vars('rule', array(			
+						'MCHAT_RULE' => $mchat_rule,
+					));
+				}				
+			}
+		}
+		else
+		{
+			return false;
+		}
 
 		// Output the page
 		page_header($user->lang['MCHAT_HELP']);
@@ -831,6 +854,7 @@ $template->assign_vars(array(
 	'MCHAT_ADD_MESSAGE'		=> $mchat_add_mess,
 	'MCHAT_READ_MODE'		=> $mchat_read_mode,
 	'MCHAT_ARCHIVE_MODE'	=> $mchat_archive_mode,
+	'MCHAT_RULES'			=> $mchat_rules,
 	'MCHAT_ALLOW_SMILES'	=> $mchat_smilies,
 	'MCHAT_ALLOW_IP'		=> $mchat_ip,
 	'MCHAT_NOMESSAGE_MODE'	=> $mchat_no_message,

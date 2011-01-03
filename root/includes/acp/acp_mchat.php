@@ -82,6 +82,7 @@ class acp_mchat
 			'override_smilie_limit'	=> request_var('mchat_override_smilie_limit', 0),
 			'timeout'			=> request_var('mchat_timeout', 0),
 			'pause_on_input'	=> request_var('mchat_pause_on_input', 0),
+			'rules'				=> utf8_normalize_nfc(request_var('mchat_rules', '', true)),
 		);		
 		
 		if ($submit)
@@ -103,6 +104,7 @@ class acp_mchat
 				'flood_time'		=> array('num', false, 0, 30),
 				'max_message_lngth'	=> array('num', false, 0, 500),
 				'timeout'			=> array('num', false, 0, (int) $config['session_length']),
+				'rules'				=> array('string', false, 0, 255),
 			);		
 			
 			$error = validate_data($mchat_row, $mchat_array);
@@ -201,6 +203,7 @@ class acp_mchat
 			'MCHAT_CUSTOM_PAGE'				=> !empty($mchat_row['custom_page']) ? $mchat_row['custom_page'] : $mchat_config['custom_page'],
 			'MCHAT_DATE'					=> !empty($mchat_row['date']) ? $mchat_row['date'] : $mchat_config['date'],
 			'MCHAT_DEFAULT_DATEFORMAT'		=> $config['default_dateformat'],		
+			'MCHAT_RULES'					=> !empty($mchat_row['rules']) ? $mchat_row['rules'] : $mchat_config['rules'],
 			'MCHAT_WHOIS'					=> !empty($mchat_row['whois']) ? $mchat_row['whois'] : $mchat_config['whois'],
 			'MCHAT_STATS_INDEX'				=> ($mchat_stats_index) ? true : false,
 			'MCHAT_BBCODE_DISALLOWED'		=> !empty($mchat_row['bbcode_disallowed']) ? $mchat_row['bbcode_disallowed'] : $mchat_config['bbcode_disallowed'],

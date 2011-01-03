@@ -126,7 +126,9 @@
 					<input type="button" class="btnlite" onclick="window.location.href = '{MCHAT_CLEAN_URL}';" value="{L_MCHAT_CLEAN}" />
 					<!-- ENDIF -->
 					<!-- IF MCHAT_ADD_MESSAGE -->
+					<!-- IF MCHAT_RULES -->
 					<input type="button" class="btnlite" onclick="popup('{U_MCHAT_RULES}', 450, 275); return false;" value="{L_MCHAT_HELP}" />
+					<!-- ENDIF -->
 					<!-- IF MCHAT_ALLOW_BBCODES -->
 						<!-- INCLUDE mchat_bbcodes.html -->
 					<!-- ENDIF -->

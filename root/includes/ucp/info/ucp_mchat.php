@@ -18,7 +18,7 @@ class ucp_mchat_info
 		return array(
 			'filename'	=> 'ucp_mchat',
 			'title'		=> 'UCP_MCHAT',
-			'version'	=> '1.3.4',
+			'version'	=> '1.3.5',
 			'modes'		=> array(
 				'configuration'	=> array('title' => 'UCP_MCHAT_CONFIG', 'auth' => 'acl_u_mchat_use', 'cat' => array('UCP_MCHAT')),
 			),

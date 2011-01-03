@@ -89,6 +89,11 @@
 	<fieldset>
 		<legend>{L_MCHAT_MESSAGES}</legend>	
 		<dl>
+			<dt><label for="mchat_rules">{L_ACP_MCHAT_RULES}:</label><br />
+			<span>{L_ACP_MCHAT_RULES_EXPLAIN}</span></dt>
+			<dd><textarea name="mchat_rules" id="contact_reasons" rows="8" cols="40">{MCHAT_RULES}</textarea></dd>
+		</dl>		
+		<dl>
 			<dt><label for="mchat_flood_time">{L_MCHAT_FLOOD_TIME}:</label><br />
 			<span>{L_MCHAT_FLOOD_TIME_EXPLAIN}</span></dt>
 			<dd><input type="text" name="mchat_flood_time" size="10" value="{MCHAT_FLOOD_TIME}" /></dd>

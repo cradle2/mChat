@@ -5,6 +5,7 @@
 * @version $Id: mchat_lang.php
 * @copyright (c) RMcGirr83 ( http://www.rmcgirr83.org/ )
 * @copyright (c) djs596 ( http://djs596.com/ ), (c) Stokerpiller ( http://www.phpbb3bbcodes.com/ )
+* @copyright (c) By Shapoval Andrey Vladimirovich (AllCity) ~ http://allcity.net.ru/
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
 **/
@@ -60,7 +61,10 @@ $lang = array_merge($lang, array(
 	'MCHAT_ERROR'				=> 'Error',	
 	'MCHAT_FLOOD'				=> 'You can not post another message so soon after your last',	
 	'MCHAT_HELP'				=> 'mChat Rules',
-	'MCHAT_HELP_INFO'			=> 'No swearing<br />Don’t advertise your site<br />Don’t leave several messages in succession<br />Don’t leave a pointless message<br />Don’t leave a message consisting of only smilies',	// <br /> signifies a new line, see above for Unicode characters to use //
+// uncomment and translate the following line for languages for the rules in the chat area
+// you must have something in the rules area of the config entries of the mod for this to display
+// <br /> signifies a new line, see above for Unicode characters to use
+	//'MCHAT_RULES'				=> 'No swearing<br />Don’t advertise your site<br />Don’t leave several messages in succession<br />Don’t leave a pointless message<br />Don’t leave a message consisting of only smilies',	
 	'MCHAT_HIDE_LIST'			=> 'Hide List',	
 	'MCHAT_HOUR'				=> 'hour ',
 	'MCHAT_HOURS'				=> 'hours',
