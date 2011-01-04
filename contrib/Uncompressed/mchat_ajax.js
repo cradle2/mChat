@@ -30,14 +30,14 @@ jQuery(document).ready(function()
 		$.fn.preventDoubleSubmit=function(){
 			var alreadySubmitted = false;
 			return jQuery(this).submit(function(){
-			if (alreadySubmitted)
-			{
-				return false;
-			}
-			else
-			{
-				alreadySubmitted = true;
-			}
+				if (alreadySubmitted)
+				{
+					return false;
+				}
+				else
+				{
+					alreadySubmitted = true;
+				}
 			});
 		};
 		//http://jsbin.com/ahaxe
@@ -92,7 +92,7 @@ jQuery(document).ready(function()
 
 				testSubject.insertAfter(input);
 				
-				$(this).bind('keypress blur change submit focus', check);
+				$(this).bind('keypress blur change submit focus update', check);
 
 			});
 
