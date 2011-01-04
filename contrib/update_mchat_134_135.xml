@@ -26,6 +26,9 @@
 				<changelog lang="en">
 					<change>Fix to mchat.php and functions_mchat.php file</change>
 					<change>jQuery 1.4.4</change>
+					<change>chat stats within index stats</change>
+					<change>rules in mchat config settings</change>
+					<change>fix to mchat js file</change>
 				</changelog>
 			</entry>			
 		</history>			
@@ -36,11 +39,12 @@
 	<action-group>
 		<copy>
 			<file from="root/mchat.php" to="mchat.php" />
+			<file from="root/mchat_install.php" to="mchat_install.php" />
 			<file from="root/includes/functions_mchat.php" to="includes/functions_mchat.php" />
 			<file from="root/includes/acp/*.*" to="includes/acp/*.*" />
 			<file from="root/includes/ucp/*.*" to="includes/ucp/*.*" />
 			<file from="root/adm/*.*" to="adm/*.*" />
-			<file from="root/language/mods/*.*" to="language/mods/*.*" />
+			<file from="root/language/en/mods/*.*" to="language/en/mods/*.*" />
 			<file from="root/styles/*.*" to="styles/*.*" />
 			<file from="root/mchat/*.*" to="mchat/*.*" />
 		</copy>
@@ -258,6 +262,12 @@ if(!empty($config['mchat_version']) && !empty($config['mchat_enable']))
 				<remove><![CDATA[<link href="{T_THEME_PATH}/mchat_prosilver.css" rel="stylesheet" type="text/css" />]]></remove>
 			</edit>			
 		</open>
+		<open src="styles/prosilver/template/index_body.html">
+			<edit>
+				<find><![CDATA[<!-- IF S_DISPLAY_BIRTHDAY_LIST and BIRTHDAY_LIST -->]]></find>
+				<action type="before-add"><![CDATA[<!-- INCLUDE mchat_stats.html -->]]></action>
+			</edit>				
+		</open>			
 		<open src="styles/subsilver2/theme/stylesheet.css">
 			<edit>
 				<find><![CDATA[/* Layout
@@ -275,6 +285,12 @@ if(!empty($config['mchat_version']) && !empty($config['mchat_enable']))
 			<edit>
 				<remove><![CDATA[<link href="{T_THEME_PATH}/mchat_subsilver2.css" rel="stylesheet" type="text/css" />]]></remove>
 			</edit>				
+		</open>		
+		<open src="styles/subsilver2/template/index_body.html">
+			<edit>
+				<find><![CDATA[<!-- IF S_DISPLAY_BIRTHDAY_LIST -->]]></find>
+				<action type="before-add"><![CDATA[<!-- INCLUDE mchat_stats.html -->]]></action>
+			</edit>			
 		</open>		
 	<php-installer><![CDATA[mchat_install.php]]></php-installer>
 <diy-instructions lang="en"><![CDATA[1. Browse to the mchat_install.php file, this will update your database.
