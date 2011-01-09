@@ -331,7 +331,7 @@ if(!defined('MCHAT_INCLUDE') && $mchat_installed && $auth->acl_get('u_mchat_view
 	include($phpbb_root_path . 'mchat.' . $phpEx);
 }
 
-if (!empty($config['mchat_enable']) && !empty($config['mchat_stats_index']))
+if (!empty($config['mchat_enable']) && !empty($config['mchat_stats_index']) && !empty($user->data['user_mchat_stats_index']))
 {
 	if (!function_exists('mchat_users'))
 	{

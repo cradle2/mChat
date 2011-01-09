@@ -60,7 +60,7 @@ $mchat_view	= ($auth->acl_get('u_mchat_view')) ? true : false;
 $mchat_no_flood	= ($auth->acl_get('u_mchat_flood_ignore')) ? true : false;
 $mchat_read_archive = ($auth->acl_get('u_mchat_archive')) ? true : false;
 $mchat_founder = ($user->data['user_type'] == USER_FOUNDER) ? true : false;
-$mchat_session_time = !empty($config_mchat['timeout']) ? $config_mchat['timeout'] : 1800;// you can change this number to a greater number for longer chat sessions
+$mchat_session_time = !empty($config_mchat['timeout']) ? $config_mchat['timeout'] : 3600;// you can change this number to a greater number for longer chat sessions
 $mchat_rules = !empty($config_mchat['rules']) ? $config_mchat['rules'] : '';
 
 

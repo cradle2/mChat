@@ -82,7 +82,7 @@ class ucp_mchat
 					'S_STATS_MCHAT'		=> $data['user_mchat_stats_index'],
 					'S_TOPICS_MCHAT'	=> $data['user_mchat_topics'],
 					'S_MCHAT_TOPICS'	=> $config['mchat_new_posts'],
-					'S_MCHAT_INDEX'		=> $config['mchat_on_index'],
+					'S_MCHAT_INDEX'		=> ($config['mchat_on_index'] || $config['mchat_stats_index']) ? true : false,
 				));
 			break;
 
