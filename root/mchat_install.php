@@ -383,7 +383,11 @@ $versions = array(
 					'config_value'	=> '',
 				),
 			),			
-		),				
+		),
+		'permission_unset' => array(
+			// Global Role permissions for admins
+			array('ROLE_ADMIN_FULL', 'a_mchat'),
+		),		
 		// purge the cache
 		'cache_purge' => array(''),
 	),
