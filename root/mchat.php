@@ -26,10 +26,6 @@ if(!defined('MCHAT_INCLUDE'))
   $auth->acl($user->data);
   $user->setup();
 }
-if (!function_exists('mchat_cache'))
-{
-	include($phpbb_root_path . 'includes/functions_mchat.' . $phpEx);
-}
 
 // Add lang file
 $user->add_lang(array('mods/mchat_lang', 'viewtopic', 'posting'));
@@ -49,6 +45,12 @@ if (empty($config['mchat_version']))
 	trigger_error ($message);
 }
 
+// Get the config entries.
+if (!function_exists('mchat_cache'))
+{
+	include($phpbb_root_path . 'includes/functions_mchat.' . $phpEx);
+}
+mchat_cache();
 $config_mchat = $cache->get('_mchat_config');
 // Access rights 
 $mchat_allow_bbcode	= ($config['allow_bbcode'] && $auth->acl_get('u_mchat_bbcode')) ? true : false;
@@ -69,7 +71,7 @@ $mchat_rules = !empty($config_mchat['rules']) ? $config_mchat['rules'] : '';
 $mchat_mode	= request_var('mode', '');
 $mchat_read_mode = $mchat_archive_mode = $mchat_custom_page = $mchat_no_message = false;
 // set redirect if on index or custom page
-$mchat_redirect = ($mchat_include_index && $mchat_mode != 'clean') ? append_sid("{$phpbb_root_path}index.$phpEx") : append_sid("{$phpbb_root_path}mchat.$phpEx");
+$on_page = defined('MCHAT_INCLUDE') ? 'index' : 'mchat';
 
 // Request mode...
 switch ($mchat_mode)
@@ -77,7 +79,7 @@ switch ($mchat_mode)
 	// rules popup..
 	case 'rules';
 		// If the rules are defined in the language file use them, else just use the entry in the database
-		if (!empty($mchat_rules))
+		if (!empty($mchat_rules) || isset($user->lang[strtoupper('mchat_rules')]))
 		{
 			if(isset($user->lang[strtoupper('mchat_rules')]))
 			{
@@ -94,20 +96,20 @@ switch ($mchat_mode)
 					));
 				}				
 			}
+			// Output the page
+			page_header($user->lang['MCHAT_HELP']);
+		
+			$template->set_filenames(array(
+				'body' => 'mchat_rules.html')
+			);		
+		
+			page_footer();
 		}
 		else
 		{
-			return false;
+			// Show no rules
+			trigger_error('NO_MCHAT_RULES', E_USER_NOTICE);
 		}
-
-		// Output the page
-		page_header($user->lang['MCHAT_HELP']);
-		
-		$template->set_filenames(array(
-			'body' => 'mchat_rules.html')
-		);		
-		
-		page_footer();
 		
 	break;
 	// whois function..
@@ -158,12 +160,15 @@ switch ($mchat_mode)
 				trigger_error('NO_AUTH_OPERATION', E_USER_NOTICE);
 			}			
 		}
+		
+		$mchat_redirect = request_var('redirect', '');
+		$mchat_redirect = ($mchat_redirect == 'index') ? append_sid("{$phpbb_root_path}index.$phpEx") : append_sid("{$phpbb_root_path}mchat.$phpEx");		
+		
 		if(confirm_box(true))
 		{
 			// Run cleaner
 			$sql = 'TRUNCATE TABLE ' . MCHAT_TABLE;
 			$db->sql_query($sql);
-			// Show OK box and redirect to correct page
 				
 			meta_refresh(3, $mchat_redirect);
 			trigger_error($user->lang['MCHAT_CLEANED'].'<br /><br />'.sprintf($user->lang['RETURN_PAGE'], '<a href="'.$mchat_redirect.'">', '</a>'), E_USER_NOTICE);
@@ -181,9 +186,11 @@ switch ($mchat_mode)
 	
 		if (!$mchat_read_archive || !$mchat_view)
 		{
+			// redirect to correct page
+			$mchat_redirect = append_sid("{$phpbb_root_path}index.$phpEx");
 			// Redirect to previous page
 			meta_refresh(3, $mchat_redirect);
-			trigger_error($user->lang['MCHAT_NOACCESS_ARCHIVE'].'<br /><br />'.sprintf($user->lang['RETURN_PAGE'], '<a href="'.$mchat_redirect.'">', '</a>'), E_USER_NOTICE);
+			trigger_error($user->lang['MCHAT_NOACCESS_ARCHIVE'].'<br /><br />'.sprintf($user->lang['RETURN_PAGE'], '<a href="' . $mchat_redirect . '">', '</a>'), E_USER_NOTICE);
 		}
 		
 		if ($config['mchat_enable'] && $mchat_read_archive && $mchat_view)
@@ -630,7 +637,7 @@ switch ($mchat_mode)
 			unset($old_cfg['max_post_smilies']);
 		}		
 		// insert user into the mChat sessions table
-		mchat_sessions($mchat_session_time);
+		mchat_sessions($mchat_session_time, true);
 		// If read mode request set true
 		$mchat_read_mode = true;
 	break;
@@ -656,7 +663,7 @@ switch ($mchat_mode)
 		$db->sql_query($sql);
 
 		// insert user into the mChat sessions table
-		mchat_sessions($mchat_session_time);
+		mchat_sessions($mchat_session_time, true);
 		// Stop running code
 		exit_handler();
 	break;
@@ -679,6 +686,7 @@ switch ($mchat_mode)
 			// If custom page false mchat.php page redirect to index...
 			if (!$config_mchat['custom_page'] && $mchat_custom_page)
 			{
+				$mchat_redirect = append_sid("{$phpbb_root_path}index.$phpEx");			
 				// Redirect to previous page
 				meta_refresh(3, $mchat_redirect);
 				trigger_error($user->lang['MCHAT_NO_CUSTOM_PAGE'].'<br /><br />'.sprintf($user->lang['RETURN_PAGE'], '<a href="' . $mchat_redirect . '">', '</a>'), E_USER_NOTICE);
@@ -866,7 +874,7 @@ $template->assign_vars(array(
 	'MCHAT_CUSTOM_HEIGHT'	=> $config_mchat['custom_height'],
 	'MCHAT_READ_ARCHIVE_BUTTON'		=> $mchat_read_archive,
 	'MCHAT_FOUNDER'			=> $mchat_founder,
-	'MCHAT_CLEAN_URL'		=> append_sid("{$phpbb_root_path}mchat.$phpEx", 'mode=clean'),
+	'MCHAT_CLEAN_URL'		=> append_sid("{$phpbb_root_path}mchat.$phpEx", 'mode=clean&amp;redirect=' . $on_page),
 	'MCHAT_STATIC_MESS'		=> !empty($config_mchat['static_message']) ? $config_mchat['static_message'] : '',
 	'MCHAT_COPYRIGHT'		=> $user->lang['MCHAT_COPYRIGHT'],
 	'MCHAT_WHOIS'			=> $config_mchat['whois'],

@@ -133,8 +133,9 @@ div.mChatSound {
 	top: -1000px;
 }
 
-.mchat-alert {
+.mchat_alert {
 	color: #7E2217;
+	padding: 10px;
 }
 
 #mChatUserList {

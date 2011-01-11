@@ -27,6 +27,8 @@ jQuery(document).ready(function()
 
 			});
 		}
+		// Prevent double submit
+		//http://greatwebguy.com/programming/dom/prevent-double-submit-with-jquery/
 		$.fn.preventDoubleSubmit=function(){
 			var alreadySubmitted = false;
 			return jQuery(this).submit(function(){
@@ -99,6 +101,7 @@ jQuery(document).ready(function()
 			return this;
 		};
 		$('input.mChatText').autoGrowInput();
+		$('#postform').preventDoubleSubmit();
 		// Sound cookie check (user prefs)
 		if (mChatSound && $.cookie('mChatNoSound')!='yes')
 		{

@@ -1,5 +1,10 @@
 <!-- IF MCHAT_ARCHIVE_MODE or MCHAT_CUSTOM_PAGE -->
 	<!-- INCLUDE overall_header.html -->
+<!-- IF S_DISPLAY_SEARCH or (S_USER_LOGGED_IN and not S_IS_BOT) and not MCHAT_ARCHIVE_MODE -->
+<ul class="linklist">
+		<li><a href="{U_SEARCH_UNANSWERED}" onclick="window.open(this.href); return false;">{L_SEARCH_UNANSWERED}</a><!-- IF S_USER_LOGGED_IN --> &bull; <a href="{U_SEARCH_UNREAD}" onclick="window.open(this.href); return false;">{L_SEARCH_UNREAD}</a> &bull; <a href="{U_SEARCH_NEW}" onclick="window.open(this.href); return false;">{L_SEARCH_NEW}</a><!-- ENDIF --> &bull; <a href="{U_SEARCH_ACTIVE_TOPICS}" onclick="window.open(this.href); return false;">{L_SEARCH_ACTIVE_TOPICS}</a> <!-- IF S_USER_LOGGED_IN -->&bull; <a href="{U_SEARCH_SELF}" onclick="window.open(this.href); return false;">{L_SEARCH_SELF}</a><!-- ENDIF --></li>
+</ul>
+<!-- ENDIF -->	
 <!-- ENDIF -->
 <!-- IF MCHAT_ARCHIVE_MODE -->
 <!--**
@@ -103,12 +108,12 @@
 			</div>
 			<!-- IF MCHAT_STATIC_MESS --><div class="mChatStatic"><strong>{L_MCHAT_ANNOUNCEMENT}:</strong> <span style="color:#990000;">{MCHAT_STATIC_MESS}</span></div><!-- ENDIF -->
 			<!-- IF not (MCHAT_ARCHIVE_MODE or MCHAT_CUSTOM_PAGE) and MCHAT_WHOIS and S_MCHAT_INDEX_STATS --><div class="mChatStats" id="mChatStats"><!-- IF MCHAT_USERS_LIST --><a href="#" onclick="mChat.toggle('UserList'); return false;">{MCHAT_USERS_COUNT}</a><!-- ELSE -->{MCHAT_USERS_COUNT}<!-- ENDIF -->&nbsp;{L_MCHAT_ONLINE_EXPLAIN}<br /><span id="mChatUserList">{MCHAT_USERS_LIST}</span></div><!-- ENDIF -->			
-			<form method="post" action="javascript:mChat.add();" id="postform">
+			<form method="post" action="javascript://" onsubmit="mChat.add();" id="postform">
 			<div class="mChatPanel">
-				<noscript><div style="color: #FF0000;">{L_MCHAT_NOJAVASCRIPT}</div></noscript>
+				<noscript><div class="mchat_alert">{L_MCHAT_NOJAVASCRIPT}</div></noscript>
 				<!-- IF MCHAT_ADD_MESSAGE -->
 				<input type="hidden" name="mode" value="add" />
-				<input type="text" name="message" class="mChatText" id="mChatMessage" /><br />
+				<input type="text" name="message" class="inputbox medium mChatText" id="mChatMessage" /><br />
 				<input id="submit_button" type="button" class="button2" onclick="mChat.add();" value="{L_MCHAT_ADD}" />
 				<input id="mChatClear" type="button" class="button2" onclick="mChat.clear();" value="{L_MCHAT_CLEAR_INPUT}" />
 				<!-- IF MCHAT_ALLOW_SMILES and .smiley -->
@@ -154,7 +159,7 @@
 			<script type="text/javascript" src="{ROOT_PATH}mchat/mchat_ajax_mini.js"></script>
 		<!-- ENDIF -->
 	<!-- ELSE -->
-	<div style="color: #FF0000; padding: 10px;">{L_MCHAT_ENABLE}</div>
+	<div class="mchat_alert">{L_MCHAT_ENABLE}</div>
 	<!-- ENDIF -->
 	<!-- IF not MCHAT_READ_MODE -->
 			<!--/ ** If you remove this expect no support from me ** /-->
