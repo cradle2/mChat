@@ -121,7 +121,7 @@ function mchat_users($session_time, $on_page = false)
 		WHERE m.user_lastupdate > ' . $check_time . '
 		ORDER BY u.username ASC';
 	$result = $db->sql_query($sql);
-	$can_view_hidden = $auth->acl_get('a_');
+	$can_view_hidden = $auth->acl_get('u_viewonline');
 	while ($row = $db->sql_fetchrow($result))
 	{
 		if (!$row['user_allow_viewonline'])
