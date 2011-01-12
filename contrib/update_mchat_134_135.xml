@@ -243,6 +243,10 @@ if(!empty($config['mchat_version']) && !empty($config['mchat_enable']))
 }
 //END mChat Mod]]></action>
 			</edit>
+			<edit>
+				<find><![CDATA['S_MCHAT_ON_INDEX'		=> (!empty($config['mchat_on_index']) && $user->data['user_mchat_index']) ? true : false,]]></find>
+				<action type="replace-with"><![CDATA['S_MCHAT_ON_INDEX'		=> (!empty($config['mchat_on_index']) && !empty($user->data['user_mchat_index'])) ? true : false,]]></action>
+			</edit>			
 		</open>
 		<open src="styles/prosilver/theme/stylesheet.css">
 			<edit>
