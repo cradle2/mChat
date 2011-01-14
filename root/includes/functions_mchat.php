@@ -160,7 +160,7 @@ function mchat_users($session_time, $on_page = false)
 	}
 }
 
-// mChat add user to sessions table
+// mchat_sessions
 /**
 * @param mixed $session_time amount of time before a user is not shown as being in the chat
 */
@@ -220,7 +220,8 @@ function mchat_delete_topic($post_id)
 	return;
 }
 
-// mChat AutoPrune Chats
+// mchat_prune
+// AutoPrune Chats
 /**
 * @param mixed $mchat_prune_amount set from mchat config entry
 */
@@ -267,7 +268,12 @@ function mchat_prune($mchat_prune_amount)
 	return;
 		
 }
-
+// display_mchat_bbcodes
+// can't use the default phpBB one but 
+// most of code is from similar function
+/**
+* @param mixed $mchat_prune_amount set from mchat config entry
+*/
 function display_mchat_bbcodes()
 {
 	global $db, $cache, $template, $user;

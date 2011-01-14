@@ -324,15 +324,15 @@
 				<find><![CDATA[// Output page
 page_header($user->lang['INDEX']);]]></find>
 				<action type="before-add"><![CDATA[// BEGIN mChat Mod
-$mchat_installed = (!empty($config['mchat_on_index']) && !empty($config['mchat_enable'])) ? true : false;
-if(!defined('MCHAT_INCLUDE') && $mchat_installed && $auth->acl_get('u_mchat_view') && $user->data['user_mchat_index'])
+$mchat_installed = (!empty($config['mchat_version']) && !empty($config['mchat_enable'])) ? true : false;
+if(!defined('MCHAT_INCLUDE') && $mchat_installed && $auth->acl_get('u_mchat_view') && !empty($user->data['user_mchat_index']))
 {
 	define('MCHAT_INCLUDE', true);
 	$mchat_include_index = true;
 	include($phpbb_root_path . 'mchat.' . $phpEx);
 }
 
-if (!empty($config['mchat_enable']) && !empty($config['mchat_stats_index']) && !empty($user->data['user_mchat_stats_index']))
+if ($mchat_installed && $auth->acl_get('u_mchat_view') && !empty($config['mchat_stats_index']) && !empty($user->data['user_mchat_stats_index']))
 {
 	if (!function_exists('mchat_users'))
 	{

@@ -87,12 +87,7 @@
 		</dl>		
 	</fieldset>
 	<fieldset>
-		<legend>{L_MCHAT_MESSAGES}</legend>	
-		<dl>
-			<dt><label for="mchat_rules">{L_ACP_MCHAT_RULES}:</label><br />
-			<span>{L_ACP_MCHAT_RULES_EXPLAIN}</span></dt>
-			<dd><textarea name="mchat_rules" id="contact_reasons" rows="8" cols="40">{MCHAT_RULES}</textarea></dd>
-		</dl>		
+		<legend>{L_MCHAT_MESSAGES}</legend>				
 		<dl>
 			<dt><label for="mchat_flood_time">{L_MCHAT_FLOOD_TIME}:</label><br />
 			<span>{L_MCHAT_FLOOD_TIME_EXPLAIN}</span></dt>
@@ -108,6 +103,12 @@
 			<span>{L_MCHAT_ARCHIVE_LIMIT_EXPLAIN}</span></dt>
 			<dd><input type="text" name="mchat_archive_limit" size="10" value="{MCHAT_ARCHIVE_LIMIT}" /></dd>
 		</dl>
+		<dl>
+			<dt><label for="mchat_avatars">{L_MCHAT_AVATARS}:</label><br />
+			<span>{L_MCHAT_AVATARS_EXPLAIN}</span></dt>
+			<dd><label><input type="radio" class="radio" name="mchat_avatars" value="1"<!-- IF MCHAT_AVATARS --> id="mchat_avatars" checked="checked"<!-- ENDIF --> /> {L_YES}</label>
+			<label><input type="radio" class="radio" name="mchat_avatars" value="0"<!-- IF not MCHAT_AVATARS --> id="mchat_avatars" checked="checked"<!-- ENDIF --> /> {L_NO}</label></dd>
+		</dl>		
 		<dl>
 			<dt><label for="mchat_pause_on_input">{L_MCHAT_PAUSE_ON_INPUT}:</label><br />
 			<span>{L_MCHAT_PAUSE_ON_INPUT_EXPLAIN}</span></dt>
@@ -145,6 +146,11 @@
 			<span>{L_MCHAT_BBCODES_DISALLOWED_EXPLAIN}</span></dt>
 			<dd><textarea name="mchat_bbcode_disallowed" id="mchat_bbcode_disallowed" rows="3" cols="40">{MCHAT_BBCODE_DISALLOWED}</textarea></dd>
 		</dl>
+		<dl>
+			<dt><label for="mchat_rules">{L_ACP_MCHAT_RULES}:</label><br />
+			<span>{L_ACP_MCHAT_RULES_EXPLAIN}</span></dt>
+			<dd><textarea name="mchat_rules" id="contact_reasons" rows="8" cols="40">{MCHAT_RULES}</textarea></dd>
+		</dl>		
 	</fieldset>	
 	<fieldset>
 		<legend>{L_MCHAT_STATS}</legend>		

@@ -8,30 +8,31 @@
 *
 **/
 
-//var $jQ=jQuery;
+var $jQ=jQuery;
 
-jQuery(document).ready(function()
+$jQ(function()
 {
 	if(!mChatArchiveMode)
 	{	
-		var scrH=$('#mChatmain')[0].scrollHeight;
-		$('#mChatmain').animate({scrollTop:scrH},1000,'swing');
+		var scrH=$jQ('#mChatmain')[0].scrollHeight;
+		$jQ('#mChatmain').animate({scrollTop:scrH},1000,'swing');
 		if(mChatPause)
 		{
 			// remove refresh on input keypress
-			$('#mChatMessage').bind('keypress', function(){
+			$jQ('#mChatMessage').bind('keypress', function(){
 				clearInterval(interval);
-				$('#mChatLoadIMG,#mChatOkIMG,#mChatErrorIMG').hide();
-				$('#mChatRefreshText').html(mChatRefreshNo).addClass('mchat-alert');
-				$('#mChatPauseIMG').show();
+				$jQ('#mChatLoadIMG,#mChatOkIMG,#mChatErrorIMG').hide();
+				$jQ('#mChatRefreshText').html(mChatRefreshNo).addClass('mchat-alert');
+				$jQ('#mChatPauseIMG').show();
 
 			});
 		}
+
 		// Prevent double submit
 		//http://greatwebguy.com/programming/dom/prevent-double-submit-with-jquery/
-		$.fn.preventDoubleSubmit=function(){
+		$jQ.fn.preventDoubleSubmit=function(){
 			var alreadySubmitted = false;
-			return jQuery(this).submit(function(){
+			return $jQ(this).submit(function(){
 				if (alreadySubmitted)
 				{
 					return false;
@@ -44,19 +45,19 @@ jQuery(document).ready(function()
 		};
 		//http://jsbin.com/ahaxe
 		//allows the input area to "grow"
-		$.fn.autoGrowInput=function(o){
-				var width = $('.mChatPanel').width();
-				o = $.extend({
+		$jQ.fn.autoGrowInput=function(o){
+				var width = $jQ('.mChatPanel').width();
+				o = $jQ.extend({
 					maxWidth: width - 20,
 					minWidth: 0,
 					comfortZone: 20
 				}, o);
 
 				this.filter('input:text').each(function(){
-					var minWidth = o.minWidth || $(this).width(),
+					var minWidth = o.minWidth || $jQ(this).width(),
 					val = '',
-					input = $(this),					
-					testSubject = $('<tester/>').css({
+					input = $jQ(this),					
+					testSubject = $jQ('<tester/>').css({
 						position: 'absolute',
 						top: -9999,
 						left: -9999,
@@ -94,28 +95,28 @@ jQuery(document).ready(function()
 
 				testSubject.insertAfter(input);
 				
-				$(this).bind('keypress blur change submit focus update', check);
+				$jQ(this).bind('keypress blur change submit focus update', check);
 
 			});
 
 			return this;
 		};
-		$('input.mChatText').autoGrowInput();
-		$('#postform').preventDoubleSubmit();
+		$jQ('input.mChatText').autoGrowInput();
+		$jQ('#postform').preventDoubleSubmit();
 		// Sound cookie check (user prefs)
-		if (mChatSound && $.cookie('mChatNoSound')!='yes')
+		if (mChatSound && $jQ.cookie('mChatNoSound')!='yes')
 		{
-			$.cookie('mChatNoSound',null);
-			$('#mChatUseSound').attr('checked','checked');
+			$jQ.cookie('mChatNoSound',null);
+			$jQ('#mChatUseSound').attr('checked','checked');
 		}
 		else
 		{
-			$.cookie('mChatNoSound','yes');
-			$('#mChatUseSound').removeAttr('checked');
+			$jQ.cookie('mChatNoSound','yes');
+			$jQ('#mChatUseSound').removeAttr('checked');
 		}	
-		if($('#mChatUserList').length && ($.cookie('mChatShowUserList')=='yes' || mChatCustomPage))
+		if($jQ('#mChatUserList').length && ($jQ.cookie('mChatShowUserList')=='yes' || mChatCustomPage))
 		{
-			$('#mChatUserList').show();
+			$jQ('#mChatUserList').show();
 		}
 	
 	}
@@ -126,9 +127,9 @@ var mChat =	{
 	//session countdown
 	countDown:function()
 	{
-		if($('#mChatSessMess').hasClass('mchat-alert'))
+		if($jQ('#mChatSessMess').hasClass('mchat-alert'))
 		{
-			$('#mChatSessMess').removeClass('mchat-alert');
+			$jQ('#mChatSessMess').removeClass('mchat-alert');
 		}	
 		session_time = session_time-1;
 
@@ -151,18 +152,18 @@ var mChat =	{
 			hrs = "0" + hrs;
 		}
 		var time_left = hrs + ":" + min + ":" + sec;				
-		$('#mChatSessMess').html(mChatSessEnds + ' ' + time_left);
+		$jQ('#mChatSessMess').html(mChatSessEnds + ' ' + time_left);
 
 		if (session_time <= 0)
 		{
 			clearInterval(counter);
-			$('#mChatSessMess').html(mChatSessOut).addClass('mchat-alert');
+			$jQ('#mChatSessMess').html(mChatSessOut).addClass('mchat-alert');
 		}
 	},			
 	// clear input box
 	clear:function()
 	{
-		if($('#mChatMessage').val()=='')
+		if($jQ('#mChatMessage').val()=='')
 		{
 			return false;
 		}
@@ -170,41 +171,41 @@ var mChat =	{
 		var answer = confirm(mChatReset);
 		if (answer)
 		{
-			if($('#mChatRefreshText').hasClass('mchat-alert'))
+			if($jQ('#mChatRefreshText').hasClass('mchat-alert'))
 			{
-				$('#mChatRefreshText').removeClass('mchat-alert');
+				$jQ('#mChatRefreshText').removeClass('mchat-alert');
 			}
 			if(mChatPause)
 			{
 				interval=setInterval(function(){mChat.refresh()},mChatRefresh);
 			}
-			$('#mChatOkIMG').show();
-			$('#mChatLoadIMG, #mChatErrorIMG, #mChatPauseIMG').hide();
-			$('#mChatRefreshText').html(mChatRefreshYes);		
-			$('#mChatMessage').val('').focus();
+			$jQ('#mChatOkIMG').show();
+			$jQ('#mChatLoadIMG, #mChatErrorIMG, #mChatPauseIMG').hide();
+			$jQ('#mChatRefreshText').html(mChatRefreshYes);		
+			$jQ('#mChatMessage').val('').focus();
 		}
 		else
 		{
-			$('#mChatMessage').focus();
+			$jQ('#mChatMessage').focus();
 		}		
 	},
 	// Sound function
 	sound:function(file)
 	{
-		if($.cookie('mChatNoSound')=='yes')
+		if($jQ.cookie('mChatNoSound')=='yes')
 		{
 			// Stop
 			return;
 		}
-		if($.browser.msie)
+		if($jQ.browser.msie)
 		{
 			// For IE ;)
-			$('#mChatSound').html('<object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,0,0" height="0" width="0" type="application/x-shockwave-flash"><param name="movie" value="'+file+'"></object>');
+			$jQ('#mChatSound').html('<object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,0,0" height="0" width="0" type="application/x-shockwave-flash"><param name="movie" value="'+file+'"></object>');
 		}
 		else
 		{
 			// For FireFox, Opera, Safari...
-			$('#mChatSound').html('<embed src="'+file+'" width="0" height="0" pluginspage="http://www.macromedia.com/go/getflashplayer" type="application/x-shockwave-flash"></embed>');
+			$jQ('#mChatSound').html('<embed src="'+file+'" width="0" height="0" pluginspage="http://www.macromedia.com/go/getflashplayer" type="application/x-shockwave-flash"></embed>');
 		}
 	},
 
@@ -212,16 +213,16 @@ var mChat =	{
 	toggle:function(id)
 	{
 		// Toggle :)
-		$('#mChat'+id).slideToggle('normal',function(){
+		$jQ('#mChat'+id).slideToggle('normal',function(){
 			// Cookie set
-			if($('#mChat'+id).is(':visible'))
+			if($jQ('#mChat'+id).is(':visible'))
 			{
-				$.cookie('mChatShow'+id,'yes');
+				$jQ.cookie('mChatShow'+id,'yes');
 			}
 			// Cookie delete
-			if($('#mChat'+id).is(':hidden'))
+			if($jQ('#mChat'+id).is(':hidden'))
 			{
-				$.cookie('mChatShow'+id,null);
+				$jQ.cookie('mChatShow'+id,null);
 			}
 		});
 	},
@@ -230,11 +231,11 @@ var mChat =	{
 	add:function()
 	{
 		// If message input empty stop Send function
-		if($('#mChatMessage').val()=='')
+		if($jQ('#mChatMessage').val()=='')
 		{
 			return false;
 		}
-		var mChatMessChars = $('#mChatMessage').val().replace(/ /g,'');
+		var mChatMessChars = $jQ('#mChatMessage').val().replace(/ /g,'');
 
 		if(mChatMessChars.length > mChatMssgLngth && mChatMssgLngth)
 		{
@@ -242,17 +243,17 @@ var mChat =	{
 			return;
 		}
 
-		$.ajax({
+		$jQ.ajax({
 			url:mChatFile,
 			timeout:10000,
 			type:'POST',
-			data:$('#postform').serialize(),
+			data:$jQ('#postform').serialize(),
 			dataType:'text',
 			beforeSend:function()
 			{		
-				$('#submit_button').attr('disabled','disabled');
+				$jQ('#submit_button').attr('disabled','disabled');
 				// Empty message input
-				$('#mChatMessage').val('');
+				$jQ('#mChatMessage').val('');
 				if (mChatUserTimeout)
 				{
 					clearInterval(activeinterval);
@@ -286,11 +287,11 @@ var mChat =	{
 			},
 			complete:function()
 			{			
-				if($('#mChatData').children('#mChatNoMessage :last'))
+				if($jQ('#mChatData').children('#mChatNoMessage :last'))
 				{
-					$('#mChatNoMessage').remove();
+					$jQ('#mChatNoMessage').remove();
 				}			
-				$('#submit_button').attr('disabled','');
+				$jQ('#submit_button').attr('disabled','');
 				interval=setInterval(function(){mChat.refresh()},mChatRefresh);
 				if (mChatUserTimeout)
 				{
@@ -305,12 +306,12 @@ var mChat =	{
   	// Edit function
 	edit:function(id)
 	{
-		var message=$('#edit'+id).val();
+		var message=$jQ('#edit'+id).val();
 		var data=prompt(mChatEditInfo,message);
 		if(data)
 		{
         	// AJAX request
-			$.ajax({
+			$jQ.ajax({
 				url:mChatFile,
 				timeout:10000,
 				type:'POST',
@@ -324,16 +325,16 @@ var mChat =	{
 					{
 						clearInterval(activeinterval);
 						clearInterval(counter);
-						$('#mChatSessTimer').html(mChatRefreshing);
+						$jQ('#mChatSessTimer').html(mChatRefreshing);
 					}
 				},				
 				success:function(html)
 				{
             		// Replace old edited message to new with animation
-					$('#mess'+id).fadeOut('slow',function(){
-						$(this).replaceWith(html);
+					$jQ('#mess'+id).fadeOut('slow',function(){
+						$jQ(this).replaceWith(html);
               			// Animation
-						$('#mess'+id).css('display','none').fadeIn('slow');
+						$jQ('#mess'+id).css('display','none').fadeIn('slow');
 					});
 				},
 				error:function(XMLHttpRequest)
@@ -358,8 +359,8 @@ var mChat =	{
 						counter = setInterval(function(){mChat.countDown()},1000);
 						activeinterval=setInterval(function() {mChat.active()}, mChatUserTimeout);
 					}
-					scrH=$('#mChatmain')[0].scrollHeight;
-					window.setTimeout(function(){$('#mChatmain').animate({scrollTop:scrH},1000,'swing')},1500);					
+					scrH=$jQ('#mChatmain')[0].scrollHeight;
+					window.setTimeout(function(){$jQ('#mChatmain').animate({scrollTop:scrH},1000,'swing')},1500);					
 				}
 			});
 		}
@@ -372,7 +373,7 @@ var mChat =	{
 		if(confirm(mChatDelConfirm))
 		{
 			// AJAX request
-			$.ajax({
+			$jQ.ajax({
 				url:mChatFile,
 				timeout:10000,
 				type:'POST',
@@ -385,15 +386,15 @@ var mChat =	{
 					{
 						clearInterval(activeinterval);
 						clearInterval(counter);
-						$('#mChatSessTimer').html(mChatRefreshing);
+						$jQ('#mChatSessTimer').html(mChatRefreshing);
 					}					
 				},				
 				success:function()
 				{
 					// Animation ;)
-					$('#mess'+id).fadeOut('slow',function(){
+					$jQ('#mess'+id).fadeOut('slow',function(){
 						// Remove message
-						$(this).remove();
+						$jQ(this).remove();
 					});
 					// Sound
 					mChat.sound(mChatForumRoot+'mchat/del.swf');
@@ -430,19 +431,19 @@ var mChat =	{
 		
 		var mess_id=0;
 
-		if($('#mChatData').children().not('#mChatNoMessage').length)
+		if($jQ('#mChatData').children().not('#mChatNoMessage').length)
 		{
-			if($('#mChatNoMessage'))
+			if($jQ('#mChatNoMessage'))
 			{
-				$('#mChatNoMessage').remove();
+				$jQ('#mChatNoMessage').remove();
 			}
-			//var mess_cnt=$('#mChatData').children().length;
-			mess_id=$('#mChatData').children(':last-child').attr('id').replace('mess','');
+			//var mess_cnt=$jQ('#mChatData').children().length;
+			mess_id=$jQ('#mChatData').children(':last-child').attr('id').replace('mess','');
 		}
 
-		var oldScrH=$('#mChatmain')[0].scrollHeight;
+		var oldScrH=$jQ('#mChatmain')[0].scrollHeight;
 
-		$.ajax({
+		$jQ.ajax({
 			url:mChatFile,
 			timeout:10000,
 			type:'POST',
@@ -450,40 +451,40 @@ var mChat =	{
 			dataType:'html',
 			beforeSend:function()
 			{		
-				$('#mChatOkIMG,#mChatErrorIMG,#mChatPauseIMG').hide();
-				$('#mChatLoadIMG').show();				
+				$jQ('#mChatOkIMG,#mChatErrorIMG,#mChatPauseIMG').hide();
+				$jQ('#mChatLoadIMG').show();				
 			},
 			success:function(html)
 			{
 				if(html!='' && html!=0)
 				{
-					if($('#mChatRefreshText').hasClass('mchat-alert'))
+					if($jQ('#mChatRefreshText').hasClass('mchat-alert'))
 					{
-						$('#mChatRefreshText').removeClass('mchat-alert');
+						$jQ('#mChatRefreshText').removeClass('mchat-alert');
 					}					
-					$('#mChatData').append(html).children(':last').not('#mChatNoMessage');
-					var newInner=$('#mChatData').children().not('#mChatNoMessage').innerHeight();
+					$jQ('#mChatData').append(html).children(':last').not('#mChatNoMessage');
+					var newInner=$jQ('#mChatData').children().not('#mChatNoMessage').innerHeight();
 					var newH=oldScrH+newInner;
-					$('#mChatmain').animate({scrollTop:newH},'slow');
+					$jQ('#mChatmain').animate({scrollTop:newH},'slow');
 					mChat.sound(mChatForumRoot+'mchat/add.swf');			
 				}
 				setTimeout(function(){
-					$('#mChatLoadIMG,#mChatErrorIMG,#mChatPauseIMG').hide();
-					$('#mChatOkIMG').show();
-					$('#mChatRefreshText').html(mChatRefreshYes);
+					$jQ('#mChatLoadIMG,#mChatErrorIMG,#mChatPauseIMG').hide();
+					$jQ('#mChatOkIMG').show();
+					$jQ('#mChatRefreshText').html(mChatRefreshYes);
 				},500);					
 			},
 			error:function()
 			{
-				$('#mChatLoadIMG,#mChatOkIMG,#mChatPauseIMG,#mChatRefreshTextNo,#mChatPauseIMG,').hide();
-				$('#mChatErrorIMG').show();
+				$jQ('#mChatLoadIMG,#mChatOkIMG,#mChatPauseIMG,#mChatRefreshTextNo,#mChatPauseIMG,').hide();
+				$jQ('#mChatErrorIMG').show();
 				mChat.sound(mChatForumRoot+'mchat/error.swf');
 			},
 			complete:function()
 			{
-				if(!$('#mChatData').children(':last').length)
+				if(!$jQ('#mChatData').children(':last').length)
 				{
-					$('#mChatData').append('<div id="mChatNoMessage">'+mChatNoMessage+'</div>').show('slow');
+					$jQ('#mChatData').append('<div id="mChatNoMessage">'+mChatNoMessage+'</div>').show('slow');
 				}
 			}
 		});
@@ -496,7 +497,7 @@ var mChat =	{
 			return;
 		}
 				
-		$.ajax({
+		$jQ.ajax({
 			url:mChatFile,
 			timeout:10000,
 			type:'POST',
@@ -506,19 +507,19 @@ var mChat =	{
 			{
 				if(mChatCustomPage)
 				{
-					$('#mChatRefreshN').show();
-					$('#mChatRefresh').hide();
+					$jQ('#mChatRefreshN').show();
+					$jQ('#mChatRefresh').hide();
 				}
 			},
 			success:function(stats)
 			{
-				$('#mChatStats').replaceWith(stats);
+				$jQ('#mChatStats').replaceWith(stats);
 						
 				if(mChatCustomPage)
 				{				
 					setTimeout(function(){
-						$('#mChatRefreshN').hide();
-						$('#mChatRefresh').show();
+						$jQ('#mChatRefreshN').hide();
+						$jQ('#mChatRefresh').show();
 					},500);
 				}				
 			},
@@ -528,9 +529,9 @@ var mChat =	{
 			},
 			complete:function()
 			{
-				if($('#mChatUserList').length && ($.cookie('mChatShowUserList')=='yes' || mChatCustomPage))
+				if($jQ('#mChatUserList').length && ($jQ.cookie('mChatShowUserList')=='yes' || mChatCustomPage))
 				{
-					$('#mChatUserList').css('display', 'block');
+					$jQ('#mChatUserList').css('display', 'block');
 				}				
 			}
 		});
@@ -538,7 +539,6 @@ var mChat =	{
 	// test for user being active
 	active:function()
 	{
-
 		if(mChatArchiveMode || !mChatUserTimeout)
 		{
 			// Stop
@@ -546,10 +546,10 @@ var mChat =	{
 		}
 		// clear refresh interval
 		clearInterval(interval);
-		$('#mChatLoadIMG,#mChatOkIMG,#mChatErrorIMG').hide();
-		$('#mChatPauseIMG').show();
-		$('#mChatRefreshText').html(mChatRefreshNo).addClass('mchat-alert');
-		$('#mChatSessMess').html(mChatSessOut).addClass('mchat-alert');
+		$jQ('#mChatLoadIMG,#mChatOkIMG,#mChatErrorIMG').hide();
+		$jQ('#mChatPauseIMG').show();
+		$jQ('#mChatRefreshText').html(mChatRefreshNo).addClass('mchat-alert');
+		$jQ('#mChatSessMess').html(mChatSessOut).addClass('mchat-alert');
 	}
 };
 
@@ -565,32 +565,32 @@ if(mChatUserTimeout)
 }
 
 // yeah for cookies
-if($.cookie('mChatShowSmiles')=='yes' &&  $('#mChatSmiles').css('display', 'none'))
+if($jQ.cookie('mChatShowSmiles')=='yes' &&  $jQ('#mChatSmiles').css('display', 'none'))
 {
-	$('#mChatSmiles').slideToggle('slow');
+	$jQ('#mChatSmiles').slideToggle('slow');
 }
-if($.cookie('mChatShowBBCodes')=='yes' && $('#mChatBBCodes').css('display', 'none'))
+if($jQ.cookie('mChatShowBBCodes')=='yes' && $jQ('#mChatBBCodes').css('display', 'none'))
 {
-	$('#mChatBBCodes').slideToggle('slow');
+	$jQ('#mChatBBCodes').slideToggle('slow');
 }
-if($.cookie('mChatShowUserList')=='yes' && $('#mChatUserList').length)
+if($jQ.cookie('mChatShowUserList')=='yes' && $jQ('#mChatUserList').length)
 {
-	$('#mChatUserList').slideToggle('slow');
+	$jQ('#mChatUserList').slideToggle('slow');
 }
-if($.cookie('mChatShowColour')=='yes' && $('#mChatColour').css('display', 'none'))
+if($jQ.cookie('mChatShowColour')=='yes' && $jQ('#mChatColour').css('display', 'none'))
 {
-	$('#mChatColour').slideToggle('slow');
+	$jQ('#mChatColour').slideToggle('slow');
 }
 
 //sound change
-$('#mChatUseSound').change(function(){
-	if($(this).is(':checked'))
+$jQ('#mChatUseSound').change(function(){
+	if($jQ(this).is(':checked'))
 	{
-		$.cookie('mChatNoSound',null);
+		$jQ.cookie('mChatNoSound',null);
 	}
 	else
 	{
-		$.cookie('mChatNoSound','yes');
+		$jQ.cookie('mChatNoSound','yes');
 	}
 });	
 

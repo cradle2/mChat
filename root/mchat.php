@@ -44,7 +44,11 @@ if (empty($config['mchat_version']))
 	}
 	trigger_error ($message);
 }
-
+//  avatars
+if (!function_exists('get_user_avatar'))
+{
+	include($phpbb_root_path . 'includes/functions_display.' . $phpEx);
+}
 // Get the config entries.
 if (!function_exists('mchat_cache'))
 {
@@ -64,7 +68,7 @@ $mchat_read_archive = ($auth->acl_get('u_mchat_archive')) ? true : false;
 $mchat_founder = ($user->data['user_type'] == USER_FOUNDER) ? true : false;
 $mchat_session_time = !empty($config_mchat['timeout']) ? $config_mchat['timeout'] : 3600;// you can change this number to a greater number for longer chat sessions
 $mchat_rules = !empty($config_mchat['rules']) ? $config_mchat['rules'] : '';
-
+$mchat_avatars = !empty($config_mchat['avatars']) && $user->optionget('viewavatars') ? true : false;
 
 // needed variables
 // Request options.
@@ -91,6 +95,7 @@ switch ($mchat_mode)
 
 				foreach ($mchat_rules as $mchat_rule)
 				{
+					$mchat_rule = htmlspecialchars($mchat_rule);
 					$template->assign_block_vars('rule', array(			
 						'MCHAT_RULE' => $mchat_rule,
 					));
@@ -162,7 +167,7 @@ switch ($mchat_mode)
 		}
 		
 		$mchat_redirect = request_var('redirect', '');
-		$mchat_redirect = ($mchat_redirect == 'index') ? append_sid("{$phpbb_root_path}index.$phpEx") : append_sid("{$phpbb_root_path}mchat.$phpEx");		
+		$mchat_redirect = ($mchat_redirect == 'index') ? append_sid("{$phpbb_root_path}index.$phpEx") : append_sid("{$phpbb_root_path}mchat.$phpEx#mChat");	
 		
 		if(confirm_box(true))
 		{
@@ -205,7 +210,7 @@ switch ($mchat_mode)
 			$mchat_archive_start = request_var('start', 0);
 			$sql_where = $user->data['user_mchat_topics'] ? '' : 'WHERE m.forum_id = 0';
 			// Message row
-			$sql = 'SELECT m.*, u.username, u.user_colour
+			$sql = 'SELECT m.*, u.username, u.user_colour, u.user_avatar, u.user_avatar_type, u.user_avatar_width, u.user_avatar_height
 				FROM ' . MCHAT_TABLE . ' m
 					LEFT JOIN ' . USERS_TABLE . ' u ON m.user_id = u.user_id
 				' . $sql_where . '
@@ -224,7 +229,7 @@ switch ($mchat_mode)
 				$mchat_ban = ($auth->acl_get('a_authusers') && $user->data['user_id'] != $row['user_id']) ? true : false;
 				$mchat_edit = ($auth->acl_get('u_mchat_edit') && ($auth->acl_get('m_') || $user->data['user_id'] == $row['user_id'])) ? true : false;
 				$mchat_del = ($auth->acl_get('u_mchat_delete') && ($auth->acl_get('m_') || $user->data['user_id'] == $row['user_id'])) ? true : false;
-				
+				$mchat_avatar = $row['user_avatar'] ? get_user_avatar($row['user_avatar'], $row['user_avatar_type'], ($row['user_avatar_width'] > $row['user_avatar_height']) ? 40 : (40 / $row['user_avatar_height']) * $row['user_avatar_width'], ($row['user_avatar_height'] > $row['user_avatar_width']) ? 40 : (40 / $row['user_avatar_width']) * $row['user_avatar_height']) : '';
 				$message_edit = $row['message'];
 				decode_message($message_edit, $row['bbcode_uid']);
 				$message_edit = str_replace('"', '&quot;', $message_edit); // Edit Fix ;)
@@ -232,6 +237,8 @@ switch ($mchat_mode)
 					'MCHAT_ALLOW_BAN'		=> $mchat_ban,
 					'MCHAT_ALLOW_EDIT'		=> $mchat_edit,
 					'MCHAT_ALLOW_DEL'		=> $mchat_del,
+					'MCHAT_USER_AVATAR'		=> $mchat_avatar,					
+					'U_VIEWPROFILE'			=> ($row['user_id'] != ANONYMOUS) ? append_sid("{$phpbb_root_path}memberlist.$phpEx", 'mode=viewprofile&amp;u=' . $row['user_id']) : '',
 					'MCHAT_MESSAGE_EDIT'	=> $message_edit,
 					'MCHAT_MESSAGE_ID'		=> $row['message_id'],
 					'MCHAT_USERNAME_FULL'	=> get_username_string('full', $row['user_id'], $row['username'], $row['user_colour'], $user->lang['GUEST']),
@@ -288,7 +295,7 @@ switch ($mchat_mode)
 		// Request
 		$mchat_message_last_id = request_var('message_last_id', 0);
 		$sql_and = $user->data['user_mchat_topics'] ? '' : 'AND m.forum_id = 0';
-		$sql = 'SELECT m.*, u.username, u.user_colour, u.user_id as userid
+		$sql = 'SELECT m.*, u.username, u.user_colour, u.user_id as userid, u.user_avatar, u.user_avatar_type, u.user_avatar_width, u.user_avatar_height
 				FROM ' . MCHAT_TABLE . ' m, ' . USERS_TABLE . ' u
 				WHERE m.user_id = u.user_id
 				AND m.message_id > ' . (int) $mchat_message_last_id . '
@@ -320,7 +327,7 @@ switch ($mchat_mode)
 			$mchat_ban = ($auth->acl_get('a_authusers') && $user->data['user_id'] != $row['user_id']) ? true : false;
 			$mchat_edit = ($auth->acl_get('u_mchat_edit') && ($auth->acl_get('m_') || $chat_auths)) ? true : false;
 			$mchat_del = ($auth->acl_get('u_mchat_delete') && ($auth->acl_get('m_') || $chat_auths)) ? true : false;
-				
+			$mchat_avatar = $row['user_avatar'] ? get_user_avatar($row['user_avatar'], $row['user_avatar_type'], ($row['user_avatar_width'] > $row['user_avatar_height']) ? 40 : (40 / $row['user_avatar_height']) * $row['user_avatar_width'], ($row['user_avatar_height'] > $row['user_avatar_width']) ? 40 : (40 / $row['user_avatar_width']) * $row['user_avatar_height']) : '';
 			$message_edit = $row['message'];
 			decode_message($message_edit, $row['bbcode_uid']);
 			$message_edit = str_replace('"', '&quot;', $message_edit);
@@ -328,6 +335,8 @@ switch ($mchat_mode)
 				'MCHAT_ALLOW_BAN'		=> $mchat_ban,
 				'MCHAT_ALLOW_EDIT'		=> $mchat_edit,
 				'MCHAT_ALLOW_DEL'		=> $mchat_del,			
+				'MCHAT_USER_AVATAR'		=> $mchat_avatar,					
+				'U_VIEWPROFILE'			=> ($row['user_id'] != ANONYMOUS) ? append_sid("{$phpbb_root_path}memberlist.$phpEx", 'mode=viewprofile&amp;u=' . $row['user_id']) : '',				
 				'MCHAT_MESSAGE_EDIT'	=> $message_edit,
 				'MCHAT_MESSAGE_ID' 		=> $row['message_id'],
 				'MCHAT_USERNAME_FULL'	=> get_username_string('full', $row['userid'], $row['username'], $row['user_colour'], $user->lang['GUEST']),
@@ -758,7 +767,7 @@ switch ($mchat_mode)
 		{
 			$sql_where = $user->data['user_mchat_topics'] ? '' : 'WHERE m.forum_id = 0';
 			// Message row
-			$sql = 'SELECT m.*, u.username, u.user_colour
+			$sql = 'SELECT m.*, u.username, u.user_colour, u.user_avatar, u.user_avatar_type, u.user_avatar_width, u.user_avatar_height
 				FROM ' . MCHAT_TABLE . ' m
 					LEFT JOIN ' . USERS_TABLE . ' u ON (m.user_id = u.user_id)
 				' . $sql_where . '
@@ -788,7 +797,7 @@ switch ($mchat_mode)
 				}
 				$mchat_edit = ($auth->acl_get('u_mchat_edit') && ($auth->acl_get('m_') || $chat_auths)) ? true : false;
 				$mchat_del = ($auth->acl_get('u_mchat_delete') && ($auth->acl_get('m_') || $chat_auths)) ? true : false;
-		
+				$mchat_avatar = $row['user_avatar'] ? get_user_avatar($row['user_avatar'], $row['user_avatar_type'], ($row['user_avatar_width'] > $row['user_avatar_height']) ? 40 : (40 / $row['user_avatar_height']) * $row['user_avatar_width'], ($row['user_avatar_height'] > $row['user_avatar_width']) ? 40 : (40 / $row['user_avatar_width']) * $row['user_avatar_height']) : '';
 				$message_edit = $row['message'];
 				decode_message($message_edit, $row['bbcode_uid']);
 				$message_edit = str_replace('"', '&quot;', $message_edit); // Edit Fix ;)
@@ -797,6 +806,8 @@ switch ($mchat_mode)
 					'MCHAT_ALLOW_BAN'		=> $mchat_ban,
 					'MCHAT_ALLOW_EDIT'		=> $mchat_edit,
 					'MCHAT_ALLOW_DEL'		=> $mchat_del,				
+					'MCHAT_USER_AVATAR'		=> $mchat_avatar,
+					'U_VIEWPROFILE'			=> ($row['user_id'] != ANONYMOUS) ? append_sid("{$phpbb_root_path}memberlist.$phpEx", 'mode=viewprofile&amp;u=' . $row['user_id']) : '',					
 					'MCHAT_MESSAGE_EDIT'	=> $message_edit,
 					'MCHAT_MESSAGE_ID'		=> $row['message_id'],
 					'MCHAT_USERNAME_FULL'	=> get_username_string('full', $row['user_id'], $row['username'], $row['user_colour'], $user->lang['GUEST']),
@@ -886,6 +897,7 @@ $template->assign_vars(array(
 	'L_MCHAT_ONLINE_EXPLAIN'	=> mchat_session_time($mchat_session_time),
 	'MCHAT_REFRESH_YES'		=> sprintf($user->lang['MCHAT_REFRESH_YES'], $config_mchat['refresh']),
 	'L_MCHAT_WHOIS_REFRESH_EXPLAIN'	=> sprintf($user->lang['WHO_IS_REFRESH_EXPLAIN'], $config_mchat['whois_refresh']),
+	'S_MCHAT_AVATARS'		=> $mchat_avatars,
 	'S_MCHAT_LOCATION'		=> $config_mchat['location'],
 	'S_MCHAT_SOUND_YES'		=> $user->data['user_mchat_sound'],
 	'S_MCHAT_INDEX_STATS'	=> $user->data['user_mchat_stats_index'],

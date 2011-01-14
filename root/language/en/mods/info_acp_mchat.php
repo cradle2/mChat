@@ -50,13 +50,15 @@ $lang = array_merge($lang, array(
 
 	// ACP entries
 	'ACP_MCHAT_RULES'				=> 'Rules',
-	'ACP_MCHAT_RULES_EXPLAIN'		=> 'Enter the rules of the forum here.  Each rule on a new line.<br />Set to empty to disable the display.  You are limited to 255 characters.<br /><strong>This message can be translated.</strong> (you must edit the mchat_lang.php file and read the instructions).',
+	'ACP_MCHAT_RULES_EXPLAIN'		=> 'Enter the rules of the forum here.  Each rule on a new line.<br />You are limited to 255 characters.<br /><strong>This message can be translated.</strong> (you must edit the mchat_lang.php file and read the instructions).',
 	'LOG_MCHAT_CONFIG_UPDATE'		=> '<strong>Updated mChat config </strong>',
 	'MCHAT_CONFIG_SAVED'			=> 'Mini Chat configuration has been updated',
 	'MCHAT_TITLE'					=> 'Mini-Chat',
 	'MCHAT_VERSION'					=> 'Version:',
 	'MCHAT_ENABLE'					=> 'Enable mChat MOD',
 	'MCHAT_ENABLE_EXPLAIN'			=> 'Enable or disable the mod globally.',
+	'MCHAT_AVATARS'					=> 'Display avatars',
+	'MCHAT_AVATARS_EXPLAIN'			=> 'If set yes, resized user avatars will be displayed',	
 	'MCHAT_ON_INDEX'				=> 'mChat On Index',
 	'MCHAT_ON_INDEX_EXPLAIN'		=> 'Allow the display of the mChat on the index page.',
 	'MCHAT_INDEX_HEIGHT'			=> 'Index Page Height',

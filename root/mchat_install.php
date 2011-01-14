@@ -382,7 +382,12 @@ $versions = array(
 					'config_name' 	=> 'rules',
 					'config_value'	=> '',
 				),
-			),			
+			),
+			array('phpbb_mchat_config', array(			
+					'config_name' 	=> 'avatars',
+					'config_value'	=> '0',
+				),
+			),					
 		),
 		'permission_unset' => array(
 			// Global Role permissions for admins

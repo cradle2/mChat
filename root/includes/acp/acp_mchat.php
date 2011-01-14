@@ -83,6 +83,7 @@ class acp_mchat
 			'timeout'			=> request_var('mchat_timeout', 0),
 			'pause_on_input'	=> request_var('mchat_pause_on_input', 0),
 			'rules'				=> utf8_normalize_nfc(request_var('mchat_rules', '', true)),
+			'avatars'			=> request_var('mchat_avatars', 0),
 		);		
 		
 		if ($submit)
@@ -198,6 +199,7 @@ class acp_mchat
 			'MCHAT_WHOIS_REFRESH'			=> !empty($mchat_row['whois_refresh']) ? $mchat_row['whois_refresh'] : $mchat_config['whois_refresh'],
 			'MCHAT_MESSAGE_LIMIT'			=> !empty($mchat_row['message_limit']) ? $mchat_row['message_limit'] : $mchat_config['message_limit'],
 			'MCHAT_ARCHIVE_LIMIT'			=> !empty($mchat_row['archive_limit']) ? $mchat_row['archive_limit'] : $mchat_config['archive_limit'],
+			'MCHAT_AVATARS'					=> !empty($mchat_row['avatars']) ? $mchat_row['avatars'] : $mchat_config['avatars'],			
 			'MCHAT_FLOOD_TIME'				=> !empty($mchat_row['flood_time']) ? $mchat_row['flood_time'] : $mchat_config['flood_time'],
 			'MCHAT_MAX_MESSAGE_LNGTH'		=> !empty($mchat_row['max_message_lngth']) ? $mchat_row['max_message_lngth'] : $mchat_config['max_message_lngth'],
 			'MCHAT_CUSTOM_PAGE'				=> !empty($mchat_row['custom_page']) ? $mchat_row['custom_page'] : $mchat_config['custom_page'],

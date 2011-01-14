@@ -12,14 +12,14 @@
 ------------ */
 div.mChatBG1 {
 	background-color: #FBFBFB;
-	padding: 5px 5px 5px 15px;
+	padding: 5px 5px 5px 5px;
 	border-bottom: 1px dotted #DDDDDD;
 	overflow: hidden;
 }
 
 div.mChatBG2 {
 	background-color: #FFFFFF;
-	padding: 5px 5px 5px 15px;
+	padding: 5px 5px 5px 5px;
 	border-bottom: 1px dotted #DDDDDD;
 	overflow: hidden;
 }
@@ -100,6 +100,7 @@ div.mChatMessage {
 	padding: 3px;
 	font-size: 1.1em;
 	width: 98%;
+
 }
 
 a.mChatScriptLink {
@@ -142,3 +143,13 @@ div.mChatSound {
 	display: none;
 	float: left;
 }
+
+.mChatAvatars {
+	float: left;
+	padding-right: 5px;
+}
+
+div.avatarMessage {
+	margin-left: 50px;
+	width: 95%;
+}	
