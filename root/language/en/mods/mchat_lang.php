@@ -62,13 +62,11 @@ $lang = array_merge($lang, array(
 	'MCHAT_FLOOD'				=> 'You can not post another message so soon after your last',	
 	'MCHAT_HELP'				=> 'mChat Rules',
 // uncomment and translate the following line for languages for the rules in the chat area
-// you must have something in the rules area of the config entries of the mod for this to display
 // <br /> signifies a new line, see above for Unicode characters to use
 	//'MCHAT_RULES'				=> 'No swearing<br />Don’t advertise your site<br />Don’t leave several messages in succession<br />Don’t leave a pointless message<br />Don’t leave a message consisting of only smilies',	
 	'MCHAT_HIDE_LIST'			=> 'Hide List',	
 	'MCHAT_HOUR'				=> 'hour ',
 	'MCHAT_HOURS'				=> 'hours',
-	'MCHAT_IP'					=> 'IP:',
 	'MCHAT_IP_WHOIS_FOR'		=> 'IP whois for %s',
 	
 	'MCHAT_MINUTE'				=> 'minute ',
@@ -114,14 +112,6 @@ $lang = array_merge($lang, array(
 	'WHO_IS_CHATTING'			=> 'Who is chatting',
 	'WHO_IS_REFRESH_EXPLAIN'	=> 'Refreshes every <strong>%d</strong> seconds',
 	'MCHAT_NEW_TOPIC'			=> '<strong>New Topic</strong>',		
-	
-	// BBCode Font
-	'MCHAT_FONTSIZE'	=> 'Font size:',
-	'MCHAT_FONTTINY'	=> 'Tiny',
-	'MCHAT_FONTSMALL'	=> 'Small',
-	'MCHAT_FONTNORMAL'	=> 'Normal',
-	'MCHAT_FONTLARGE'	=> 'Large',
-	'MCHAT_FONTHUGE'	=> 'Huge',
 	
 	// UCP
 	'UCP_PROFILE_MCHAT'	=> 'mChat Preferences',
