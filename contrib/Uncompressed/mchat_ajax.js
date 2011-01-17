@@ -359,8 +359,11 @@ var mChat =	{
 						counter = setInterval(function(){mChat.countDown()},1000);
 						activeinterval=setInterval(function() {mChat.active()}, mChatUserTimeout);
 					}
-					scrH=$jQ('#mChatmain')[0].scrollHeight;
-					window.setTimeout(function(){$jQ('#mChatmain').animate({scrollTop:scrH},1000,'swing')},1500);					
+					if(!mChatArchiveMode)
+					{
+						scrH=$jQ('#mChatmain')[0].scrollHeight;
+						window.setTimeout(function(){$jQ('#mChatmain').animate({scrollTop:scrH},1000,'swing')},1500);
+					}
 				}
 			});
 		}

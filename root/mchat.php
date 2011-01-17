@@ -279,6 +279,7 @@ switch ($mchat_mode)
 		);			
 		// If archive mode request set true
 		$mchat_archive_mode = true;
+		$old_mode = 'archive';
 
 	break;
  
@@ -509,7 +510,7 @@ switch ($mchat_mode)
 
 	// Edit function...
 	case 'edit':
-	
+
 		// edit and delete auths
 		$mchat_edit = $auth->acl_get('u_mchat_edit') ? true : false;
 		$mchat_del = $auth->acl_get('u_mchat_delete') ? true : false;	
@@ -651,6 +652,7 @@ switch ($mchat_mode)
 		mchat_sessions($mchat_session_time, true);
 		// If read mode request set true
 		$mchat_read_mode = true;
+
 	break;
 
 	// Delete function...
@@ -675,6 +677,7 @@ switch ($mchat_mode)
 
 		// insert user into the mChat sessions table
 		mchat_sessions($mchat_session_time, true);
+	
 		// Stop running code
 		exit_handler();
 	break;
