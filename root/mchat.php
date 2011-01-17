@@ -378,7 +378,7 @@ switch ($mchat_mode)
 			
 		if(!empty($mchat_stats['online_userlist']))
 		{
-			$message = '<div class="mChatStats" id="mChatStats"><a href="javascript://" onclick="mChat.toggle(\'UserList\');">' . $mchat_stats['mchat_users_count'] . '</a>&nbsp;' . $mchat_stats['refresh_message'] . '<br /><span id="mChatUserList" style="display: none; float: left;">' . $mchat_stats['online_userlist'] . '</span></div>';
+			$message = '<div class="mChatStats" id="mChatStats"><a href="#" onclick="mChat.toggle(\'UserList\'); return false;">' . $mchat_stats['mchat_users_count'] . '</a>&nbsp;' . $mchat_stats['refresh_message'] . '<br /><span id="mChatUserList" style="display: none; float: left;">' . $mchat_stats['online_userlist'] . '</span></div>';
 		}
 		else
 		{

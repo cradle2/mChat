@@ -40,18 +40,19 @@
 		<installation>
 			<level>easy</level>
 			<time>120</time>
-			<target-version>3.0.7-PL1</target-version>
+			<target-version>3.0.8</target-version>
 		</installation>
 		<link-group>
 				<link type="parent" href="../install.xml" lang="en">Main Install File</link>
 		</link-group>
 	</header>
-	<action-group>		<open src="includes/functions_posting.php">
+	<action-group>		
+		<open src="includes/functions_posting.php">
 			<edit>
 				<find><![CDATA[	$make_global = false;]]></find>
 				<action type="before-add"><![CDATA[// BEGIN mChat Mod
 // only trigger if mode is post 
-	if ($post_mode == 'post' && $post_approval && (isset($config['mchat_enable']) && $config['mchat_enable']) && (isset($config['mchat_new_posts']) && $config['mchat_new_posts']))		  
+	if ($post_mode == 'post' && $post_approval && !empty($config['mchat_enable']) && !empty($config['mchat_new_posts']))		  
 	{
 		$user->add_lang('mods/mchat_lang');
 		
@@ -83,7 +84,7 @@
 			<edit>
 				<find><![CDATA[			$next_post_id = delete_post($forum_id, $topic_id, $post_id, $data);]]></find>
 				<action type="after-add"><![CDATA[			// BEGIN mChat Mod Add-on
-			if ((isset($config['mchat_enable']) && $config['mchat_enable']) && (isset($config['mchat_new_posts']) && $config['mchat_new_posts']))
+			if (!empty($config['mchat_enable']) && !empty($config['mchat_new_posts']))
 			{
 				if (!function_exists('mchat_delete_topic'))
 				{
