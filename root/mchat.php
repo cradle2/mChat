@@ -295,7 +295,7 @@ switch ($mchat_mode)
 		// Request
 		$mchat_message_last_id = request_var('message_last_id', 0);
 		$sql_and = $user->data['user_mchat_topics'] ? '' : 'AND m.forum_id = 0';
-		$sql = 'SELECT m.*, u.username, u.user_colour, u.user_id as userid, u.user_avatar, u.user_avatar_type, u.user_avatar_width, u.user_avatar_height
+		$sql = 'SELECT m.*, u.username, u.user_colour, u.user_avatar, u.user_avatar_type, u.user_avatar_width, u.user_avatar_height
 				FROM ' . MCHAT_TABLE . ' m, ' . USERS_TABLE . ' u
 				WHERE m.user_id = u.user_id
 				AND m.message_id > ' . (int) $mchat_message_last_id . '
@@ -339,9 +339,9 @@ switch ($mchat_mode)
 				'U_VIEWPROFILE'			=> ($row['user_id'] != ANONYMOUS) ? append_sid("{$phpbb_root_path}memberlist.$phpEx", 'mode=viewprofile&amp;u=' . $row['user_id']) : '',				
 				'MCHAT_MESSAGE_EDIT'	=> $message_edit,
 				'MCHAT_MESSAGE_ID' 		=> $row['message_id'],
-				'MCHAT_USERNAME_FULL'	=> get_username_string('full', $row['userid'], $row['username'], $row['user_colour'], $user->lang['GUEST']),
-				'MCHAT_USERNAME'		=> get_username_string('username', $row['userid'], $row['username'], $row['user_colour'], $user->lang['GUEST']),
-				'MCHAT_USERNAME_COLOR'	=> get_username_string('colour', $row['userid'], $row['username'], $row['user_colour'], $user->lang['GUEST']),
+				'MCHAT_USERNAME_FULL'	=> get_username_string('full', $row['user_id'], $row['username'], $row['user_colour'], $user->lang['GUEST']),
+				'MCHAT_USERNAME'		=> get_username_string('username', $row['user_id'], $row['username'], $row['user_colour'], $user->lang['GUEST']),
+				'MCHAT_USERNAME_COLOR'	=> get_username_string('colour', $row['user_id'], $row['username'], $row['user_colour'], $user->lang['GUEST']),
 				'MCHAT_USER_IP'			=> $row['user_ip'],
 				'MCHAT_U_WHOIS'			=> append_sid("{$phpbb_root_path}mchat.$phpEx", 'mode=whois&amp;ip=' . $row['user_ip']),
 				'MCHAT_U_BAN'			=> append_sid("{$phpbb_root_path}adm/index.$phpEx" ,'i=permissions&amp;mode=setting_user_global&amp;user_id[0]=' . $row['user_id'], true, $user->session_id),
@@ -603,7 +603,7 @@ switch ($mchat_mode)
 		$db->sql_query($sql);
 		
 		// Message edited...now read it
-		$sql = 'SELECT m.*, u.username, u.user_colour, u.user_id as userid
+		$sql = 'SELECT m.*, u.username, u.user_colour, u.user_avatar, u.user_avatar_type, u.user_avatar_width, u.user_avatar_height
 					FROM ' . MCHAT_TABLE . ' m, ' . USERS_TABLE . ' u
 						WHERE m.user_id = u.user_id
 					AND m.message_id = ' . (int) $message_id . '
@@ -616,17 +616,19 @@ switch ($mchat_mode)
 		
 		decode_message($message_edit, $row['bbcode_uid']);
 		$message_edit = str_replace('"', '&quot;', $message_edit); // Edit Fix ;)
-		$mchat_ban = ($auth->acl_get('a_authusers') && $user->data['user_id'] != $row['userid']) ? true : false;
-        
+		$mchat_ban = ($auth->acl_get('a_authusers') && $user->data['user_id'] != $row['user_id']) ? true : false;
+ 		$mchat_avatar = $row['user_avatar'] ? get_user_avatar($row['user_avatar'], $row['user_avatar_type'], ($row['user_avatar_width'] > $row['user_avatar_height']) ? 40 : (40 / $row['user_avatar_height']) * $row['user_avatar_width'], ($row['user_avatar_height'] > $row['user_avatar_width']) ? 40 : (40 / $row['user_avatar_width']) * $row['user_avatar_height']) : '';       
 		$template->assign_block_vars('mchatrow', array(
 			'MCHAT_ALLOW_BAN'		=> $mchat_ban,
 			'MCHAT_ALLOW_EDIT'		=> $mchat_edit,
 			'MCHAT_ALLOW_DEL'		=> $mchat_del,		
 			'MCHAT_MESSAGE_EDIT'	=> $message_edit,
+			'MCHAT_USER_AVATAR'		=> $mchat_avatar,					
+			'U_VIEWPROFILE'			=> ($row['user_id'] != ANONYMOUS) ? append_sid("{$phpbb_root_path}memberlist.$phpEx", 'mode=viewprofile&amp;u=' . $row['user_id']) : '',			
 			'MCHAT_MESSAGE_ID'		=> $row['message_id'],
-			'MCHAT_USERNAME_FULL'	=> get_username_string('full', $row['userid'], $row['username'], $row['user_colour'], $user->lang['GUEST']),
-			'MCHAT_USERNAME'		=> get_username_string('username', $row['userid'], $row['username'], $row['user_colour'], $user->lang['GUEST']),
-			'MCHAT_USERNAME_COLOR'	=> get_username_string('colour', $row['userid'], $row['username'], $row['user_colour'], $user->lang['GUEST']),
+			'MCHAT_USERNAME_FULL'	=> get_username_string('full', $row['user_id'], $row['username'], $row['user_colour'], $user->lang['GUEST']),
+			'MCHAT_USERNAME'		=> get_username_string('username', $row['user_id'], $row['username'], $row['user_colour'], $user->lang['GUEST']),
+			'MCHAT_USERNAME_COLOR'	=> get_username_string('colour', $row['user_id'], $row['username'], $row['user_colour'], $user->lang['GUEST']),
 			'MCHAT_USER_IP'			=> $row['user_ip'],
 			'MCHAT_U_WHOIS'			=> append_sid("{$phpbb_root_path}mchat.$phpEx", 'mode=whois&amp;ip=' . $row['user_ip']),
 			'MCHAT_U_BAN'			=> append_sid("{$phpbb_root_path}adm/index.$phpEx" ,'i=permissions&amp;mode=setting_user_global&amp;user_id[0]=' . $row['user_id'], true, $user->session_id),
