@@ -149,5 +149,6 @@ div.mChatSound {
 
 div.avatarMessage {
 	margin-left: 50px;
-	width: 95%;
+	width: 90%;
+	margin-right: 5px;
 }
