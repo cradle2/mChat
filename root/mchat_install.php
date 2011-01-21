@@ -375,6 +375,7 @@ $versions = array(
 		),
 		'table_column_add'	=> array(
 			array('phpbb_users', 'user_mchat_topics', array('BOOL', true)),
+			array('phpbb_users', 'user_mchat_avatars', array('BOOL', true)),
 		),		
 		// Insert a new entry
 		'table_insert'	=> array(

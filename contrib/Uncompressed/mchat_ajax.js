@@ -43,7 +43,7 @@ $jQ(function()
 				}
 			});
 		};
-		//http://jsbin.com/ahaxe
+		//http://stackoverflow.com/questions/931207/is-there-a-jquery-autogrow-plugin-for-text-fields
 		//allows the input area to "grow"
 		$jQ.fn.autoGrowInput=function(o){
 				var width = $jQ('.mChatPanel').width();
@@ -57,7 +57,7 @@ $jQ(function()
 					var minWidth = o.minWidth || $jQ(this).width(),
 					val = '',
 					input = $jQ(this),					
-					testSubject = $jQ('<tester/>').css({
+					testSubject = $jQ('<div/>').css({
 						position: 'absolute',
 						top: -9999,
 						left: -9999,
@@ -95,7 +95,7 @@ $jQ(function()
 
 				testSubject.insertAfter(input);
 				
-				$jQ(this).bind('keypress blur change submit focus update', check);
+				$jQ(this).bind('keypress blur change submit focus', check);
 
 			});
 
@@ -252,8 +252,7 @@ var mChat =	{
 			beforeSend:function()
 			{		
 				$jQ('#submit_button').attr('disabled','disabled');
-				// Empty message input
-				$jQ('#mChatMessage').val('');
+
 				if (mChatUserTimeout)
 				{
 					clearInterval(activeinterval);
@@ -299,6 +298,8 @@ var mChat =	{
 					counter = setInterval(function(){mChat.countDown()},1000);
 					activeinterval = setInterval(function(){mChat.active()}, mChatUserTimeout);
 				}
+				// Empty message input
+				$jQ('#mChatMessage').val('').focus();
 			}
 		});
 	},
@@ -553,7 +554,26 @@ var mChat =	{
 		$jQ('#mChatPauseIMG').show();
 		$jQ('#mChatRefreshText').html(mChatRefreshNo).addClass('mchat-alert');
 		$jQ('#mChatSessMess').html(mChatSessOut).addClass('mchat-alert');
-	}
+	},
+	// Refresh function
+	profile:function(id)
+	{
+		$jQ.ajax({
+			url:mChatFile,
+			timeout:10000,
+			type:'POST',
+			data:{mode:'profile',profile_id:id},
+			dataType:'html',
+			success:function(html)
+			{
+				$jQ('div#profile('+id+')').tooltip();
+			},
+			error:function()
+			{
+				return false;
+			}
+		});
+	}	
 };
 
 // timeouts

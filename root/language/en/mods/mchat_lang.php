@@ -100,7 +100,6 @@ $lang = array_merge($lang, array(
 	'MCHAT_USESOUND'			=> 'Use sound?',
 	
 // uncomment and translate the following line for languages for the static message in the chat area
-// you must have something in the static message area of the config entries of the mod for this to display
 //	'STATIC_MESSAGE'			=> 'Put whatever you want here',
 	// whois chatting stuff
 
@@ -120,6 +119,7 @@ $lang = array_merge($lang, array(
 	'SOUND_MCHAT'		=> 'Enable mChat sound',
 	'DISPLAY_STATS_INDEX'	=> 'Display the Who is Chatting stats on index page',
 	'DISPLAY_NEW_TOPICS'	=> 'Display new topics in the chat',
+	'DISPLAY_AVATARS'	=> 'Display avatars in the chat',
 	
 	// ACP
 	'USER_MCHAT_UPDATED'	=> 'Users mChat preferences were updated',

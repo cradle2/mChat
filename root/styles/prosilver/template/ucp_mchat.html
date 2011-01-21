@@ -42,6 +42,15 @@
 		</dd>
 	</dl>
 	<!-- ENDIF -->
+	<!-- IF S_MCHAT_AVATARS -->
+	<dl>
+		<dt><label for="mchat_avatars">{L_DISPLAY_AVATARS}:</label></dt>
+		<dd>
+			<label><input type="radio" name="user_mchat_avatars" value="1"<!-- IF S_AVATARS_MCHAT --> id="mchat_avatars" checked="checked"<!-- ENDIF --> /> {L_YES}</label> 
+			<label><input type="radio" name="user_mchat_avatars" value="0"<!-- IF not S_AVATARS_MCHAT --> id="mchat_avatars" checked="checked"<!-- ENDIF --> /> {L_NO}</label>
+		</dd>
+	</dl>
+	<!-- ENDIF -->	
 	</fieldset>
 	<span class="corners-bottom"><span></span></span></div>
 </div>	

@@ -115,6 +115,7 @@
 					'user_mchat_sound'	=> request_var('user_mchat_sound', (bool) $user_row['user_mchat_sound']),
 					'user_mchat_stats_index'	=> request_var('user_mchat_stats_index', (bool) $user_row['user_mchat_stats_index']),
 					'user_mchat_topics'	=> request_var('user_mchat_topics', (bool) $user_row['user_mchat_topics']),
+					'user_mchat_avatars'	=> request_var('user_mchat_avatars', (bool) $user_row['user_mchat_avatars']),
 				);
 
 				if ($submit)
@@ -134,6 +135,7 @@
 							'user_mchat_sound'	=> $data['user_mchat_sound'],
 							'user_mchat_stats_index'	=> $data['user_mchat_stats_index'],
 							'user_mchat_topics'	=> $data['user_mchat_topics'],
+							'user_mchat_avatars'	=> $data['user_mchat_avatars'],
 						);
 
 						$sql = 'UPDATE ' . USERS_TABLE . '
@@ -154,6 +156,7 @@
 					'SOUND_MCHAT'	=> $data['user_mchat_sound'],
 					'STATS_MCHAT'	=> $data['user_mchat_stats_index'],
 					'TOPICS_MCHAT'	=> $data['user_mchat_topics'],
+					'AVATARS_MCHAT'	=> $data['user_mchat_avatars'],
 				));
 			break;
 // END mChat Mod]]></action>
@@ -172,14 +175,16 @@ if(!defined('MCHAT_INCLUDE') && $mchat_installed && $auth->acl_get('u_mchat_view
 // END mChat Mod]]></find>
 				<action type="replace-with"><![CDATA[// BEGIN mChat Mod
 $mchat_installed = (!empty($config['mchat_version']) && !empty($config['mchat_enable'])) ? true : false;
-if(!defined('MCHAT_INCLUDE') && $mchat_installed && $auth->acl_get('u_mchat_view') && !empty($user->data['user_mchat_index']))
+if ($mchat_installed && $auth->acl_get('u_mchat_view'))
+{
+	if(!defined('MCHAT_INCLUDE') && $config['mchat_on_index'] && !empty($user->data['user_mchat_index']))
 {
 	define('MCHAT_INCLUDE', true);
 	$mchat_include_index = true;
 	include($phpbb_root_path . 'mchat.' . $phpEx);
 }
 
-if ($mchat_installed && $auth->acl_get('u_mchat_view') && !empty($config['mchat_stats_index']) && !empty($user->data['user_mchat_stats_index']))
+	if (!empty($config['mchat_stats_index']) && !empty($user->data['user_mchat_stats_index']))
 {
 	if (!function_exists('mchat_users'))
 	{
@@ -197,13 +202,14 @@ if ($mchat_installed && $auth->acl_get('u_mchat_view') && !empty($config['mchat_
 		'L_MCHAT_ONLINE_EXPLAIN'	=> $mchat_stats['refresh_message'],	
 	));
 }
+}	
 // END mChat Mod]]></action>
 			</edit>
 		</open>
 		<open src="includes/functions.php">
 			<edit>
 				<find><![CDATA[// BEGIN mChat Mod
-if(!empty($config['mchat_version']))
+if(!empty($config['mchat_version']) && !empty($config['mchat_enable']))
 {
 	global $cache;
 	if (!function_exists('mchat_cache'))

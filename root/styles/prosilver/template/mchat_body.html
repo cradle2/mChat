@@ -1,10 +1,5 @@
 <!-- IF MCHAT_ARCHIVE_MODE or MCHAT_CUSTOM_PAGE -->
 	<!-- INCLUDE overall_header.html -->
-<!-- IF S_DISPLAY_SEARCH or (S_USER_LOGGED_IN and not S_IS_BOT) and not MCHAT_ARCHIVE_MODE -->
-<ul class="linklist">
-		<li><a href="{U_SEARCH_UNANSWERED}" onclick="window.open(this.href); return false;">{L_SEARCH_UNANSWERED}</a><!-- IF S_USER_LOGGED_IN --> &bull; <a href="{U_SEARCH_UNREAD}" onclick="window.open(this.href); return false;">{L_SEARCH_UNREAD}</a> &bull; <a href="{U_SEARCH_NEW}" onclick="window.open(this.href); return false;">{L_SEARCH_NEW}</a><!-- ENDIF --> &bull; <a href="{U_SEARCH_ACTIVE_TOPICS}" onclick="window.open(this.href); return false;">{L_SEARCH_ACTIVE_TOPICS}</a> <!-- IF S_USER_LOGGED_IN -->&bull; <a href="{U_SEARCH_SELF}" onclick="window.open(this.href); return false;">{L_SEARCH_SELF}</a><!-- ENDIF --></li>
-</ul>
-<!-- ENDIF -->	
 <!-- ENDIF -->
 <!-- IF MCHAT_ARCHIVE_MODE -->
 <!--**

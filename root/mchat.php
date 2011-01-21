@@ -30,6 +30,11 @@ if(!defined('MCHAT_INCLUDE'))
 // Add lang file
 $user->add_lang(array('mods/mchat_lang', 'viewtopic', 'posting'));
 
+//chat enabled
+if (!$config['mchat_enable'])
+{
+	trigger_error($user->lang['MCHAT_ENABLE'], E_USER_NOTICE);
+}
 // check for mod installed
 if (empty($config['mchat_version']))
 {
@@ -54,7 +59,10 @@ if (!function_exists('mchat_cache'))
 {
 	include($phpbb_root_path . 'includes/functions_mchat.' . $phpEx);
 }
+if (($config_mchat = $cache->get('_mchat_config')) === false)
+{
 mchat_cache();
+}
 $config_mchat = $cache->get('_mchat_config');
 // Access rights 
 $mchat_allow_bbcode	= ($config['allow_bbcode'] && $auth->acl_get('u_mchat_bbcode')) ? true : false;
@@ -68,7 +76,7 @@ $mchat_read_archive = ($auth->acl_get('u_mchat_archive')) ? true : false;
 $mchat_founder = ($user->data['user_type'] == USER_FOUNDER) ? true : false;
 $mchat_session_time = !empty($config_mchat['timeout']) ? $config_mchat['timeout'] : 3600;// you can change this number to a greater number for longer chat sessions
 $mchat_rules = !empty($config_mchat['rules']) ? $config_mchat['rules'] : '';
-$mchat_avatars = !empty($config_mchat['avatars']) && $user->optionget('viewavatars') ? true : false;
+$mchat_avatars = (!empty($config_mchat['avatars']) && $user->optionget('viewavatars') && $user->data['user_mchat_avatars']) ? true : false;
 
 // needed variables
 // Request options.
@@ -618,7 +626,7 @@ switch ($mchat_mode)
 		decode_message($message_edit, $row['bbcode_uid']);
 		$message_edit = str_replace('"', '&quot;', $message_edit); // Edit Fix ;)
 		$mchat_ban = ($auth->acl_get('a_authusers') && $user->data['user_id'] != $row['user_id']) ? true : false;
- 		$mchat_avatar = $row['user_avatar'] ? get_user_avatar($row['user_avatar'], $row['user_avatar_type'], ($row['user_avatar_width'] > $row['user_avatar_height']) ? 40 : (40 / $row['user_avatar_height']) * $row['user_avatar_width'], ($row['user_avatar_height'] > $row['user_avatar_width']) ? 40 : (40 / $row['user_avatar_width']) * $row['user_avatar_height']) : '';       
+ 		$mchat_avatar = $row['user_avatar'] ? get_user_avatar($row['user_avatar'], $row['user_avatar_type'], ($row['user_avatar_width'] > $row['user_avatar_height']) ? 40 : (40 / $row['user_avatar_height']) * $row['user_avatar_width'], ($row['user_avatar_height'] > $row['user_avatar_width']) ? 40 : (40 / $row['user_avatar_width']) * $row['user_avatar_height']) : '';   
 		$template->assign_block_vars('mchatrow', array(
 			'MCHAT_ALLOW_BAN'		=> $mchat_ban,
 			'MCHAT_ALLOW_EDIT'		=> $mchat_edit,
@@ -685,12 +693,6 @@ switch ($mchat_mode)
 	// Default function...
 	default:
 
-		//chat enabled
-		if (!$config['mchat_enable'])
-		{
-			trigger_error($user->lang['MCHAT_ENABLE'], E_USER_NOTICE);
-		}
-			
 		// If not include in index.php set mchat.php page true
 		if (!$mchat_include_index)
 		{
