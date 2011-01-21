@@ -91,7 +91,7 @@ switch ($mchat_mode)
 	// rules popup..
 	case 'rules';
 		// If the rules are defined in the language file use them, else just use the entry in the database
-		if (!empty($mchat_rules) || isset($user->lang[strtoupper('mchat_rules')]))
+		if ($mchat_rules || isset($user->lang[strtoupper('mchat_rules')]))
 		{
 			if(isset($user->lang[strtoupper('mchat_rules')]))
 			{
@@ -99,6 +99,7 @@ switch ($mchat_mode)
 			}
 			else
 			{
+				$mchat_rules = $config_mchat['rules'];
 				$mchat_rules = explode("\n", $mchat_rules);
 
 				foreach ($mchat_rules as $mchat_rule)
