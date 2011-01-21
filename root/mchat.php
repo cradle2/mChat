@@ -75,7 +75,7 @@ $mchat_no_flood	= ($auth->acl_get('u_mchat_flood_ignore')) ? true : false;
 $mchat_read_archive = ($auth->acl_get('u_mchat_archive')) ? true : false;
 $mchat_founder = ($user->data['user_type'] == USER_FOUNDER) ? true : false;
 $mchat_session_time = !empty($config_mchat['timeout']) ? $config_mchat['timeout'] : 3600;// you can change this number to a greater number for longer chat sessions
-$mchat_rules = !empty($config_mchat['rules']) ? $config_mchat['rules'] : '';
+$mchat_rules = (!empty($config_mchat['rules']) || isset($user->lang[strtoupper('mchat_rules')])) ? true : false;
 $mchat_avatars = (!empty($config_mchat['avatars']) && $user->optionget('viewavatars') && $user->data['user_mchat_avatars']) ? true : false;
 
 // needed variables
@@ -852,9 +852,13 @@ switch ($mchat_mode)
 				generate_smilies('inline', 0);
 			}
 			// If the static message is defined in the language file use it, else just use the entry in the database
-			if (isset($user->lang[strtoupper('static_message')]) && $config_mchat['static_message'])
+			if (isset($user->lang[strtoupper('static_message')]) || !empty($config_mchat['static_message']))
 			{
-				$config_mchat['static_message'] = $user->lang[strtoupper('static_message')];
+				$config_mchat['static_message'] = $config_mchat['static_message'];
+				if(isset($user->lang[strtoupper('static_message')]))
+				{
+					$config_mchat['static_message'] = $user->lang[strtoupper('static_message')];
+				}
 			}			
 			// a list of users using the chat
 			if ($mchat_custom_page)
