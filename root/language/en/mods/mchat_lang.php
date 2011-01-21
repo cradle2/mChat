@@ -83,6 +83,7 @@ $lang = array_merge($lang, array(
 	'MCHAT_NOT_INSTALLED'		=> 'mChat database entries are missing.<br />Please run the %sinstaller%s to make the database changes for the modification.',
 	'MCHAT_OK'					=> 'OK',
 	'MCHAT_PAUSE'				=> 'Paused',
+	'MCHAT_LOAD'				=> 'Loading',      
 	'MCHAT_PERMISSIONS'			=> 'Change users permissions',
 	'MCHAT_REFRESHING'			=> 'Refreshing...',
 	'MCHAT_REFRESH_NO'			=> 'Autoupdate is off',
