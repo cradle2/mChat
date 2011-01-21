@@ -1,7 +1,7 @@
 /**
 *
 * @package mChat JavaScript Code mini
-* @version 1.4.1 of 2010-12-26
+* @version 1.4.2 of 2011-01-10
 * @copyright (c) 2010 By Rich McGirr (RMcGirr83) http://rmcgirr83.org
 * @copyright (c) 2009 By Shapoval Andrey Vladimirovich (AllCity) ~ http://allcity.net.ru/
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
@@ -554,26 +554,7 @@ var mChat =	{
 		$jQ('#mChatPauseIMG').show();
 		$jQ('#mChatRefreshText').html(mChatRefreshNo).addClass('mchat-alert');
 		$jQ('#mChatSessMess').html(mChatSessOut).addClass('mchat-alert');
-	},
-	// Refresh function
-	profile:function(id)
-	{
-		$jQ.ajax({
-			url:mChatFile,
-			timeout:10000,
-			type:'POST',
-			data:{mode:'profile',profile_id:id},
-			dataType:'html',
-			success:function(html)
-			{
-				$jQ('div#profile('+id+')').tooltip();
-			},
-			error:function()
-			{
-				return false;
-			}
-		});
-	}	
+	}
 };
 
 // timeouts
@@ -615,5 +596,4 @@ $jQ('#mChatUseSound').change(function(){
 	{
 		$jQ.cookie('mChatNoSound','yes');
 	}
-});	
-
+});
