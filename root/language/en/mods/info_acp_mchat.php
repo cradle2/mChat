@@ -95,7 +95,7 @@ $lang = array_merge($lang, array(
 	'MCHAT_BBCODES_DISALLOWED'		=> 'Disallowed bbcodes',
 	'MCHAT_BBCODES_DISALLOWED_EXPLAIN'	=> 'Here you can input the bbcodes that are <strong>not</strong> to be used in a message.<br />Separate bbcodes with a vertical bar, for example: <br />b|i|u|code|list|list=|flash|quote and/or a %scustom bbcode tag name%s',
 	'MCHAT_STATIC_MESSAGE'			=> 'Static Message',
-	'MCHAT_STATIC_MESSAGE_EXPLAIN'	=> 'Here you can define a static message to display to users of the chat.<br />Set to empty to disable the display.  You are limited to 255 characters.<br /><strong>This message can be translated.</strong>  (you must edit the mchat_lang.php file and read the instructions).',
+	'MCHAT_STATIC_MESSAGE_EXPLAIN'	=> 'Here you can define a static message to display to users of the chat.  HTML code is allowed.<br />Set to empty to disable the display.  You are limited to 255 characters.<br /><strong>This message can be translated.</strong>  (you must edit the mchat_lang.php file and read the instructions).',
 	'MCHAT_USER_TIMEOUT'			=> 'User Timeout',
 	'MCHAT_USER_TIMEOUT_EXPLAIN'	=> 'Set the amount of time, in seconds, until a users session in the chat ends. Set to 0 for no timeout.<br /><em>You are limited to the %sforum config setting for sessions%s which is currently set to %s seconds</em>',
 	'MCHAT_OVERRIDE_SMILIE_LIMIT'	=> 'Override smilie limit',

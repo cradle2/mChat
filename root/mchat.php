@@ -61,7 +61,7 @@ if (!function_exists('mchat_cache'))
 }
 if (($config_mchat = $cache->get('_mchat_config')) === false)
 {
-mchat_cache();
+	mchat_cache();
 }
 $config_mchat = $cache->get('_mchat_config');
 // Access rights 
@@ -898,7 +898,7 @@ $template->assign_vars(array(
 	'MCHAT_READ_ARCHIVE_BUTTON'		=> $mchat_read_archive,
 	'MCHAT_FOUNDER'			=> $mchat_founder,
 	'MCHAT_CLEAN_URL'		=> append_sid("{$phpbb_root_path}mchat.$phpEx", 'mode=clean&amp;redirect=' . $on_page),
-	'MCHAT_STATIC_MESS'		=> !empty($config_mchat['static_message']) ? $config_mchat['static_message'] : '',
+	'MCHAT_STATIC_MESS'		=> !empty($config_mchat['static_message']) ? htmlspecialchars_decode($config_mchat['static_message']) : '',
 	'MCHAT_COPYRIGHT'		=> $user->lang['MCHAT_COPYRIGHT'],
 	'MCHAT_WHOIS'			=> $config_mchat['whois'],
 	'MCHAT_MESSAGE_LNGTH'	=> $config_mchat['max_message_lngth'],
