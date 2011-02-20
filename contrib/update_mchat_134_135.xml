@@ -267,7 +267,7 @@ if(!empty($config['mchat_version']) && !empty($config['mchat_enable']))
 				<find><![CDATA[<!-- IF S_MCHAT_ENABLE and (S_MCHAT_ON_INDEX or U_MCHAT) -->
 <script type="text/javascript" src="{ROOT_PATH}mchat/jquery-1.4.2.min.js"></script>]]></find>
 				<action type="replace-with"><![CDATA[<!-- IF S_MCHAT_ENABLE and (S_MCHAT_ON_INDEX or U_MCHAT) -->
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>]]></action>
+<script type="text/javascript" src="{ROOT_PATH}mchat/jquery-1.5.0.min.js"></script>]]></action>
 			</edit>
 			<edit>
 				<remove><![CDATA[<link href="{T_THEME_PATH}/mchat_prosilver.css" rel="stylesheet" type="text/css" />]]></remove>
