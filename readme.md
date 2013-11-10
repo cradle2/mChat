@@ -6,7 +6,7 @@ permissions of the forum as well as allow the admin to set permissions on users/
 as to what they can and can not do within the chat.
 
 ##Features
-jQuery 1.4.4 as retrieved from Google API repo
+jQuery 1.10.0 as retrieved from Google API repo
 Can use BBcodes (custom too) and smilies
 Can quote another message that is displayed
 Shows who is chatting (stats)
