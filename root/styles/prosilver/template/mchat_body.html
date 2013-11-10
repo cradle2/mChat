@@ -110,7 +110,8 @@
 				<noscript><div class="mchat_alert">{L_MCHAT_NOJAVASCRIPT}</div></noscript>
 				<!-- IF MCHAT_ADD_MESSAGE -->
 				<input type="hidden" name="mode" value="add" />
-				<input type="text" name="message" class="inputbox medium mChatText" id="mChatMessage" /><br />
+				<!-- IF MCHAT_INPUT_TYPE --><input type="text" name="message" class="inputbox medium mChatText" id="mChatMessage" /><!-- ELSE -->
+				<textarea name="message" class="inputbox mChatText" id="mChatMessage" onkeypress="mChat.key(event);" cols="32" rows="5" style="width: 50em;height: 6em;"></textarea><!-- ENDIF --><br />
 				<input id="submit_button" type="button" class="button2" onclick="mChat.add();" value="{L_MCHAT_ADD}" />
 				<input id="mChatClear" type="button" class="button2" onclick="mChat.clear();" value="{L_MCHAT_CLEAR_INPUT}" />
 				<!-- IF MCHAT_ALLOW_SMILES and .smiley -->
@@ -149,19 +150,18 @@
 					<img src="{ROOT_PATH}mchat/error.gif" alt="{L_MCHAT_ERROR}" title="{L_MCHAT_ERROR}" id="mChatErrorIMG" class="mChatImageHideImg" />
 					<img src="{ROOT_PATH}mchat/paused.gif" alt="{L_MCHAT_PAUSE}" title="{L_MCHAT_PAUSE}" id="mChatPauseIMG" class="mChatImageHideImg" />
 					<span id="mChatRefreshText">{MCHAT_REFRESH_YES}</span><!-- IF MCHAT_USER_TIMEOUT --> &bull; <span id="mChatSessMess">&nbsp;</span><!-- ENDIF --> &bull; <label for="mChatUseSound">{L_MCHAT_USESOUND} <input type="checkbox" id="mChatUseSound" <!-- IF S_MCHAT_SOUND_YES -->checked="checked"<!-- ENDIF --> /></label>
+				 {L_MCHAT_COPYRIGHT}
 				</div>
 			</div>
 			</form>
 			<!-- ENDIF -->
 			<div id="mChatSound" class="mChatSound"></div>
-			<script type="text/javascript" src="{ROOT_PATH}mchat/mchat_ajax_mini.js"></script>
+			<script type="text/javascript" src="{ROOT_PATH}mchat/mchat_ajax_mini.js=v{S_MCHAT_VERSION}"></script>
 		<!-- ENDIF -->
 	<!-- ELSE -->
 	<div class="mchat_alert">{L_MCHAT_ENABLE}</div>
 	<!-- ENDIF -->
 	<!-- IF not MCHAT_READ_MODE -->
-			<!--/ ** If you remove this expect no support from me ** /-->
-			<div style="text-align:center;">{L_MCHAT_COPYRIGHT}</div>
 		</div>
 	<span class="corners-bottom"><span></span></span></div>
 </div>

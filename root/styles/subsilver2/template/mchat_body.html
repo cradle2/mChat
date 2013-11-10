@@ -111,7 +111,8 @@
 					<noscript><div style="color: #FF0000;">{L_MCHAT_NOJAVASCRIPT}</div></noscript>
 					<!-- IF MCHAT_ADD_MESSAGE -->
 					<input type="hidden" name="mode" value="add" />
-					<input type="text" name="message" class="mChatText" id="mChatMessage" /><br />
+					<!-- IF MCHAT_INPUT_TYPE --><input type="text" name="message" class="mChatText" id="mChatMessage" /><!-- ELSE -->
+				<textarea name="message" class="mChatText" id="mChatMessage" onkeypress="mChat.key(event);" cols="32" rows="5" style="width: 50em;height: 6em;"></textarea><!-- ENDIF --><br />
 					<input id="submit_button" type="button" class="btnlite" onclick="mChat.add();" value="{L_MCHAT_ADD}" />
 					<input id="mChatClear" type="button" class="btnlite" onclick="mChat.clear();" value="{L_MCHAT_CLEAR_INPUT}" />
 					<!-- IF MCHAT_ALLOW_SMILES and .smiley -->
@@ -155,7 +156,7 @@
 				</form>
 			<!-- ENDIF -->
 			<div id="mChatSound" class="mChatSound"></div>
-			<script type="text/javascript" src="{ROOT_PATH}mchat/mchat_ajax_mini.js"></script>
+			<script type="text/javascript" src="{ROOT_PATH}mchat/mchat_ajax_mini.js=v{S_MCHAT_VERSION}"></script>
 			<!-- ENDIF -->
 			<!-- ELSE -->
 			<div class="mchat_alert">{L_MCHAT_ENABLE}</div>

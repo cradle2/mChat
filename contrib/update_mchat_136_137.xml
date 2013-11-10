@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<?xml-stylesheet type="text/xsl" href="modx.prosilver.en.xsl"?>
+<!--NOTICE: Please open this file in your web browser. If presented with a security warning, you may safely tell it to allow the blocked content.-->
+<!--For security purposes, please check: http://www.phpbb.com/mods/ for the latest version of this MOD.\nAlthough MODs are checked before being allowed in the MODs Database there is no guarantee that there are no security problems within the MOD.\nNo support will be given for MODs not found within the MODs Database which can be found at http://www.phpbb.com/mods/-->
+<mod xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="https://www.phpbb.com/mods/xml/modx-1.2.6.xsd">
+	<header>
+		<meta name="generator" content="MODX file generated with PP MODX Creator 1.2.6 by tumba25 (phpBB version)"/>
+		<meta name="generator" content="MODX file generated with PP MODX Creator by tumba25 (online version)"/>
+		<license><![CDATA[http://opensource.org/licenses/gpl-license.php GNU General Public License v2]]></license>
+		<title lang="en"><![CDATA[mChat 1.3.6 to 1.3.7]]></title>
+		<description lang="en"><![CDATA[Updates mod to 1.3.7 from 1.3.6]]></description>
+		<author-group>
+			<author>
+				<realname><![CDATA[Rich McGirr]]></realname>
+				<username><![CDATA[RMcGirr83]]></username>
+				<homepage><![CDATA[http://rmcgirr83.org]]></homepage>
+			</author>
+		</author-group>
+		<mod-version>1.3.7</mod-version>
+		<installation>
+			<level>easy</level>
+			<time>300</time>
+			<target-version>3.0.12</target-version>
+		</installation>
+		<history>
+			<entry>
+				<date>2013-10-25</date>
+				<rev-version>1.3.7</rev-version>
+				<changelog lang="en">
+					<change><![CDATA[Fix can only submit once]]></change>
+					<change><![CDATA[Fix Double posting]]></change>
+					<change><![CDATA[Use new jQuery cookie]]></change>
+					<change><![CDATA[UMIL add registered user group permissions]]></change>
+					<change><![CDATA[jQuery 1.10.2]]></change>
+					<change><![CDATA[hooks file]]></change>
+				</changelog>
+			</entry>			
+		</history>		
+		<link-group>
+			<link type="parent" href="../install.xml" lang="en">Main Install File</link>
+		</link-group>		
+	</header>
+	<action-group>
+		<copy>
+			<file from="root/mchat/mchat_ajax_mini.js" to="mchat/mchat_ajax_mini.js"/>
+			<file from="root/mchat/jquery-1.10.2.min.js" to="mchat/jquery-1.10.2.min.js"/>
+			<file from="root/mchat/jquery_cookie_mini.js" to="mchat/jquery_cookie_mini.js"/>
+			<file from="root/mchat.php" to="mchat.php"/>
+			<file from="root/language/en/mods/mchat_lang.php" to="language/en/mods/mchat_lang.php"/>
+			<file from="root/styles/prosilver/template/mchat_body.html" to="styles/prosilver/template/mchat_body.html"/>
+			<file from="root/styles/subsilver2/template/mchat_body.html" to="styles/subsilver2/template/mchat_body.html"/>
+			<file from="root/styles/prosilver/template/ucp_mchat.html" to="styles/prosilver/template/ucp_mchat.html"/>
+			<file from="root/styles/subsilver2/template/ucp_mchat.html" to="styles/subsilver2/template/ucp_mchat.html"/>
+			<file from="root/adm/style/acp_users_mchat.html" to="adm/style/acp_users_mchat.html"/>
+			<file from="root/includes/hooks/hook_mchat.php" to="includes/hooks/hook_mchat.php"/>			
+		</copy>
+		<open src="index.php">
+			<edit>
+				<remove><![CDATA[// BEGIN mChat Mod
+$mchat_installed = (!empty($config['mchat_version']) && !empty($config['mchat_enable'])) ? true : false;
+if ($mchat_installed && $auth->acl_get('u_mchat_view'))
+{
+	if(!defined('MCHAT_INCLUDE') && $config['mchat_on_index'] && !empty($user->data['user_mchat_index']))
+	{
+		define('MCHAT_INCLUDE', true);
+		$mchat_include_index = true;
+		include($phpbb_root_path . 'mchat.' . $phpEx);
+	}	
+
+	if (!empty($config['mchat_stats_index']) && !empty($user->data['user_mchat_stats_index']))
+	{
+		if (!function_exists('mchat_users'))
+		{
+			include($phpbb_root_path . 'includes/functions_mchat.' . $phpEx);
+		}
+		// Add lang file
+		$user->add_lang('mods/mchat_lang');
+		// stats display
+		$mchat_session_time = !empty($config_mchat['timeout']) ? $config_mchat['timeout'] : 3600;// you can change this number to a greater number for longer chat sessions
+		$mchat_stats = mchat_users($mchat_session_time);
+		$template->assign_vars(array(
+			'MCHAT_INDEX_STATS'	=> true,
+			'MCHAT_INDEX_USERS_COUNT'	=> $mchat_stats['mchat_users_count'],
+			'MCHAT_INDEX_USERS_LIST'	=> $mchat_stats['online_userlist'],
+			'L_MCHAT_ONLINE_EXPLAIN'	=> $mchat_stats['refresh_message'],	
+		));
+	}
+}	
+// END mChat Mod]]></remove>
+			</edit>
+		</open>	
+		<open src="includes/functions.php">
+			<edit>
+				<remove><![CDATA[// BEGIN mChat Mod
+$mchat_custom_page = false;
+if(!empty($config['mchat_version']) && !empty($config['mchat_enable']))
+{
+	global $cache;
+	if (!function_exists('mchat_cache'))
+	{
+		include($phpbb_root_path . 'includes/functions_mchat.' . $phpEx);
+	}
+	if (($config_mchat = $cache->get('_mchat_config')) === false)
+	{
+		mchat_cache();
+	}
+	$config_mchat = $cache->get('_mchat_config');	
+		
+	$mchat_custom_page = $config_mchat['custom_page'];
+}
+//END mChat Mod]]></remove>
+			</edit>
+			<edit>
+				<remove><![CDATA[// BEGIN mChat Mod
+		'U_MCHAT'				=> $auth->acl_get('u_mchat_view') && $mchat_custom_page ? append_sid("{$phpbb_root_path}mchat.$phpEx") : '',
+		'S_MCHAT_ON_INDEX'		=> (!empty($config['mchat_on_index']) && !empty($user->data['user_mchat_index'])) ? true : false,
+		'S_MCHAT_ENABLE'		=> (!empty($config['mchat_enable']) && $auth->acl_get('u_mchat_view')) ? true : false,
+// END mChat Mod]]></remove>
+			</edit>
+		</open>
+		<open src="styles/prosilver/template/editor.js">		
+			<edit>
+				<remove><![CDATA[try
+		{]]></remove>
+			</edit>
+			<edit>
+				<remove><![CDATA[}
+		catch(e)
+		{
+		}]]></remove>
+			</edit>
+		</open>
+		<open src="styles/prosilver/template/overall_header.html">
+			<edit>
+				<find><![CDATA[<!-- IF S_MCHAT_ENABLE and (S_MCHAT_ON_INDEX or U_MCHAT) -->
+<script type="text/javascript" src="{ROOT_PATH}mchat/jquery-1.8.3.min.js"></script>
+<script type="text/javascript" src="{ROOT_PATH}mchat/jquery_cookie_mini.js"></script>
+<!-- ENDIF -->]]></find>
+				<action type="replace-with"><![CDATA[<!-- IF S_MCHAT_ENABLE and (S_MCHAT_ON_INDEX or U_MCHAT) -->
+<script type="text/javascript" src="{ROOT_PATH}mchat/jquery-1.10.2.min.js"></script>
+<script type="text/javascript" src="{ROOT_PATH}mchat/jquery_cookie_mini.js"></script>
+<!-- ENDIF -->]]></action>
+			</edit>
+		</open>
+		<open src="styles/subsilver2/template/editor.js">		
+			<edit>
+				<remove><![CDATA[try
+		{]]></remove>
+			</edit>
+			<edit>
+				<remove><![CDATA[}
+		catch(e)
+		{
+		}]]></remove>
+			</edit>
+		</open>		
+		<open src="styles/subsilver2/template/overall_header.html">
+			<edit>
+				<find><![CDATA[<!-- IF S_MCHAT_ENABLE and (S_MCHAT_ON_INDEX or U_MCHAT) -->
+<script type="text/javascript" src="{ROOT_PATH}mchat/jquery-1.8.3.min.js"></script>
+<script type="text/javascript" src="{ROOT_PATH}mchat/jquery_cookie_mini.js"></script>
+<!-- ENDIF -->]]></find>
+				<action type="replace-with"><![CDATA[<!-- IF S_MCHAT_ENABLE and (S_MCHAT_ON_INDEX or U_MCHAT) -->
+<script type="text/javascript" src="{ROOT_PATH}mchat/jquery-1.10.2.min.js"></script>
+<script type="text/javascript" src="{ROOT_PATH}mchat/jquery_cookie_mini.js"></script>
+<!-- ENDIF -->]]></action>
+			</edit>
+		</open>
+		<open src="language/en/acp/common.php">
+			<edit>
+				<find><![CDATA[// BEGIN mChat Mod
+$lang = array_merge($lang, array(
+	// Prune Feature
+	'LOG_MCHAT_TABLE_PRUNED'	=> 'mChat Table was pruned',
+	'ACP_USER_MCHAT'			=> 'mChat Settings',
+));
+// END mChat Mod]]></find>
+				<action type="replace-with"><![CDATA[// BEGIN mChat Mod
+$lang = array_merge($lang, array(
+	// Prune Feature
+	'LOG_MCHAT_TABLE_PRUNED'	=> 'mChat Table was pruned',
+	'ACP_USER_MCHAT'			=> 'mChat Settings',
+	'LOG_DELETED_MCHAT'      => '<strong>Deleted mChat message</strong><br />» %1$s',
+	'LOG_EDITED_MCHAT'      => '<strong>Edited mChat message</strong><br />» %1$s',	
+));
+// END mChat Mod]]></action>
+			</edit>
+		</open>	
+		<php-installer><![CDATA[mchat_install.php]]></php-installer>
+		<diy-instructions lang="en"><![CDATA[1. Browse to the mchat_install.php file, this will update your database.
+2. Delete the mchat_install.php file from the root of your forum.
+***NOTE if installing via Automod, please ignore step 3
+3. Upload files to your forum.
+4. Refresh the prosilver and subsilver2 templates and themes and purge the cache.    
+5. Refresh your web browser cache
+6. Enjoy the Mod!!]]></diy-instructions>
+	</action-group>
+</mod>

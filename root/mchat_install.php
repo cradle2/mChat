@@ -5,7 +5,7 @@
 * @author RMcGirr83 (Rich McGirr) rmcgirr83@gmail.com 
 * @package mChat
 * @version $Id mchat_install.php
-* @copyright (c) 2010 RMcGirr83 ( http://www.rmcgirr83.org/ )
+* @copyright (c) 2013 RMcGirr83 ( http://www.rmcgirr83.org/ )
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
 */
@@ -402,6 +402,23 @@ $versions = array(
 		// purge the cache, template and theme...may save all nub questions...
 		'cache_purge' => array('', 'template', 'theme'),
 	),
+	// Version 1.3.7
+	'1.3.7'	=> array(	
+	
+		'permission_set' => array(
+			// Registered users permissions
+			array('REGISTERED', 'u_mchat_use', 'group'),
+			array('REGISTERED', 'u_mchat_view', 'group'),
+			array('REGISTERED', 'u_mchat_archive', 'group'),
+			array('REGISTERED', 'u_mchat_bbcode', 'group'),
+			array('REGISTERED', 'u_mchat_smilies', 'group'),
+			array('REGISTERED', 'u_mchat_urls', 'group'),
+		),
+		'table_column_add'	=> array(
+			array('phpbb_users', 'user_mchat_input_area', array('BOOL', true)),
+		),
+		'cache_purge' => array('', 'template', 'theme'),
+	),	
 );
 
 // Include the UMIF Auto file and everything else will be handled automatically.

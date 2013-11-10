@@ -60,6 +60,7 @@ $lang = array_merge($lang, array(
 	'MCHAT_ENABLE'				=> 'Sorry, the Mini-Chat is currently unavailable',	
 	'MCHAT_ERROR'				=> 'Error',	
 	'MCHAT_FLOOD'				=> 'You can not post another message so soon after your last',	
+	'MCHAT_FOE'					=> 'This message was made by <strong>%1$s</strong> who is currently on your ignore list.',
 	'MCHAT_HELP'				=> 'mChat Rules',
 // uncomment and translate the following line for languages for the rules in the chat area
 // <br /> signifies a new line, see above for Unicode characters to use
@@ -107,7 +108,7 @@ $lang = array_merge($lang, array(
 	'MCHAT_ONLINE_USERS_TOTAL'			=> 'In total there are <strong>%d</strong> users chatting ',
 	'MCHAT_ONLINE_USER_TOTAL'			=> 'In total there is <strong>%d</strong> user chatting ',
 	'MCHAT_NO_CHATTERS'					=> 'No one is chatting',
-	'MCHAT_ONLINE_EXPLAIN'				=> '( based on users active over the past %s)',
+	'MCHAT_ONLINE_EXPLAIN'				=> 'based on users active over the past %s',
 	
 	'WHO_IS_CHATTING'			=> 'Who is chatting',
 	'WHO_IS_REFRESH_EXPLAIN'	=> 'Refreshes every <strong>%d</strong> seconds',
@@ -121,7 +122,10 @@ $lang = array_merge($lang, array(
 	'DISPLAY_STATS_INDEX'	=> 'Display the Who is Chatting stats on index page',
 	'DISPLAY_NEW_TOPICS'	=> 'Display new topics in the chat',
 	'DISPLAY_AVATARS'	=> 'Display avatars in the chat',
-	
+	'CHAT_AREA'		=> 'Input type',
+	'CHAT_AREA_EXPLAIN'	=> 'Choose which type of area to use to input a chat:<br />A text area or<br />an input area',
+	'INPUT_AREA'		=> 'Input area',
+	'TEXT_AREA'			=> 'Text area',	
 	// ACP
 	'USER_MCHAT_UPDATED'	=> 'Users mChat preferences were updated',
 ));
