@@ -393,9 +393,14 @@ $versions = array(
 		'permission_unset' => array(
 			// Global Role permissions for admins
 			array('ROLE_ADMIN_FULL', 'a_mchat'),
-		),		
-		// purge the cache
-		'cache_purge' => array(''),
+		),	
+	),
+	// Version 1.3.6
+	'1.3.6'	=> array(	
+	
+		//nothing to do here ...
+		// purge the cache, template and theme...may save all nub questions...
+		'cache_purge' => array('', 'template', 'theme'),
 	),
 );
 

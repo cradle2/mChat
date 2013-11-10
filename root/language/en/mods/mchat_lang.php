@@ -67,7 +67,7 @@ $lang = array_merge($lang, array(
 	'MCHAT_HIDE_LIST'			=> 'Hide List',	
 	'MCHAT_HOUR'				=> 'hour ',
 	'MCHAT_HOURS'				=> 'hours',
-	'MCHAT_IP_WHOIS_FOR'		=> 'IP whois for %s',
+	'MCHAT_IP'					=> 'IP whois for',
 	
 	'MCHAT_MINUTE'				=> 'minute ',
 	'MCHAT_MINUTES'				=> 'minutes ',

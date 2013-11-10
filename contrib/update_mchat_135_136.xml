@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<?xml-stylesheet type="text/xsl" href="modx.prosilver.en.xsl"?>
+<!--NOTICE: Please open this file in your web browser. If presented with a security warning, you may safely tell it to allow the blocked content.-->
+<!--For security purposes, please check: http://www.phpbb.com/mods/ for the latest version of this MOD.\nAlthough MODs are checked before being allowed in the MODs Database there is no guarantee that there are no security problems within the MOD.\nNo support will be given for MODs not found within the MODs Database which can be found at http://www.phpbb.com/mods/-->
+<mod xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="https://www.phpbb.com/mods/xml/modx-1.2.6.xsd">
+	<header>
+		<meta name="generator" content="MODX file generated with PP MODX Creator 1.2.6 by tumba25 (phpBB version)"/>
+		<meta name="generator" content="MODX file generated with PP MODX Creator by tumba25 (online version)"/>
+		<license><![CDATA[http://opensource.org/licenses/gpl-license.php GNU General Public License v2]]></license>
+		<title lang="en"><![CDATA[mChat 1.3.5 to 1.3.6]]></title>
+		<description lang="en"><![CDATA[Updates mod to 1.3.5 from 1.3.6 - 1.3.6 includes Bug Fixes...]]></description>
+		<author-notes lang="en"><![CDATA[You could simply copy all new files and do the file edits to subsilver2 and prosilver template  overall_header.html files to update ,but below are the manual instructions for updating the files belonging to mChat..]]></author-notes>
+		<author-group>
+			<author>
+				<realname><![CDATA[Rich McGirr]]></realname>
+				<username><![CDATA[RMcGirr83]]></username>
+				<homepage><![CDATA[http://rmcgirr83.org]]></homepage>
+			</author>
+		</author-group>
+		<mod-version>1.3.6</mod-version>
+		<installation>
+			<level>easy</level>
+			<time>300</time>
+			<target-version>3.0.12</target-version>
+		</installation>
+		<link-group>
+			<link type="parent" href="../install.xml" lang="en">Main Install File</link>
+		</link-group>
+	</header>
+	<action-group>
+		<copy>
+			<file from="root/*.*" to="/*.*"/>
+		</copy>
+		<open src="mchat.php">
+			<edit>
+				<find><![CDATA[	// Edit function...
+	case 'edit':
+
+		// edit and delete auths
+		$mchat_edit = $auth->acl_get('u_mchat_edit') ? true : false;
+		$mchat_del = $auth->acl_get('u_mchat_delete') ? true : false;	
+		// If mChat disabled and not edit
+		if (!$config['mchat_enable'] || !$mchat_edit)
+		{
+			// Forbidden (for jQ AJAX request)
+			header('HTTP/1.0 403 Forbidden');
+			exit_handler();
+		}
+		
+		// Reguest...
+		$message_id = request_var('message_id', 0);]]></find>
+				<action type="replace-with"><![CDATA[	// Edit function...
+	case 'edit':
+   
+		$message_id = request_var('message_id', 0);
+		// check for the correct user
+		$sql = 'SELECT *
+			FROM ' . MCHAT_TABLE . '
+			WHERE message_id = ' . (int) $message_id;      
+		$result = $db->sql_query($sql);
+		$row = $db->sql_fetchrow($result);
+		$db->sql_freeresult($result);
+		// edit and delete auths
+		$mchat_edit = $auth->acl_get('u_mchat_edit')&& ($auth->acl_get('m_') || $user->data['user_id'] == $row['user_id']) ? true : false;
+		$mchat_del = $auth->acl_get('u_mchat_delete') && ($auth->acl_get('m_') || $user->data['user_id'] == $row['user_id']) ? true : false;   
+		// If mChat disabled and not edit
+		if (!$config['mchat_enable'] || !$mchat_edit)
+		{
+			// Forbidden (for jQ AJAX request)
+			header('HTTP/1.0 403 Forbidden');
+			exit_handler();
+		}
+      
+		// Reguest...]]></action>
+			</edit>
+			<edit>
+				<find><![CDATA[	// Delete function...
+	case 'delete':
+		
+		// must have auths to delete
+		$mchat_del = ($auth->acl_get('u_mchat_delete')) ? true : false;
+		// Reguest...
+		$message_id = request_var('message_id', 0);]]></find>
+				<action type="replace-with"><![CDATA[	// Delete function...
+	case 'delete':
+      
+		$message_id = request_var('message_id', 0);
+		
+		// check for the correct user
+		$sql = 'SELECT *
+			FROM ' . MCHAT_TABLE . '
+			WHERE message_id = ' . (int) $message_id;      
+		$result = $db->sql_query($sql);
+		$row = $db->sql_fetchrow($result);
+		$db->sql_freeresult($result);
+		
+		// edit and delete auths
+		$mchat_edit = $auth->acl_get('u_mchat_edit')&& ($auth->acl_get('m_') || $user->data['user_id'] == $row['user_id']) ? true : false;
+		$mchat_del = $auth->acl_get('u_mchat_delete') && ($auth->acl_get('m_') || $user->data['user_id'] == $row['user_id']) ? true : false;
+		]]></action>
+			</edit>
+			<edit>
+				<find><![CDATA[	// Add function...
+	case 'add':
+	
+		// If mChat disabled
+		if (!$config['mchat_enable'] || !$mchat_add_mess)]]></find>
+				<action type="replace-with"><![CDATA[	// Add function...
+	case 'add':
+	
+		// If mChat disabled
+		if (!$config['mchat_enable'] || !$mchat_add_mess || !check_form_key('mchat_posting'))]]></action>
+			</edit>
+			<edit>
+				<find><![CDATA[// Template function...
+$template->assign_vars(array(]]></find>
+				<action type="before-add"><![CDATA[add_form_key('mchat_posting');]]></action>
+			</edit>
+		</open>
+		<open src="language/en/mods/mchat_lang.php">
+			<edit>
+				<find><![CDATA[	'MCHAT_IP_WHOIS_FOR'		=> 'IP whois for %s',]]></find>
+				<action type="replace-with"><![CDATA[	'MCHAT_IP'					=> 'IP whois for',]]></action>
+			</edit>
+		</open>
+		<open src="styles/prosilver/template/mchat_body.html">
+			<edit>
+				<find><![CDATA[			<script type="text/javascript" src="{T_TEMPLATE_PATH}/editor.js"></script>]]></find>
+				<action type="replace-with"><![CDATA[			<script type="text/javascript" src="{T_SUPER_TEMPLATE_PATH}/editor.js"></script>]]></action>
+			</edit>
+			<edit>
+				<find><![CDATA[				<!-- IF MCHAT_ALLOW_SMILES and .smiley -->]]></find>
+				<action type="before-add"><![CDATA[				{S_FORM_TOKEN}]]></action>
+			</edit>
+		</open>
+		<open src="styles/prosilver/template/overall_header.html">
+			<edit>
+				<find><![CDATA[<script type="text/javascript" src="{ROOT_PATH}mchat/jquery-1.5.0.min.js"></script>]]></find>
+				<action type="replace-with"><![CDATA[<script type="text/javascript" src="{ROOT_PATH}mchat/jquery-1.8.3.min.js"></script>]]></action>
+			</edit>
+		</open>
+		<open src="styles/subsilver2/template/mchat_body.html">
+			<edit>
+				<find><![CDATA[			<script type="text/javascript" src="{T_TEMPLATE_PATH}/editor.js"></script>]]></find>
+				<action type="replace-with"><![CDATA[			<script type="text/javascript" src="{T_SUPER_TEMPLATE_PATH}/editor.js"></script>]]></action>
+			</edit>
+			<edit>
+				<find><![CDATA[					<!-- IF MCHAT_ALLOW_SMILES and .smiley -->]]></find>
+				<action type="before-add"><![CDATA[					{S_FORM_TOKEN}]]></action>
+			</edit>
+		</open>
+		<open src="styles/subsilver2/template/overall_header.html">
+			<edit>
+				<find><![CDATA[<script type="text/javascript" src="{ROOT_PATH}mchat/jquery-1.5.0.min.js"></script>]]></find>
+				<action type="replace-with"><![CDATA[<script type="text/javascript" src="{ROOT_PATH}mchat/jquery-1.8.3.min.js"></script>]]></action>
+			</edit>
+		</open>
+		<php-installer><![CDATA[mchat_install.php]]></php-installer>
+		<diy-instructions lang="en"><![CDATA[1. Browse to the mchat_install.php file, this will update your database.
+2. Delete the mchat_install.php file from the root of your forum.
+***NOTE if installing via Automod, please ignore step 3
+3. Upload files to your forum.
+4. Refresh the prosilver and subsilver2 templates and themes.    
+5. Refrsh your web browser cache
+6. Enjoy the Mod!!]]></diy-instructions>
+	</action-group>
+</mod>

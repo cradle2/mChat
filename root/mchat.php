@@ -185,7 +185,7 @@ switch ($mchat_mode)
 			$db->sql_query($sql);
 				
 			meta_refresh(3, $mchat_redirect);
-			trigger_error($user->lang['MCHAT_CLEANED'].'<br /><br />'.sprintf($user->lang['RETURN_PAGE'], '<a href="'.$mchat_redirect.'">', '</a>'), E_USER_NOTICE);
+			trigger_error($user->lang['MCHAT_CLEANED'].'<br /><br />'.sprintf($user->lang['RETURN_PAGE'], '<a href="'.$mchat_redirect.'">', '</a>'));
 		}
 		else
 		{
@@ -403,7 +403,7 @@ switch ($mchat_mode)
 	case 'add':
 	
 		// If mChat disabled
-		if (!$config['mchat_enable'] || !$mchat_add_mess)
+		if (!$config['mchat_enable'] || !$mchat_add_mess || !check_form_key('mchat_posting'))
 		{
 			// Forbidden (for jQ AJAX request)
 			header('HTTP/1.0 403 Forbidden');
@@ -519,10 +519,18 @@ switch ($mchat_mode)
 
 	// Edit function...
 	case 'edit':
-
+   
+		$message_id = request_var('message_id', 0);
+		// check for the correct user
+		$sql = 'SELECT *
+			FROM ' . MCHAT_TABLE . '
+			WHERE message_id = ' . (int) $message_id;      
+		$result = $db->sql_query($sql);
+		$row = $db->sql_fetchrow($result);
+		$db->sql_freeresult($result);
 		// edit and delete auths
-		$mchat_edit = $auth->acl_get('u_mchat_edit') ? true : false;
-		$mchat_del = $auth->acl_get('u_mchat_delete') ? true : false;	
+		$mchat_edit = $auth->acl_get('u_mchat_edit')&& ($auth->acl_get('m_') || $user->data['user_id'] == $row['user_id']) ? true : false;
+		$mchat_del = $auth->acl_get('u_mchat_delete') && ($auth->acl_get('m_') || $user->data['user_id'] == $row['user_id']) ? true : false;   
 		// If mChat disabled and not edit
 		if (!$config['mchat_enable'] || !$mchat_edit)
 		{
@@ -530,9 +538,8 @@ switch ($mchat_mode)
 			header('HTTP/1.0 403 Forbidden');
 			exit_handler();
 		}
-		
+      
 		// Reguest...
-		$message_id = request_var('message_id', 0);
 		$message = utf8_normalize_nfc(request_var('message', '', true));
 		
 		// stop run code
@@ -666,11 +673,21 @@ switch ($mchat_mode)
 
 	// Delete function...
 	case 'delete':
-		
-		// must have auths to delete
-		$mchat_del = ($auth->acl_get('u_mchat_delete')) ? true : false;
-		// Reguest...
+      
 		$message_id = request_var('message_id', 0);
+		
+		// check for the correct user
+		$sql = 'SELECT *
+			FROM ' . MCHAT_TABLE . '
+			WHERE message_id = ' . (int) $message_id;      
+		$result = $db->sql_query($sql);
+		$row = $db->sql_fetchrow($result);
+		$db->sql_freeresult($result);
+		
+		// edit and delete auths
+		$mchat_edit = $auth->acl_get('u_mchat_edit')&& ($auth->acl_get('m_') || $user->data['user_id'] == $row['user_id']) ? true : false;
+		$mchat_del = $auth->acl_get('u_mchat_delete') && ($auth->acl_get('m_') || $user->data['user_id'] == $row['user_id']) ? true : false;
+		
 		// If mChat disabled
 		if (!$config['mchat_enable'] || !$mchat_del || !$message_id)
 		{
@@ -877,7 +894,7 @@ switch ($mchat_mode)
 		}
 	break;
 }
-
+add_form_key('mchat_posting');
 // Template function...
 $template->assign_vars(array(
 	'MCHAT_FILE_NAME'		=> append_sid("{$phpbb_root_path}mchat.$phpEx"),

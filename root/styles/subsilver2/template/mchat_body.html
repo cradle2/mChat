@@ -89,7 +89,7 @@
 			// ]]>
 			</script>
 			<!-- IF not MCHAT_ARCHIVE_MODE -->
-			<script type="text/javascript" src="{T_TEMPLATE_PATH}/editor.js"></script>
+			<script type="text/javascript" src="{T_SUPER_TEMPLATE_PATH}/editor.js"></script>
 			<div id="mChatmain" <!-- IF MCHAT_CUSTOM_PAGE -->class="mChatRowLimitCustom" style="height: {MCHAT_CUSTOM_HEIGHT}px;"<!-- ELSE -->class="mChatRowLimit" style="height: {MCHAT_INDEX_HEIGHT}px;"<!-- ENDIF -->>
 				<!-- ENDIF -->
 				<div id="mChatData">
@@ -134,7 +134,8 @@
 					<!-- IF MCHAT_ALLOW_BBCODES -->
 						<!-- INCLUDE mchat_bbcodes.html -->
 					<!-- ENDIF -->
-					<!-- ENDIF -->				
+					<!-- ENDIF -->	
+					{S_FORM_TOKEN}
 					<!-- IF MCHAT_ALLOW_SMILES and .smiley -->
 					<div id="mChatSmiles" style="padding: 5px; display: none;">
 						<!-- BEGIN smiley -->
