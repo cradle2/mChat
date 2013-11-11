@@ -52,7 +52,8 @@
 			<file from="root/styles/prosilver/template/ucp_mchat.html" to="styles/prosilver/template/ucp_mchat.html"/>
 			<file from="root/styles/subsilver2/template/ucp_mchat.html" to="styles/subsilver2/template/ucp_mchat.html"/>
 			<file from="root/adm/style/acp_users_mchat.html" to="adm/style/acp_users_mchat.html"/>
-			<file from="root/includes/hooks/hook_mchat.php" to="includes/hooks/hook_mchat.php"/>			
+			<file from="root/includes/hooks/hook_mchat.php" to="includes/hooks/hook_mchat.php"/>
+			<file from="root/language/en/mods/info_acp_mchat.php" to="language/en/mods/info_acp_mchat.php"/>
 		</copy>
 		<open src="index.php">
 			<edit>
