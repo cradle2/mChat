@@ -114,7 +114,7 @@ $lang = array_merge($lang, array(
 	
 	// error reporting
 	'MCHAT_NEEDS_UPDATING'	=> 'The mChat mod needs updating.  Please have a forum founder visit this section to run the installer.',
-	'MCHAT_WRONG_VERSION'	=> 'The wrong verson of the mod is installed.  Please run the %sinstaller%s for the new version of the modification.',
+	'MCHAT_WRONG_VERSION'	=> 'The wrong version of the mod is installed.  Please run the %sinstaller%s for the new version of the modification.',
 	'WARNING'	=> 'Warning',
 	'TOO_LONG_DATE'		=> 'The date format you entered is too long.',
 	'TOO_SHORT_DATE'	=> 'The date format you entered is too short.',
