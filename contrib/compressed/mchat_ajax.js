@@ -76,7 +76,7 @@ $jQ(function () {
     }
     $jQ.browser = {};
     $jQ.browser.msie = false;
-    if (navigator.userAgent.match(/MSIE ([0-9]+)\./)) {
+    if (navigator.userAgent.match(/MSIE ([0-9]+)\./)||navigator.userAgent.match(/Trident\/7.0; rv 11.0/)) {
         $jQ.browser.msie = true;
     }
 });
