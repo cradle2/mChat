@@ -32,7 +32,12 @@ function hook_mchat(&$hook)
 {
 	global $auth, $cache, $config, $db, $template, $user;
 	global $phpbb_root_path, $phpEx;
-	
+
+	// cause no errors during update of forum software
+	if (defined('IN_INSTALL'))
+	{
+		return;
+	}	
 	$mchat_installed = (!empty($config['mchat_version']) && !empty($config['mchat_enable']) && $auth->acl_get('u_mchat_view')) ? true : false;
 	if ($mchat_installed)
 	{
@@ -87,7 +92,7 @@ function hook_mchat(&$hook)
 /**
  * Only register the hook for normal pages, not administration pages.
  */
-if (!defined('ADMIN_START') || !defined('IN_INSTALL'))
+if (!defined('ADMIN_START'))
 {
 	$phpbb_hook->register(array('template', 'display'), 'hook_mchat');
 }
