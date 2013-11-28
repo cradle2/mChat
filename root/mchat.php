@@ -955,7 +955,7 @@ switch ($mchat_mode)
 		}
 	break;
 }
-$copyright = base64_decode('qSA8YSBocmVmPSJodHRwOi8vcm1jZ2lycjgzLm9yZyI+Uk1jR2lycjgzPC9hPg==');
+$copyright = base64_decode('JmNvcHk7IDxhIGhyZWY9Imh0dHA6Ly9ybWNnaXJyODMub3JnIj5STWNHaXJyODM8L2E+');
 add_form_key('mchat_posting');
 // Template function...
 $template->assign_vars(array(
