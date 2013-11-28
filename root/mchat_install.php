@@ -414,6 +414,14 @@ $versions = array(
 			array('REGISTERED', 'u_mchat_smilies', 'group'),
 			array('REGISTERED', 'u_mchat_urls', 'group'),
 		),
+		'table_insert'	=> array(
+			array('phpbb_mchat_config', array(			
+				array(			
+					'config_name' 	=> 'message_num',
+					'config_value'	=> '10',
+				),
+			)),			
+		),		
 		'table_column_add'	=> array(
 			array('phpbb_users', 'user_mchat_input_area', array('BOOL', true)),
 		),
