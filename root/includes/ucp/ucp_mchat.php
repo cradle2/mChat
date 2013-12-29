@@ -3,7 +3,7 @@
 *
 * @package ucp_mchat
 * @version $Id$
-* @copyright (c) 2010 RMcGirr83 Rich McGirr http://rmcgirr83.org
+* @copyright (c) 2013 RMcGirr83 Rich McGirr http://rmcgirr83.org
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
 */
@@ -39,6 +39,7 @@ class ucp_mchat
 					'user_mchat_stats_index'	=> request_var('user_mchat_stats_index', (bool) $user->data['user_mchat_stats_index']),
 					'user_mchat_topics'		=> request_var('user_mchat_topics', (bool) $user->data['user_mchat_topics']),
 					'user_mchat_avatars'	=> request_var('user_mchat_avatars', (bool) $user->data['user_mchat_avatars']),
+					'user_mchat_input_area'	=> request_var('user_mchat_input_area', (bool) $user->data['user_mchat_input_area']),
 				);
 
 				add_form_key('ucp_mchat');
@@ -58,13 +59,14 @@ class ucp_mchat
 							'user_mchat_stats_index'	=> $data['user_mchat_stats_index'],
 							'user_mchat_topics'	=> $data['user_mchat_topics'],
 							'user_mchat_avatars'	=> $data['user_mchat_avatars'],
+							'user_mchat_input_area'	=> $data['user_mchat_input_area'],
 						);
 
 						if (sizeof($sql_ary))
 						{
 							$sql = 'UPDATE ' . USERS_TABLE . '
 								SET ' . $db->sql_build_array('UPDATE', $sql_ary) . '
-								WHERE user_id = ' . $user->data['user_id'];
+								WHERE user_id = ' . (int) $user->data['user_id'];
 							$db->sql_query($sql);
 						}
 
@@ -90,6 +92,7 @@ class ucp_mchat
 					'S_STATS_MCHAT'		=> $data['user_mchat_stats_index'],
 					'S_TOPICS_MCHAT'	=> $data['user_mchat_topics'],
 					'S_AVATARS_MCHAT'	=> $data['user_mchat_avatars'],
+					'S_INPUT_MCHAT'		=> $data['user_mchat_input_area'],
 					'S_MCHAT_TOPICS'	=> $config['mchat_new_posts'],
 					'S_MCHAT_INDEX'		=> ($config['mchat_on_index'] || $config['mchat_stats_index']) ? true : false,
 					'S_MCHAT_AVATARS'	=> $mchat_cache['avatars'],

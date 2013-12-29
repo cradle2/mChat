@@ -426,6 +426,10 @@ $versions = array(
 			array('phpbb_users', 'user_mchat_input_area', array('BOOL', true)),
 		),
 		'cache_purge' => array('', 'template', 'theme'),
+	),
+	// Version 1.3.8
+	'1.3.8'	=> array(
+		//nothing to do here ...
 	),	
 );
 
