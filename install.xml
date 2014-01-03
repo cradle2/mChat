@@ -501,6 +501,8 @@ $lang = array_merge($lang, array(
 	// Prune Feature
 	'LOG_MCHAT_TABLE_PRUNED'	=> 'mChat Table was pruned',
 	'ACP_USER_MCHAT'			=> 'mChat Settings',
+	'LOG_DELETED_MCHAT'      => '<strong>Deleted mChat message</strong><br />» %1$s',
+	'LOG_EDITED_MCHAT'      => '<strong>Edited mChat message</strong><br />» %1$s',	
 ));
 // END mChat Mod]]></action>
 			</edit>
