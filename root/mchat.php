@@ -587,7 +587,7 @@ switch ($mchat_mode)
 			exit_handler();
 		}
 		// Reguest...
-		$message = request_var('message', '');
+		$message = request_var('message', '', true);
 		
 		// must have something other than bbcode in the message
 		if (empty($mchatregex))
