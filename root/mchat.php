@@ -443,7 +443,7 @@ switch ($mchat_mode)
 	case 'add':
 	
 		// If mChat disabled
-		if (!$config['mchat_enable'] || !$mchat_add_mess || !check_form_key('mchat_posting'))
+		if (!$config['mchat_enable'] || !$mchat_add_mess || !check_form_key('mchat_posting', -1))
 		{
 			// Forbidden (for jQ AJAX request)
 			header('HTTP/1.0 403 Forbidden');
