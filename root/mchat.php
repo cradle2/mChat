@@ -561,13 +561,13 @@ switch ($mchat_mode)
    
 		$message_id = request_var('message_id', 0);
 	  
-      // If mChat disabled and not edit
-      if (!$config['mchat_enable'] || !$message_id)
-      {
-         // Forbidden (for jQ AJAX request)
-         header('HTTP/1.0 403 Forbidden');
-         exit_handler();
-      }
+		// If mChat disabled and not edit
+		if (!$config['mchat_enable'] || !$message_id)
+		{
+			// Forbidden (for jQ AJAX request)
+			header('HTTP/1.0 403 Forbidden');
+			exit_handler();
+		}
 	  
 		// check for the correct user
 		$sql = 'SELECT *

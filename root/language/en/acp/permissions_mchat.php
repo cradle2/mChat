@@ -50,6 +50,7 @@ $lang = array_merge($lang, array(
 	'acl_u_mchat_bbcode'		=> array('lang' => 'Can use bbcode in mChat', 'cat' => 'mchat'),
 	'acl_u_mchat_smilies'		=> array('lang' => 'Can use smilies in mChat', 'cat' => 'mchat'),
 	'acl_u_mchat_urls'			=> array('lang' => 'Can post urls in mChat', 'cat' => 'mchat'),
+	'acl_u_mchat_quote'			=> array('lang' => 'Can quote in mChat', 'cat' => 'mchat'),
 
 	// Admin perms
 	'acl_a_mchat'				=> array('lang' => 'Can manage mChat settings', 'cat' => 'permissions'), // Using a phpBB category here
